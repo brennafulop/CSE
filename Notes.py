@@ -31,3 +31,5 @@ print("Hi %s." %name)
 
 age = input("How old are you?")
 print("%s?! That's really old. You belong in a retirement home." %age)
+
+print("wake up, neo")
