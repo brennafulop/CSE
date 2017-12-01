@@ -34,7 +34,7 @@
 #
 # print("wake up neo")
 
-#functions
+# functions
 
 
 # def print_hw():

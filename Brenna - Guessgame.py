@@ -1,8 +1,10 @@
 import random
+import sys
+
 
 winning_number = random.randint(1,50)
 guesses = 5
-
+number = input('Choose a number between one and fifty')
 
 def compare(number, guesses):
     number = input("Choose a number between one and fifty.")
@@ -16,5 +18,8 @@ def compare(number, guesses):
         guesses -= 1
         print("Your guess is too low! You only have %d guesses left!" % guesses)
         compare(number, guesses)
+
+
+
 
 
