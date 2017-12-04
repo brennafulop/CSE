@@ -115,7 +115,19 @@
 #     a += 1 # This iterates so that we can break the loop
 
 # Random Numbers
-import random
-print(random.randint(0, 10))
+# import random
+# print(random.randint(0, 10))
 
 
+# Recasting
+c = '1'
+print(c == 1) # we have a string and an integer
+print(int(c) == 1)
+print(c == str(1))
+
+
+# Comparisons
+
+print( 1 == 1) # Use a double equal sign
+print(1 != 2) # One is not equal to two
+print(not False) # "!" is the "not" operator
