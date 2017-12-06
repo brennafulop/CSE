@@ -22,7 +22,22 @@ that takes one parameter called "name"
 and prints out name.py'''
 
 
-def add_py (name):
-    print(name + ".py")
+# def add_py (name):
+#     print(name + ".py")
+#
+# add_py("brenna")
 
-add_py("brenna")
+# 12.6.17
+'''Write a function called "add" 
+which takes three parameters 
+and prints the sum of the numbers
+'''
+
+#
+# def add(num1, num2, num3):
+#     print (num1 + num2 + num3)
+#
+#
+# add (15, 18, 9000)
+# add(80, 90, 100)
+
