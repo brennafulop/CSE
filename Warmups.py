@@ -41,3 +41,16 @@ and prints the sum of the numbers
 # add (15, 18, 9000)
 # add(80, 90, 100)
 
+#12.7.17
+# write a function called "repeat"
+# that takes one parameter (string)
+# and prints it three times.
+
+
+def repeat(word):
+    print(word)
+    print(word)
+    print(word)
+
+
+repeat("hi")
