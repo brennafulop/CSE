@@ -27,4 +27,3 @@ print(player_roll)
 print("Ha ha ha!!! I win, just like I knew I would...loser! I have all your money now!")
 print("It took you %s tries just to lose." % rolls)
 print("Your top balance was $" + str(top_balance) + " in round " + str(top_round) + ".")
-
