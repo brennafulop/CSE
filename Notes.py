@@ -1,3 +1,4 @@
+'''
 # print("Hello world")
 #
 # # brenna
@@ -131,3 +132,29 @@ print(c == str(1))
 print( 1 == 1) # Use a double equal sign
 print(1 != 2) # One is not equal to two
 print(not False) # "!" is the "not" operator
+'''
+
+# Lists
+
+the_count = [1, 2, 3 , 4, 5]
+cheeseburger_ingredients = ['cheese', 'beef', 'sauce', 'sesame seed bun', 'avocado', 'onion']
+print(cheeseburger_ingredients[0])
+print(cheeseburger_ingredients[3])
+print(len(cheeseburger_ingredients))
+print(len(the_count))
+
+# Going through lists
+
+for item in cheeseburger_ingredients:
+    print(item)
+
+for variable in the_count:
+    print(variable * 2)
+
+length = len(cheeseburger_ingredients)
+range(5)  # A list of the numbers 0 through 4]
+range(len(cheeseburger_ingredients))  # Generates a list of all indices
+
+for num in range(len(cheeseburger_ingredients)):
+    item = cheeseburger_ingredients[num]
+    print('The item at index %d is %s' % (num, item))
