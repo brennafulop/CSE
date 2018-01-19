@@ -36,8 +36,6 @@
 # print("wake up neo")
 
 # functions
-
-
 # def print_hw():
 #     print("Hello world.")
 #     print("Enjoy the day.")
@@ -104,12 +102,10 @@
 
 
 # Loops
-
 # for num in range(10):
 #     print (num + 1)
 #
 # # While Loops (BEWARE)
-#
 # a = 1
 # while a < 10:
 #     print(a)
@@ -128,14 +124,12 @@ print(c == str(1))
 
 
 # Comparisons
-
 print( 1 == 1) # Use a double equal sign
 print(1 != 2) # One is not equal to two
 print(not False) # "!" is the "not" operator
 '''
 
 # Lists
-
 the_count = [1, 2, 3 , 4, 5]
 cheeseburger_ingredients = ['cheese', 'beef', 'sauce', 'sesame seed bun', 'avocado', 'onion']
 print(cheeseburger_ingredients[0])
@@ -144,7 +138,6 @@ print(len(cheeseburger_ingredients))
 print(len(the_count))
 
 # Going through lists
-
 for item in cheeseburger_ingredients:
     print(item)
 
@@ -158,3 +151,36 @@ range(len(cheeseburger_ingredients))  # Generates a list of all indices
 for num in range(len(cheeseburger_ingredients)):
     item = cheeseburger_ingredients[num]
     print('The item at index %d is %s' % (num, item))
+
+
+# Recasting into a list
+strOne = "Hello World!"
+
+listOne = list(strOne)
+print(listOne)
+print(listOne)
+print(listOne[-1])
+listOne[11] = "."
+
+# Adding things to a list
+cheeseburger_ingredients.append("fries")
+print(cheeseburger_ingredients)
+cheeseburger_ingredients.append("tomato")
+print(cheeseburger_ingredients)
+
+# Remove things from a list
+cheeseburger_ingredients.pop(1) # removes from a specific index
+print(cheeseburger_ingredients)
+cheeseburger_ingredients.remove("tomato")
+print(cheeseburger_ingredients)
+
+# Getting the alphabet
+import string
+print(string.ascii_letters)
+print(string.ascii_lowercase)
+print(string.punctuation)
+
+# Making things lowercase
+strTwo = "ThIs Is A VeRY oDd sEnTeNCe"
+lowercase = strTwo.lower()
+print(lowercase)
