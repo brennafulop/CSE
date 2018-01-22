@@ -1,4 +1,5 @@
 import random
+import string
 """
 This is a guide of how to make hangman
 
@@ -9,4 +10,15 @@ This is a guide of how to make hangman
 5. Create win and lose condition
 """
 
-word_bank = ['forest', 'computer', 'pluto', 'strange', 'infinity', 'goodbye', 'river', 'wolves' 'canada', 'fascinating']
+word_bank = ['forest', 'melancholy', 'pluto', 'strange', 'infinity', 'goodbye', 'river', 'interestingly', 'canada',
+             'fascinating']
+
+random_word = random.choice(word_bank)
+list_word = list(random_word)
+print(list_word)
+hidden_word = list("*" * len(list_word))
+print(hidden_word)
+print("The word is " + str(len(list_word)), "letters long.")
+print(string.ascii_lowercase)
+user_input = input("Guess a letter >_")
+list_word.index(user_input)

@@ -35,7 +35,7 @@
 #
 # print("wake up neo")
 
-# functions
+# functionsd
 # def print_hw():
 #     print("Hello world.")
 #     print("Enjoy the day.")
@@ -130,7 +130,7 @@ print(not False) # "!" is the "not" operator
 '''
 
 # Lists
-the_count = [1, 2, 3 , 4, 5]
+the_count = [1, 2, 3, 4, 5]
 cheeseburger_ingredients = ['cheese', 'beef', 'sauce', 'sesame seed bun', 'avocado', 'onion']
 print(cheeseburger_ingredients[0])
 print(cheeseburger_ingredients[3])
@@ -158,7 +158,6 @@ strOne = "Hello World!"
 
 listOne = list(strOne)
 print(listOne)
-print(listOne)
 print(listOne[-1])
 listOne[11] = "."
 
@@ -169,7 +168,7 @@ cheeseburger_ingredients.append("tomato")
 print(cheeseburger_ingredients)
 
 # Remove things from a list
-cheeseburger_ingredients.pop(1) # removes from a specific index
+cheeseburger_ingredients.pop(1)  # removes from a specific index
 print(cheeseburger_ingredients)
 cheeseburger_ingredients.remove("tomato")
 print(cheeseburger_ingredients)
