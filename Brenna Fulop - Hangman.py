@@ -17,7 +17,7 @@ This is a guide of how to make hangman
 word_bank = ['Forest', 'Melancholy', 'Pluto', 'Strange', 'Infinity', 'Goodbye', 'River', 'Interestingly', 'Canada',
              'Fascinating']
 guesses_left = 10
-random_word = random.choice(word_bank)
+random_word = random.choice(word_bank).lower()
 list_word = list(random_word)
 
 print('*' * len(random_word))
@@ -27,7 +27,7 @@ print("You have 10 guesses.")
 guesses = []
 
 while guesses_left > 0:
-    current_guess = input("Guess a letter >_")
+    current_guess = input("Guess a letter >_").lower()
     guesses.append(current_guess)
     if current_guess == 'quit':
         exit(0)
