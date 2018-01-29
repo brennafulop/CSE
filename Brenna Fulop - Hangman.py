@@ -1,5 +1,4 @@
 import random
-import string
 import sys
 
 """
@@ -16,6 +15,7 @@ This is a guide of how to make hangman
 
 word_bank = ['Forest', 'Melancholy', 'Pluto', 'Strange', 'Infinity', 'Goodbye', 'River', 'Interestingly', 'Canada',
              'Fascinating']
+
 guesses_left = 10
 random_word = random.choice(word_bank).lower()
 list_word = list(random_word)

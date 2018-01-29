@@ -183,3 +183,9 @@ print(string.punctuation)
 strTwo = "ThIs Is A VeRY oDd sEnTeNCe"
 lowercase = strTwo.lower()
 print(lowercase)
+
+# Joining lists
+L1 = ["h", 'e', 'l', 'l', 'o']
+print(L1)
+L1 = ''.join(L1)
+print(L1)
