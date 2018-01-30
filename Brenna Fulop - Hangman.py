@@ -26,6 +26,7 @@ print("You have 10 guesses.")
 
 guesses = []
 
+
 while guesses_left > 0:
     current_guess = input("Guess a letter >_").lower()
     guesses.append(current_guess)
@@ -34,6 +35,7 @@ while guesses_left > 0:
     if current_guess not in random_word:
         guesses_left -= 1
     print("You have %s guesses left" % guesses_left)
+    print("You have already guessed these letters: %s" % guesses)
     output = []
     for letter in random_word:
         if letter in guesses:
