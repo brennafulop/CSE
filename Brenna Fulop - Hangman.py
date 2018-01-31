@@ -1,5 +1,4 @@
 import random
-import sys
 
 """
 
@@ -13,7 +12,7 @@ This is a guide of how to make hangman
 
 """
 
-word_bank = ['Forest', 'Melancholy', 'Pluto', 'Strange', 'Infinity', 'Goodbye', 'River', 'Interestingly', 'Canada',
+word_bank = ['Forest', 'Melancholy', 'Pluto', 'Strange', 'Infinity', 'Goodbye', 'Inconceivable', 'Interestingly', 'Canada',
              'Fascinating']
 
 guesses_left = 10
@@ -25,7 +24,6 @@ print("The word is " + str(len(list_word)), "letters long.")
 print("You have 10 guesses.")
 
 guesses = []
-
 
 while guesses_left > 0:
     current_guess = input("Guess a letter >_").lower()
@@ -45,7 +43,7 @@ while guesses_left > 0:
     output = ''.join(output)
     if '*' not in output:
         print('You win! The word was %s' % random_word)
-        sys.exit()
+        exit(0)
     print(output)
 
 print('You lose! The word was %s' % random_word)
