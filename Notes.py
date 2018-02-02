@@ -127,7 +127,7 @@ print(c == str(1))
 print( 1 == 1) # Use a double equal sign
 print(1 != 2) # One is not equal to two
 print(not False) # "!" is the "not" operator
-'''
+
 
 # Lists
 the_count = [1, 2, 3, 4, 5]
@@ -189,3 +189,38 @@ L1 = ["h", 'e', 'l', 'l', 'o']
 print(L1)
 L1 = ''.join(L1)
 print(L1)
+'''
+
+# Dictionaries - Made up of key: value pair
+
+dictionary = {'name': 'Lance', 'age': 26, 'height': 6 * 12 + 2}
+
+# Accessing things from a dictionary
+print(dictionary['name'])
+print(dictionary['age'])
+print(dictionary['height'])
+
+large_dictionary = {
+    'CA': 'California',
+    'AZ': 'Arizona',
+    'NY': 'New York'
+}
+
+print(large_dictionary['NY'])
+
+larger_dictionary = {
+    'CA': [
+        'Fresno',
+        'San Francisco',
+        'San Jose'
+    ],
+    'AZ': [
+        'Phoenix',
+        'Tuscon'
+    ],
+    'NY': [
+        'New York',
+        'Brooklyn'
+    ]
+}
+print(larger_dictionary['NY'][1])
