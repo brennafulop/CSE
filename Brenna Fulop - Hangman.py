@@ -12,8 +12,10 @@ This is a guide of how to make hangman
 
 """
 
-word_bank = ['Forest', 'Melancholy', 'Pluto', 'Strange', 'Infinity', 'Goodbye', 'Inconceivable', 'Interestingly', 'Canada',
-             'Fascinating']
+word_bank = ['Forest', 'Melancholy', 'Pluto', 'Strange', 'Infinity', 'Goodbye', 'Inconceivable', 'Interestingly',
+             'Canada', 'Fascinating']
+
+
 def hangman():
 
     guesses_left = 10
@@ -39,7 +41,7 @@ def hangman():
                 else:
                     exit(0)
             else:
-                guesses_left +=1
+                guesses_left += 1
         if current_guess not in random_word:
             guesses_left -= 1
         print("You have %s guesses left" % guesses_left)
