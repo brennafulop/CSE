@@ -92,7 +92,19 @@ world_map = {
         'DESCRIPTION': 'You are on top of a tall plateau. You can see a path winding through the desert to the east.'
                        'Farther to the east you see a less advanced civilization. To the south you see a cave.'
                        'South-east reveals a large wall with rows of houses inside. Finally, to the north you can see '
-                       'tallest sand dunes you have ever witnessed.'
+                       'tallest sand dunes you have ever witnessed.',
+        'PATHS': {
+            'DOWN': 'PLATEAUBOTTOM'
+}
+    },
+    'CAVEENTRANCE': {
+        'NAME': 'Cave Entrance',
+        'DESCRIPTION': 'You are standing at the mouth of a wide cave. Looking inside, it looks endless.',
+        'PATHS': {
+            'SOUTH': 'MAZE1',
+            'NORTH': 'APATH2'
+        }
+
     }
 
 
