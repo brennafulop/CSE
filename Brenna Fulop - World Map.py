@@ -32,7 +32,6 @@ world_map = {
             'WEST': 'CAVE'
         }
     },
-    # Civilization
     'ACIVIL': {
         "NAME": 'Civilization',
         'DESCRIPTION': 'You reach the entrance to the civilization, which is surrounded by a large wall '
@@ -81,7 +80,8 @@ world_map = {
     },
     'PLATEAUBOTTOM': {
         'NAME': 'Plateau base',
-        'DESCRIPTION': 'You are at the base of a plateau, and the wall seems rocky enough to climb. The path stops here.',
+        'DESCRIPTION': 'You are at the base of a plateau, and the wall seems rocky enough to climb. The path stops'
+                       ' here.',
         'PATHS': {
             'UP': 'PLATEAU',
             'SOUTH': 'APATH2'
@@ -95,7 +95,7 @@ world_map = {
                        'tallest sand dunes you have ever witnessed.',
         'PATHS': {
             'DOWN': 'PLATEAUBOTTOM'
-}
+            }
     },
     'CAVEENTRANCE': {
         'NAME': 'Cave Entrance',
