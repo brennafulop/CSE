@@ -189,10 +189,9 @@ L1 = ["h", 'e', 'l', 'l', 'o']
 print(L1)
 L1 = ''.join(L1)
 print(L1)
-'''
+
 
 # Dictionaries - Made up of key: value pair
-
 dictionary = {'name': 'Lance', 'age': 26, 'height': 6 * 12 + 2}
 
 # Accessing things from a dictionary
@@ -264,4 +263,43 @@ largest_dictionary = {
 current_node = largest_dictionary['NY']
 print(current_node['NAME'])
 print(current_node["POPULATION"])
+
+
+#Defining Functions
+
+
+def hello_world():
+    print('Hello world!')
+
+
+hello_world()
+
+def square_it(number):
+    return number**2
+
+
+print(square_it(3))
+
+def tip_calc(bill):
+    tax_amt = bill * 0.18
+    total_bill = tax_amt + bill
+    return total_bill
+
+
+print('Your bill is $%d' % tip_calc(100))
+
+def distance_calc(x1, y1, x2, y2):
+    inside = (x2 - x1) ** 2 + (y2 - y1) ** 2
+    answer = inside ** 0.5
+    return answer
+
+
+print(distance_calc(0, 0, 3, 4,))
+
+def pythagorean_calc(a, b):
+    inside = (a ** 2 + b ** 2)
+    c = inside ** 0.5
+    return c
+
+print(pythagorean_calc(5, 12) '''
 

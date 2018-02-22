@@ -101,10 +101,17 @@ world_map = {
         'NAME': 'Cave Entrance',
         'DESCRIPTION': 'You are standing at the mouth of a wide cave. Looking inside, it looks endless.',
         'PATHS': {
-            'SOUTH': 'MAZE1',
+            'SOUTH': 'OASIS1',
             'NORTH': 'APATH2'
         }
 
+    },
+    'OASIS': {
+        'NAME': 'Oasis',
+        'DESCRIPTION': 'You see a small body of water and a palm tree. The air is cooler here',
+        'PATHS': {
+            'NORTH': "CAVEENTRANCE"
+        }
     }
 
 
