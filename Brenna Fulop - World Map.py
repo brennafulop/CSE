@@ -17,8 +17,6 @@ world_map = {
                        "There is a small chest to your right.",
         'PATHS': {
             'NORTH': 'AIRLOCK',
-            'WEST': 'CHEST',
-            'EAST': 'CONTROLS'
             }
     },
     # Arrakis
@@ -52,11 +50,19 @@ world_map = {
         }
     },
     'ACIVILWALL1': {
-        'NAME': 'Civilization',
+        'NAME': 'Wall',
         'DESCRIPTION': 'You have reached the wall. You cannot go any farther. Houses surround you, but they all seem '
                        'locked',
         'PATHS': {
             'SOUTH': 'ACIVILPATHN1'
+        }
+    },
+    'ACIVILBACKWALL1':{
+        'NAME': 'Back Wall',
+        'DESCRIPTION': 'You have reached the wall. You cannot go any farther. Houses surround you, but they all seem '
+                       'locked',
+        'PATHS': {
+            'NORTH': 'ACIVILPATHN1'
         }
     },
     'APATH1': {
@@ -65,9 +71,26 @@ world_map = {
         'PATHS': {
             'NORTH': 'DUNES',
             'SOUTH': 'ALANDINGPAD',
-            'EAST': 'FREEMAN',
+            'EAST': 'FREEMEN',
             'WEST': 'APATH2'
         }
+    },
+    "DUNES": {
+        'NAME': 'Sand Dunes',
+        'DESCRIPTION': 'You are at the bottom of the tallest sand dunes you have ever seen. There is no way you could '
+                       'climb them.',
+        'PATHS': {
+            'SOUTH': 'APATH1'
+        }
+    },
+    'FREEMEN':{
+        'NAME': "Freemen Civilization",
+        'DESCRIPTION': "You reach a circle of small huts. These are the legendary Freemen, able to withstand the "
+                       "full wrath of the desert. A guard stands in front of you and does not permit you to enter.",
+        'PATHS': {
+            'WEST': 'APATH1'
+        }
+
     },
     'APATH2': {
         'NAME': 'Open Desert',
@@ -126,7 +149,7 @@ directions = ['NORTH', 'SOUTH', 'EAST', 'WEST', 'UP', 'DOWN']
 while True:
     print(current_node['NAME'])
     print(current_node['DESCRIPTION'])
-    command = input('>_').upper()
+    command = input('>_')
     if command == 'quit':
         quit(0)
     if command in directions:
