@@ -124,7 +124,7 @@ world_map = {
         'NAME': 'Cave Entrance',
         'DESCRIPTION': 'You are standing at the mouth of a wide cave. Looking inside, it looks endless.',
         'PATHS': {
-            'SOUTH': 'OASIS1',
+            'SOUTH': 'OASIS',
             'NORTH': 'APATH2'
         }
 
