@@ -16,17 +16,16 @@ class Room(object):
 
 # Spaceship
 cockpit = Room("Cockpit", 'airlock', None, None, None, None, None, "You are inside your ship, in front of you are the "
-                       "controls. You can see three moon-sized planets through the glass in front of you. "
-                       "There is a small chest to your right.")
+                       "controls. You can see two moon-sized planets through the glass in front of you. "
+                       "There is a small chest to your right. There is a door to the North.")
 airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad', None, None, "You are inside your"
                         " Spaceship's airlock room. Through the clear wall you can see a planet covered in trees to"
-                        " the north, a planet covered in water to the east, and a planet covered in sand to the west")
-
+                        " the north and a planet covered in sand to the west")
 
 # Arrakis
-alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'cave', 'airlock', None, 'You are on Arrakis, a desert '
+alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentrance', 'airlock', None, 'You are on Arrakis, a desert '
                             'planet. To the east you see civilization, the north shows a long winding path, and far to '
-                            ' the west you can barely make out what appears to be a cave.')
+                            'the west you can barely make out what appears to be a cave.')
 acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, 'You reach the entrance to the '
                         'civilization, which is surrounded by a large wall '
                         'Rows of houses line the path. Only one appears unlocked. '
@@ -36,8 +35,8 @@ ahouse = Room("Arrakis Home", None, None, None, 'acivil', None, None, 'You are i
                                                                      'to the knife there sits a small bottle of water.'
                                                                      ' On the other side of the room there is a cot.')
 apath1 = Room("Open Desert", None, 'alandingpad', None, 'apath2', None, None, 'You have reached a crossroads.'
-                                                                                      'The path diverges in all '
-                                                                                      'directions.')
+                                                                                      'The path diverges to the south'
+                                                                                      'and west.')
 apath2 = Room('Open Desert', None, 'caveentrance', 'apath1', None, 'plateau', None, 'You have reached a crossroads. '
                                                                                     'You are at the base of a very tall'
                                                                                     ' plateau, and to the south you see'
@@ -50,20 +49,21 @@ caveentrance = Room('Cave Entrance', 'apath2', 'maze1', None, None, None, None, 
                                                                                 'Inside is pitch black.')
 maze1 = Room('Tunnel', 'caveentrance', 'maze2', 'maze3', None, None, None, "You are inside the cave system. You can't "
                                                                            "see anything, but you can feel the walls.")
-maze2 = Room('Tunnel', 'maze1', 'maze4', None, None, None, None, "You are inside the cave system You can't "
+maze2 = Room('Tunnel', 'maze1', None , 'maze4', None, None, None, "You are inside the cave system You can't "
                                                                  "see anything, but you can feel the walls.")
 maze4 = Room('Tunnel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
                                                                  'You see light coming from the west.')
 maze3 = Room('Tunnel', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
                                                                  "see anything, but you can feel the walls.")
-oasis = Room('Oaisis', None, None, "maze4", None, None, "There is a large body of water and a palm tree. The air is"
-                                                        " cooler here." )
-
-# Caladan
-clandingpad = Room()
+oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air is"
+                                                        " cooler here. This appears to be the only source of above "
+                                                        "ground water on the entire planet." )
 
 # Endore
-elandingpad = Room()
+elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
+                                                                                      'planet. You smell smoke in the'
+                                                                                      ' air.')
+
 
 current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
