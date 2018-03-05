@@ -8,6 +8,7 @@ class Room(object):
         self.up = up
         self.down = down
         self.description = description
+        self.visited = False
 
     def move(self, direction):
         global current_node
@@ -40,7 +41,8 @@ apath1 = Room("Open Desert", None, 'alandingpad', None, 'apath2', None, None, 'Y
 apath2 = Room('Open Desert', None, 'caveentrance', 'apath1', None, 'plateau', None, 'You have reached a crossroads. '
                                                                                     'You are at the base of a very tall'
                                                                                     ' plateau, and to the south you see'
-                                                                                    ' a cave.')
+                                                                                    ' a cave. The path also diverges '
+                                                                                    'to the east.')
 plateau = Room('Plateau', None, None, None, None, None, 'apath2', 'You are on top of a tall plateau. You can see a'
                                                                   ' path winding through the desert to the east.'
                                                                   'To the south you see a cave. South-east reveals a '
@@ -63,19 +65,64 @@ oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large 
 elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
                                                                                       'planet. You smell smoke in the'
                                                                                       ' air.')
+ecivil = Room("Civilization", 'bridge1', 'elandingpad', 'ehouse', None, None, None, 'You have reached the Endore '
+                                                                                    'civilization. '
+                                                                        'The grass and mud huts are few and far between'
+                                                                         ' and the area seems deserted. Most huts are '
+                                                                         'crumbled, except one. You think you see '
+                                                                         'movement inside it.')
+ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of the hut. A strange looking man with a '
+                                                             'knife stands in a defensive pose in one corner, a stack'
+                                                             'of dried meat sits next to him. He seems to be chanting '
+                                                             'to himself under his breath, '
+                                                             '"Put the stone in the volcano."')
+bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', 'You are on a fancy bridge over a wide and'
+                                                                              ' fast moving river.')
+river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the river. The water is freezing cold and it is'
+                                                             ' difficult to fight the strong current. '
+                                                             'This was a bad idea.')
+forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'You are in the forest on a well worn path.'
+                                                                             ' You see something glimmer at you from the'
+                                                                             ' top of a nearby tree.')
+tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree. There is a '
+                                                            'glimmering blue stone on the branch next to you.')
+bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are a fragile rope bridge above the'
+                                                                                ' river. There are a few boards missing'
+                                                                                ' and the surface is slippery. It sways'
+                                                                                ' as you move across it.')
+mountains = Room('Mountain Range', None, 'volcano', None, 'bridge2', None, None, 'You are in the mountain range. The '
+                                                                                 'ground is rocky and uneven. Just past'
+                                                                                 ' the range there is a volcano that is'
+                                                                                 ' spewing smoke and ash. It seems close'
+                                                                                 ' to eruption.')
+volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', None,'You stand at the base of the '
+                                                                                    'volcano. The air is hot and stuffy,'
+                                                                                    ' and you can barely see through the'
+                                                                                    ' smoke. YOu hear a rumble.')
+volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
+                                                                      'unbearably hot.')
+
+
+
 
 
 current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
+short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
 while True:
     print (current_node.name)
-    print(current_node.description)
-    command = input('>_')
+    if not current_node.visited:
+        print(current_node.description)
+    command = input('>_').lower().strip()
     if command == 'quit':
         quit(0)
+    elif command in short_directions:
+        pos = short_directions.index(command)
+        command = directions[pos]
     if command in directions:
         try:
+            current_node.visited = True
             current_node.move(command)
         except KeyError:
             print('You cannot go this way')
