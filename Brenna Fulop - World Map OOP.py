@@ -17,16 +17,16 @@ class Room(object):
 
 # Spaceship
 cockpit = Room("Cockpit", 'airlock', None, None, None, None, None, "You are inside your ship, in front of you are the "
-                       "controls. You can see two moon-sized planets through the glass in front of you. "
-                       "There is a small chest to your right. There is a door to the North.")
+"controls. You can see two moon-sized planets through the glass in front of you. "
+"There is a small chest to your right. There is a door to the North.")
 airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad', None, None, "You are inside your"
                         " Spaceship's airlock room. Through the clear wall you can see a planet covered in trees to"
                         " the north and a planet covered in sand to the west")
 
 # Arrakis
-alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentrance', 'airlock', None, 'You are on Arrakis, a desert '
-                            'planet. To the east you see civilization, the north shows a long winding path, and far to '
-                            'the west you can barely make out what appears to be a cave.')
+alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentrance', 'airlock', None, 'You are on'
+' Arrakis, a desert planet. To the east you see civilization, the north shows a long winding path, and far to '
+'the west you can barely make out what appears to be a cave.')
 acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, 'You reach the entrance to the '
                         'civilization, which is surrounded by a large wall '
                         'Rows of houses line the path. Only one appears unlocked. '
