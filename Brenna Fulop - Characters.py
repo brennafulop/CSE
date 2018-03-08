@@ -12,30 +12,43 @@ Needs:
     status effect
     take damage
 '''
+
+
 class Character(object):
-    def __init__(self, name, health, description, dialogue):
+    def __init__(self, name, description, dialogue, holding, items=None):
+        if items is None:
+            items = []
         self.name = name
-        self.health = health
+        self.health = 100
         self.description = description
         self.dialogue = dialogue
-        self.holding = False
-        self.death = False
+        self.holding = holding
+        self.dead = False
+        self.inventory = items
 
     def pick_up(self):
         if self.holding:
-            print('Your hands are full.')
+            print(" %s's hands are full." % self.name)
         else:
-            print('You pick up the object.')
+            print('%s picks up the object.' % self.name)
 
-    def attack(self):
-        print('You attack.')
+    def attack(self, target):
+        print('%s attacks %s' % (self.name, target.name))
+        target.damage()
 
     def death(self):
-        if self.health < 1:
-            self.death = True
+        if self.health <= 0:
+            self.dead = True
+            print('%s has died' % self.name)
 
     def damage(self):
         self.health -= 1
+        if self.health <= 0:
+            self.death()
+        print('%s has %s health.' % (self.name, self.health))
 
-cap_america = Character('Steve Rogers', 100, 'Large man in a colorful suit holding a round shield.', None)
-cap_america.attack()
+
+cap_america = Character('Steve Rogers', 'Large man in a colorful suit holding a round shield.', None, "Shield")
+iron_man = Character('Tony Stark', 'Rich man in an iron suit.', None, None)
+cap_america.attack(iron_man)
+iron_man.attack(cap_america)
