@@ -103,9 +103,6 @@ volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand
                                                                       'unbearably hot.')
 
 
-
-
-
 current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
