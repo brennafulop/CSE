@@ -12,8 +12,6 @@ class Item(object):
     def sell(self):
         print("You sold the %s" % self.name)
 
-    def pick_up(self, item):
-
 
 
 class Weapon(Item):
@@ -24,5 +22,5 @@ class Weapon(Item):
 
 
 axe = Weapon("Axe", 'A rusty axe.', 20)
-room = Room([axe])
+house = Room([axe])
 axe.sell()
