@@ -9,18 +9,23 @@ class Item(object):
         self.description = description
 
 
-    def sell(self):
-        print("You sold the %s" % self.name)
-
-
-
 class Weapon(Item):
     def __init__(self, name, description, damage):
         super(Weapon, self).__init__(name, description,)
         self.damage = damage
 
 
+class Food(Item):
+    def __init__(self, name, description, nutrition):
+        super(Food, self).__init__(name, description)
+        self.nutrition = nutrition
 
-axe = Weapon("Axe", 'A rusty axe.', 20)
-house = Room([axe])
-axe.sell()
+
+class Liquid(Item):
+    def __init__(self, name, description, amount):
+        super(Liquid, self).__init__(name, description)
+        self.amount = amount
+        
+class Armor(Item):
+    def __init__(self, name, description):
+        super(Armor, self).__init__(name, description)
