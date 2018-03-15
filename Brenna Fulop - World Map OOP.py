@@ -75,7 +75,7 @@ ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of 
                                                              'knife stands in a defensive pose in one corner, a stack'
                                                              'of dried meat sits next to him. He seems to be chanting '
                                                              'to himself under his breath, '
-                                                             '"Put the stone in the volcano."')
+                                                             '"You must put the stone in the volcano."')
 bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', 'You are on a fancy bridge over a wide and'
                                                                               ' fast moving river.')
 river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the river. The water is freezing cold and it is'
@@ -86,7 +86,8 @@ forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'Yo
                                                                              ' top of a nearby tree.')
 tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree. There is a '
                                                             'glimmering blue stone on the branch next to you.')
-bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are a fragile rope bridge above the'
+bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are  on a fragile rope bridge '
+                                                                                'above the'
                                                                                 ' river. There are a few boards missing'
                                                                                 ' and the surface is slippery. It sways'
                                                                                 ' as you move across it.')
@@ -98,7 +99,7 @@ mountains = Room('Mountain Range', None, 'volcano', None, 'bridge2', None, None,
 volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', None,'You stand at the base of the '
                                                                                     'volcano. The air is hot and stuffy,'
                                                                                     ' and you can barely see through the'
-                                                                                    ' smoke. YOu hear a rumble.')
+                                                                                    ' smoke. You hear a rumble.')
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
                                                                       'unbearably hot.')
 
