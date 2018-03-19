@@ -8,6 +8,16 @@ class Person(object):
         if items is None:
             items = []
         self.inventory = items
+        self.cloak_slot = None
+        self.helm = None
+
+    def equip(self, item):
+        if isinstance(item, Helmet):
+            self.helm = item
+            item.put_on()
+        elif isinstance(item, Cloak):
+            self.cloak_slot = item
+            item.put_on()
 
 
 class Item(object):
@@ -20,10 +30,16 @@ class Item(object):
         person.inventory.append(self)
 
 
+class Pebble(Item):
+    def __init__(self, name, description):
+        super(Pebble, self).__init__("Pebble", "A small blue pebble. It has a strange gleam to it.")
+
+
 class Weapon(Item):
     def __init__(self, name, description, damage):
         super(Weapon, self).__init__(name, description)
         self.damage = damage
+
 
 class Melee(Weapon):
     def __init__(self, name, description, damage):
@@ -33,17 +49,17 @@ class Melee(Weapon):
 
 class Sword(Melee):
     def __init__(self, name, description, damage):
-        super(Sword, self).__init__(name, description, 10)
+        super(Sword, self).__init__('Sword', 'An old rusted sword, it appears fairly dull.', 15)
 
 
 class Knife(Melee):
     def __init__(self, name, description, damage):
-        super(Knife, self).__init__(name, description, 10)
+        super(Knife, self).__init__('Knife', 'A small sharp knife.', 10)
 
 
 class ElvenSword(Sword):
     def __init__(self, name, description, damage):
-        super(ElvenSword, self).__init__(name, description, 15)
+        super(ElvenSword, self).__init__('Elven sword', 'A very sharp Elven sword. It has jewels in the handle.', 20)
 
 
 class Ranged(Weapon):
@@ -53,7 +69,7 @@ class Ranged(Weapon):
 
 class Bow(Ranged):
     def __init__(self, name, description, damage, distance):
-        super(Bow, self).__init__('Bow', description, 15, 30)
+        super(Bow, self).__init__('Bow', 'A wooden bow. It appears to be in pretty good shape.', 15, 30)
 
 
 class Wearable(Item):
@@ -62,13 +78,38 @@ class Wearable(Item):
         self.wearing = False
 
     def put_on(self):
-        if self.picked_up():
+        if not self.wearing:
             self.wearing = True
+            print("You are wearing the %s" % self.name)
+        else:
+            self.wearing = False
+
+
+class Cloak(Wearable):
+    def __init__(self, name, description):
+        super(Cloak, self).__init__('Desert Cloak', 'A cloak that would protect you from the forces of the desert')
+
+
+class Helmet(Wearable):
+    def __init__(self, name, description):
+        super(Helmet, self).__init__('Helmet', 'A slightly rusty helmet, it appears strong despite its wear.')
 
 
 class Container(Item):
-    def __init__(self, name, description):
+    def __init__(self, name, description, items=None):
         super(Container, self).__init__(name, description)
+        if items is None:
+            items = []
+
+
+class Bottle(Container):
+    def __init__(self, name, description):
+        super(Bottle, self).__init__('Bottle', 'A clear glass bottle')
+
+
+class Chest(Container):
+    def __init__(self, name, description):
+        super(Chest, self).__init__('Chest', 'A large wooden chest.')
 
 
 class Consumable(Item):
