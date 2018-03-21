@@ -4,21 +4,29 @@ class Room(object):
 
 
 class Person(object):
-    def __init__(self, items=None):
+    def __init__(self, health, damage, thirsty, items=None):
         self.inventory = items
         self.cloak_slot = None
         self.helm = None
+        self.health = health
+        self.damage = damage
+        self.thirsty = thirsty
 
     def pick_up(self, item, room):
         room.items.remove(item)
         self.inventory.append(item)
 
     def equip(self, item):
-        if isinstance(item, Helmet):
+        if isinstance(item, Wearable):
             self.helm = item
             item.put_on()
-        elif isinstance(item, Cloak):
+        elif isinstance(item, Wearable):
             self.cloak_slot = item
+            item.put_on()
+
+    def attack(self, target):
+        target.health = target.health - self.damage
+        print(target.health)
 
 
 class Item(object):
@@ -35,6 +43,9 @@ class Weapon(Item):
     def __init__(self, name, description, damage):
         super(Weapon, self).__init__(name, description)
         self.damage = damage
+
+    def held(self, person):
+        person.damage = self.damage + person.damage
 
 
 class Melee(Weapon):
@@ -65,9 +76,10 @@ class Bow(Ranged):
 
 
 class Wearable(Item):
-    def __init__(self, name, description):
+    def __init__(self, name, description, protection):
         super(Wearable, self).__init__(name, description)
         self.wearing = False
+        self.protection = protection
 
     def put_on(self):
         if not self.wearing:
@@ -76,15 +88,18 @@ class Wearable(Item):
         else:
             self.wearing = False
 
+    def protecting(self, person):
+        if self.wearing:
+            person.health = person.health + self.protection
+
+class Cloak(Wearable):
+    def __init__(self, name, description, protection):
+        super(Cloak, self).__init__(name, description, protection)
+
 
 class Helmet(Wearable):
-    def __init__(self, name, description):
-        super(Helmet, self).__init__(name, description)
-        
-        
-class Cloak(Wearable):
-    def __init__(self, name, description):
-        super(Cloak, self).__init__(name, description)
+    def __init__(self, name, description, protection):
+        super(Helmet, self).__init__(name, description, protection)
 
 
 class Container(Item):
@@ -105,17 +120,27 @@ class Food(Consumable):
         super(Food, self).__init__(name, description)
         self.nutrients = nutrients
 
+    def eaten(self, person):
+        person.health = person.health + self.nutrients
 
 class Liquid(Consumable):
     def __init__(self, name, description):
         super(Liquid, self).__init__(name, description)
 
 
-tester = Person([])
-desert_cloak = Cloak('Desert Cloak', '8')
-tester.cloak_slot = desert_cloak
-tester.equip(desert_cloak)
-
 elven_sword = Sword('Elven Sword', 'An expensive looking sword. It is sharp, with jewels in the handle', 20)
-tester_room = Room([elven_sword])
-print(tester_room.items[0].name)
+tester = Person(50, 10, [elven_sword])
+tester2 = Person(50, 10, [])
+lembas = Food('Lembas', 'Dry, but filling', 20)
+desert_cloak = Wearable('Desert Cloak', '8', 20)
+tester.wearable_slot1 = desert_cloak
+tester.equip(desert_cloak)
+tester_room = Room([])
+print(tester.damage)
+elven_sword.held(tester)
+print(tester.damage)
+tester.attack(tester2)
+lembas.eaten(tester2)
+print(tester2.health)
+print(tester.health)
+print(desert_cloak.wearing)
