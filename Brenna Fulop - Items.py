@@ -5,6 +5,8 @@ class Room(object):
 
 class Person(object):
     def __init__(self, health, damage, thirsty, items=None):
+        if items is None:
+            items = []
         self.inventory = items
         self.cloak_slot = None
         self.helm = None
@@ -37,6 +39,10 @@ class Item(object):
     def picked_up(self, person, room):
         room.items.remove(self)
         person.inventory.append(self)
+        if room.items.picked_up:
+            return True
+        else:
+            return False
 
 
 class Weapon(Item):
@@ -45,6 +51,7 @@ class Weapon(Item):
         self.damage = damage
 
     def held(self, person):
+
         person.damage = self.damage + person.damage
 
 
@@ -92,6 +99,7 @@ class Wearable(Item):
         if self.wearing:
             person.health = person.health + self.protection
 
+
 class Cloak(Wearable):
     def __init__(self, name, description, protection):
         super(Cloak, self).__init__(name, description, protection)
@@ -110,6 +118,21 @@ class Container(Item):
         self.inventory = items
 
 
+class Bottle(Container):
+    def __init__(self, name, description, items=None):
+        super(Bottle, self).__init__(name, description)
+        self.items = items
+
+
+class Chest(Container):
+    def __init__(self, name, description, items=None):
+        super(Chest, self).__init__(name, description)
+        self.items = items
+
+    def picked_up(self, person, room):
+        return False
+
+
 class Consumable(Item):
     def __init__(self, name, description):
         super(Consumable, self).__init__(name, description)
@@ -123,6 +146,7 @@ class Food(Consumable):
     def eaten(self, person):
         person.health = person.health + self.nutrients
 
+
 class Liquid(Consumable):
     def __init__(self, name, description):
         super(Liquid, self).__init__(name, description)
@@ -135,8 +159,9 @@ lembas = Food('Lembas', 'Dry, but filling', 20)
 desert_cloak = Wearable('Desert Cloak', '8', 20)
 tester.wearable_slot1 = desert_cloak
 tester.equip(desert_cloak)
-tester_room = Room([])
+tester_room = Room([Chest("Chest", "Test")])
 print(tester.damage)
+
 elven_sword.held(tester)
 print(tester.damage)
 tester.attack(tester2)
@@ -144,3 +169,7 @@ lembas.eaten(tester2)
 print(tester2.health)
 print(tester.health)
 print(desert_cloak.wearing)
+if tester_room.items[0].picked_up(tester, tester_room):
+    print("Success!")
+else:
+    print("Fail")
