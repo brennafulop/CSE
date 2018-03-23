@@ -4,7 +4,7 @@ class Room(object):
 
 
 class Person(object):
-    def __init__(self, health, damage, thirsty, items=None):
+    def __init__(self, health, damage, items=None):
         if items is None:
             items = []
         self.inventory = items
@@ -12,7 +12,6 @@ class Person(object):
         self.helm = None
         self.health = health
         self.damage = damage
-        self.thirsty = thirsty
 
     def pick_up(self, item, room):
         room.items.remove(item)
@@ -35,14 +34,23 @@ class Item(object):
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.able_to = True
 
     def picked_up(self, person, room):
-        room.items.remove(self)
-        person.inventory.append(self)
-        if room.items.picked_up:
-            return True
+        if self.able_to is True:
+            room.items.remove(self)
+            person.inventory.append(self)
+            print('You picked up the %s' % self.name)
         else:
-            return False
+            print("You can't pick up the %s, don't be silly." % self.name)
+
+    def drop(self, person, room):
+        if self in person.inventory:
+            room.items.append(self)
+            person.inventory.remove(self)
+            print('You have dropped the %s' % self.name)
+        else:
+            print("You aren't holding the %s, and therefore can't drop it." % self.name)
 
 
 class Weapon(Item):
@@ -51,14 +59,12 @@ class Weapon(Item):
         self.damage = damage
 
     def held(self, person):
-
         person.damage = self.damage + person.damage
 
 
 class Melee(Weapon):
     def __init__(self, name, description, damage):
         super(Melee, self).__init__(name, description, damage)
-        self.damage = damage
 
 
 class Sword(Melee):
@@ -113,8 +119,6 @@ class Helmet(Wearable):
 class Container(Item):
     def __init__(self, name, description, items=None):
         super(Container, self).__init__(name, description)
-        if items is None:
-            items = []
         self.inventory = items
 
 
@@ -128,14 +132,17 @@ class Chest(Container):
     def __init__(self, name, description, items=None):
         super(Chest, self).__init__(name, description)
         self.items = items
-
-    def picked_up(self, person, room):
-        return False
+        self.able_to = False
 
 
 class Consumable(Item):
     def __init__(self, name, description):
         super(Consumable, self).__init__(name, description)
+        self.consume = False
+
+    def consumed(self, person):
+        self.consume = True
+        person.inventory.remove(self)
 
 
 class Food(Consumable):
@@ -148,28 +155,34 @@ class Food(Consumable):
 
 
 class Liquid(Consumable):
-    def __init__(self, name, description):
+    def __init__(self, name, description, amount):
         super(Liquid, self).__init__(name, description)
+        self.amount = amount
+        self.able_to = False
+
+    def drank(self, person):
+        person.health = person.health + self.amount
 
 
+# TESTING:
 elven_sword = Sword('Elven Sword', 'An expensive looking sword. It is sharp, with jewels in the handle', 20)
-tester = Person(50, 10, [elven_sword])
+tester = Person(50, 10, [])
 tester2 = Person(50, 10, [])
 lembas = Food('Lembas', 'Dry, but filling', 20)
 desert_cloak = Wearable('Desert Cloak', '8', 20)
 tester.wearable_slot1 = desert_cloak
 tester.equip(desert_cloak)
-tester_room = Room([Chest("Chest", "Test")])
+chest1 = Chest('chest', 'test')
+puddle = Liquid('Puddle', 'test', 30)
+bottle = Bottle('glass bottle', 'test', [])
+tester_room = Room([chest1, elven_sword, puddle])
 print(tester.damage)
-
-elven_sword.held(tester)
 print(tester.damage)
 tester.attack(tester2)
 lembas.eaten(tester2)
 print(tester2.health)
 print(tester.health)
 print(desert_cloak.wearing)
-if tester_room.items[0].picked_up(tester, tester_room):
-    print("Success!")
-else:
-    print("Fail")
+chest1.picked_up(tester, tester_room)
+elven_sword.picked_up(tester, tester_room)
+print(tester.inventory[0].name)
