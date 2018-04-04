@@ -125,7 +125,9 @@ class Container(Item):
 class Bottle(Container):
     def __init__(self, name, description, items=None):
         super(Bottle, self).__init__(name, description)
-        self.items = items
+        if items is None:
+            items = []
+        self.inventory = items
 
 
 class Chest(Container):
@@ -159,6 +161,10 @@ class Liquid(Consumable):
         super(Liquid, self).__init__(name, description)
         self.amount = amount
         self.able_to = False
+
+    def check_for_container(self, person):
+        if Bottle in person.inventory:
+            self.able_to = True
 
     def drank(self, person):
         person.health = person.health + self.amount
