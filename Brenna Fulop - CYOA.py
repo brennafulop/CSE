@@ -6,17 +6,18 @@ class Item(object):
         self.able_to = True
 
     def picked_up(self, person, room):
-        if self.able_to is True:
-            room.items.remove(self)
-            person.inventory.append(self)
-            print('You picked up the %s' % self.name)
+        if self in room.inv:
+            if self.able_to is True:
+                person.inv.append(self)
+                room.inv.remove(self)
+                print('You picked up the %s' % self.name)
         else:
             print("You can't pick up the %s, don't be silly." % self.name)
 
     def drop(self, person, room):
-        if self in person.inventory:
-            room.items.append(self)
-            person.inventory.remove(self)
+        if self in person.inv:
+            room.inv.append(self)
+            person.inv.remove(self)
             print('You have dropped the %s' % self.name)
         else:
             print("You aren't holding the %s, and therefore can't drop it." % self.name)
@@ -88,7 +89,7 @@ class Helmet(Wearable):
 class Container(Item):
     def __init__(self, name, description, items=None):
         super(Container, self).__init__(name, description)
-        self.inventory = items
+        self.inv = items
 
 
 class Bottle(Container):
@@ -96,13 +97,13 @@ class Bottle(Container):
         super(Bottle, self).__init__(name, description)
         if items is None:
             items = []
-        self.inventory = items
+        self.inv = items
 
 
 class Chest(Container):
     def __init__(self, name, description, items=None):
         super(Chest, self).__init__(name, description)
-        self.items = items
+        self.inv = items
         self.able_to = False
 
 
@@ -138,6 +139,9 @@ class Liquid(Consumable):
     def drank(self, person):
         person.health = person.health + self.amount
 
+
+fancy_chest = Chest('Chest', 'a nice gold and wooden chest', [])
+
 # CHARACTERS
 
 
@@ -150,7 +154,7 @@ class Character(object):
         self.description = description
         self.dialogue = dialogue
         self.dead = False
-        self.inventory = items
+        self.inv = items
 
     def attack(self, target):
         print('%s attacks %s' % (self.name, target.name))
@@ -172,7 +176,7 @@ class Character(object):
 # ROOMS
 
 class Room(object):
-    def __init__(self, name, north, south, east, west, up, down, description):
+    def __init__(self, name, north, south, east, west, up, down, description, items=None):
         self.name = name
         self.north = north
         self.south = south
@@ -182,6 +186,7 @@ class Room(object):
         self.down = down
         self.description = description
         self.visited = False
+        self.inv = items
 
     def move(self, direction):
         global current_node
@@ -275,3 +280,38 @@ volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', N
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
                                                                       'unbearably hot.')
 
+
+# # CONTROLLER
+# current_node = cockpit
+# directions = ['north', 'south', 'east', 'west', 'up', 'down']
+# short_directions = ['n', 's', 'e', 'w', 'u', 'd']
+#
+# while True:
+#     print(current_node.name)
+#     if not current_node.visited:
+#         print(current_node.description)
+#     command = input('>_').lower().strip()
+#     if command == 'quit':
+#         quit(0)
+#     elif command in short_directions:
+#         pos = short_directions.index(command)
+#         command = directions[pos]
+#     if command in directions:
+#         try:
+#             current_node.visited = True
+#             current_node.move(command)
+#         except KeyError:
+#             print('You cannot go this way')
+#     else:
+#         print("Command not recognized")
+#
+elven_sword = Sword('Elven Sword', 'An expensive looking sword. It is sharp, with jewels in the handle', 20)
+strange_item = Item('strange item', None)
+strange_room = Room('Strange room', None, None, None, None, None, None, 'test', [])
+strange_man = Character('Strange Man', 'test', None, [strange_item])
+strange_item.drop(strange_man, strange_room)
+strange_item.drop(strange_man, strange_room)
+strange_item.picked_up(strange_man, strange_room)
+strange_item.picked_up(strange_man, strange_room)
+strange_chest = Chest('strange chest', 'test', [])
+strange_chest.picked_up(strange_man, strange_room)
