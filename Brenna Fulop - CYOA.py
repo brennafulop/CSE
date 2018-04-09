@@ -133,14 +133,31 @@ class Liquid(Consumable):
         self.able_to = False
 
     def check_for_container(self, person):
-        if Bottle in person.inventory:
+        if Bottle in person.inv:
             self.able_to = True
+            self.name = 'water'
 
     def drank(self, person):
         person.health = person.health + self.amount
 
 
+rusted_sword = Sword('rusted sword', "a rusted and dull sword. It won't do much damage.", 10)
+elven_sword = Sword('elven sword', 'an expensive looking sword. It is sharp, with jewels in the handle', 30)
+broken_knife = Knife('broken knife', "the blade of this knife has been snapped. It's still sharp.", 15)
+crystal_knife = Knife('crystal knife', "this is a very sharp knife made of clear crystal.", 25)
+sturdy_bow = Bow('bow and arrows', "a sturdy wooden bow with engravings in the handle. The quiver seems to be charmed.",
+                                   30, 40)
+desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
+shiny_helmet = Helmet('shiny helmet', "this helmet looks new. It will protect the wearer well.", 15)
+glass_bottle = Bottle('glass bottle', 'an empty glass bottle')
+space_food = Food('space food', "freeze dried food, it doesn't taste very good.", 30)
+dried_meat = Food('dried meat', "dried meat of unknown origin.", 25)
+lembas = Food('Lembas', "bread-like, wrapped in large leaves. It's very filling", 20)
+pond = Liquid('Pond', 'a large body of water.', 20)
+water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it.', [])
+water_bottle2 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 fancy_chest = Chest('Chest', 'a nice gold and wooden chest', [])
+
 
 # CHARACTERS
 
@@ -305,13 +322,13 @@ volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand
 #     else:
 #         print("Command not recognized")
 #
-elven_sword = Sword('Elven Sword', 'An expensive looking sword. It is sharp, with jewels in the handle', 20)
-strange_item = Item('strange item', None)
-strange_room = Room('Strange room', None, None, None, None, None, None, 'test', [])
-strange_man = Character('Strange Man', 'test', None, [strange_item])
-strange_item.drop(strange_man, strange_room)
-strange_item.drop(strange_man, strange_room)
-strange_item.picked_up(strange_man, strange_room)
-strange_item.picked_up(strange_man, strange_room)
-strange_chest = Chest('strange chest', 'test', [])
-strange_chest.picked_up(strange_man, strange_room)
+
+# strange_item = Item('strange item', None)
+# strange_room = Room('Strange room', None, None, None, None, None, None, 'test', [])
+# strange_man = Character('Strange Man', 'test', None, [strange_item])
+# strange_item.drop(strange_man, strange_room)
+# strange_item.drop(strange_man, strange_room)
+# strange_item.picked_up(strange_man, strange_room)
+# strange_item.picked_up(strange_man, strange_room)
+# strange_chest = Chest('strange chest', 'test', [])
+# strange_chest.picked_up(strange_man, strange_room)
