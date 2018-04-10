@@ -158,7 +158,6 @@ water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 water_bottle2 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 fancy_chest = Chest('Chest', 'a nice gold and wooden chest', [])
 
-
 # CHARACTERS
 
 
@@ -177,17 +176,22 @@ class Character(object):
         print('%s attacks %s' % (self.name, target.name))
         target.damage()
 
-    def death(self):
+    def death(self,room):
         if self.health <= 0:
             self.dead = True
             print('%s has died' % self.name)
+            self.inv.append(room)
 
-    def damage(self):
+    def damage(self, items):
         self.health -= 1
         if self.health >= 1:
             print('%s has %s health.' % (self.name, self.health))
         else:
             self.death()
+
+
+strange_man = Character('strange man', 'an odd man in tattered clothing holding a broken knife. He is frightened by you'
+                                       '.', '"Please, the stone, return it to the volcano.', [broken_knife])
 
 
 # ROOMS
