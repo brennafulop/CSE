@@ -141,7 +141,6 @@ class Liquid(Consumable):
         person.health = person.health + self.amount
 
 
-rusted_sword = Sword('rusted sword', "a rusted and dull sword. It won't do much damage.", 10)
 elven_sword = Sword('elven sword', 'an expensive looking sword. It is sharp, with jewels in the handle', 30)
 broken_knife = Knife('broken knife', "the blade of this knife has been snapped. It's still sharp.", 15)
 crystal_knife = Knife('crystal knife', "this is a very sharp knife made of clear crystal.", 25)
@@ -153,10 +152,10 @@ glass_bottle = Bottle('glass bottle', 'an empty glass bottle')
 space_food = Food('space food', "freeze dried food, it doesn't taste very good.", 30)
 dried_meat = Food('dried meat', "dried meat of unknown origin.", 25)
 lembas = Food('Lembas', "bread-like, wrapped in large leaves. It's very filling", 20)
-pond = Liquid('Pond', 'a large body of water.', 20)
 water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 water_bottle2 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 fancy_chest = Chest('Chest', 'a nice gold and wooden chest', [])
+pebble = Item('blut pebble', 'a glimmering blue pebble')
 
 # CHARACTERS
 
@@ -176,13 +175,12 @@ class Character(object):
         print('%s attacks %s' % (self.name, target.name))
         target.damage()
 
-    def death(self,room):
+    def death(self):
         if self.health <= 0:
             self.dead = True
             print('%s has died' % self.name)
-            self.inv.append(room)
 
-    def damage(self, items):
+    def damage(self):
         self.health -= 1
         if self.health >= 1:
             print('%s has %s health.' % (self.name, self.health))
@@ -190,8 +188,11 @@ class Character(object):
             self.death()
 
 
-strange_man = Character('strange man', 'an odd man in tattered clothing holding a broken knife. He is frightened by you'
-                                       '.', '"Please, the stone, return it to the volcano.', [broken_knife])
+strange_man = Character('a strange man', 'in tattered clothing holding a broken knife. He is frightened by '
+                                         'you'
+                                         '.', '"Please, the stone, return it to the volcano.', [broken_knife])
+old_man = Character('an old beggar', 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
+                    '"Here, take my cloak."]', [desert_cloak])
 
 
 # ROOMS
@@ -217,7 +218,7 @@ class Room(object):
 # Spaceship
 cockpit = Room("Cockpit", 'airlock', None, None, None, None, None, "You are inside your ship, in front of you are the "
                "controls. You can see two moon-sized planets through the glass in front of you. "
-               "There is a small chest to your right. There is a door to the North.")
+               "There is a small chest to your right. There is a door to the North.", [fancy_chest, space_food])
 airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad', None, None, "You are inside your"
                " Spaceship's airlock room. Through the clear wall you can see a planet covered in trees to"
                " the north and a planet covered in sand to the west")
@@ -228,12 +229,10 @@ alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentranc
                    'and far to the west you can barely make out what appears to be a cave.')
 acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, 'You reach the entrance to the '
               'civilization, which is surrounded by a large wall '
-              'Rows of houses line the path. Only one appears unlocked. '
-              'An old beggar in a tan cloak approaches you and asks for water.')
+              'Rows of houses line the path. Only one appears unlocked.', [old_man])
 ahouse = Room("Arrakis Home", None, None, None, 'acivil', None, None, 'You are in a one room house. There is a table'
-              ' in front of you with an old knife on it. Next '
-              'to the knife there sits a small bottle of water.'
-              ' On the other side of the room there is a cot.')
+              ' in front of you.'
+              ' On the other side of the room there is a cot.', [crystal_knife, water_bottle1])
 apath1 = Room("Open Desert", None, 'alandingpad', None, 'apath2', None, None, 'You have reached a crossroads.'
               'The path diverges to the south and west.')
 apath2 = Room('Open Desert', None, 'caveentrance', 'apath1', None, 'plateau', None, 'You have reached a crossroads. '
@@ -252,12 +251,12 @@ maze1 = Room('Tunnel', 'caveentrance', 'maze2', 'maze3', None, None, None, "You 
 maze2 = Room('Tunnel', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
                                                                  "see anything, but you can feel the walls.")
 maze4 = Room('Tunnel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
-                                                                 'You see light coming from the west.')
+                                                                 'You see light coming from the west.', [shiny_helmet])
 maze3 = Room('Tunnel', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
                                                                  "see anything, but you can feel the walls.")
 oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
                                                               "is cooler here. This appears to be the only source of"
-                                                              " above ground water on the entire planet.")
+             " above ground water on the entire planet.", [glass_bottle])
 
 # Endore
 elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
@@ -268,12 +267,10 @@ ecivil = Room("Civilization", 'bridge1', 'elandingpad', 'ehouse', None, None, No
               'The grass and mud huts are few and far between'
               ' and the area seems deserted. Most huts are '
               'crumbled, except one. You think you see '
-              'movement inside it.')
-ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of the hut. A strange looking man with a '
-                                                             'knife stands in a defensive pose in one corner, a stack'
-                                                             'of dried meat sits next to him. He seems to be chanting '
-                                                             'to himself under his breath, '
-                                                             '"You must put the stone in the volcano."')
+              'movement inside it.',)
+ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of the hut. ', [dried_meat,
+                                                                                             broken_knife,
+                                                                                             strange_man, lembas])
 bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', 'You are on a fancy bridge over a wide '
                                                                                'and fast moving river.')
 river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the river. The water is freezing cold and it'
@@ -282,8 +279,8 @@ river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the r
 forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'You are in the forest on a well worn path'
                                                                              '. You see something glimmer at you from'
                                                                              ' the top of a nearby tree.')
-tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree. There is a '
-                                                            'glimmering blue stone on the branch next to you.')
+tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree.', [pebble,
+                                                                                                         sturdy_bow])
 bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are  on a fragile rope bridge '
                                                                                 'above the'
                                                                                 ' river. There are a few boards missing'
@@ -299,40 +296,35 @@ volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', N
                                                                                      'y, and you can barely see through'
                                                                                      ' the smoke. You hear a rumble.')
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
-                                                                      'unbearably hot.')
+                                                                      'unbearably hot.', [elven_sword])
 
 
-# # CONTROLLER
-# current_node = cockpit
-# directions = ['north', 'south', 'east', 'west', 'up', 'down']
-# short_directions = ['n', 's', 'e', 'w', 'u', 'd']
-#
-# while True:
-#     print(current_node.name)
-#     if not current_node.visited:
-#         print(current_node.description)
-#     command = input('>_').lower().strip()
-#     if command == 'quit':
-#         quit(0)
-#     elif command in short_directions:
-#         pos = short_directions.index(command)
-#         command = directions[pos]
-#     if command in directions:
-#         try:
-#             current_node.visited = True
-#             current_node.move(command)
-#         except KeyError:
-#             print('You cannot go this way')
-#     else:
-#         print("Command not recognized")
-#
+# CONTROLLER
+current_node = cockpit
+directions = ['north', 'south', 'east', 'west', 'up', 'down']
+short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
-# strange_item = Item('strange item', None)
-# strange_room = Room('Strange room', None, None, None, None, None, None, 'test', [])
-# strange_man = Character('Strange Man', 'test', None, [strange_item])
-# strange_item.drop(strange_man, strange_room)
-# strange_item.drop(strange_man, strange_room)
-# strange_item.picked_up(strange_man, strange_room)
-# strange_item.picked_up(strange_man, strange_room)
-# strange_chest = Chest('strange chest', 'test', [])
-# strange_chest.picked_up(strange_man, strange_room)
+while True:
+    print(current_node.name)
+    if not current_node.visited:
+        print(current_node.description)
+    command = input('>_').lower().strip()
+    if command == 'quit':
+        quit(0)
+    elif command in short_directions:
+        pos = short_directions.index(command)
+        command = directions[pos]
+    if command in directions:
+        try:
+            current_node.visited = True
+            current_node.move(command)
+        except KeyError:
+            print('You cannot go this way')
+    elif command == 'description':
+        print(current_node.description)
+    elif command == 'jump':
+        print('You jumped. Nothing else happened')
+    elif command == 'help':
+        print('Find the special item on each planet and put them in the chest in your ship.')
+    else:
+        print('Command not recognized.')
