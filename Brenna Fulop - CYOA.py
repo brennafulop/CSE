@@ -130,32 +130,28 @@ class Liquid(Consumable):
     def __init__(self, name, description, amount):
         super(Liquid, self).__init__(name, description)
         self.amount = amount
-        self.able_to = False
-
-    def check_for_container(self, person):
-        if Bottle in person.inv:
-            self.able_to = True
-            self.name = 'water'
+        self.able_to = True
 
     def drank(self, person):
         person.health = person.health + self.amount
 
 
-elven_sword = Sword('elven sword', 'an expensive looking sword. It is sharp, with jewels in the handle', 30)
-broken_knife = Knife('broken knife', "the blade of this knife has been snapped. It's still sharp.", 15)
-crystal_knife = Knife('crystal knife', "this is a very sharp knife made of clear crystal.", 25)
-sturdy_bow = Bow('bow and arrows', "a sturdy wooden bow with engravings in the handle. The quiver seems to be charmed.",
-                                   30, 40)
+elven_sword = Sword('elven sword', 'There is a sword on the table, it looks expensive', 30)
+broken_knife = Knife('broken knife', "he is holding a broken knife. "
+                                     "the blade of this knife has been snapped. It's still sharp.", 15)
+crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you. it has been half-buried.", 25)
+sturdy_bow = Bow('bow and arrows', "a sturdy wooden bow with engravings in the handle hangs from a nearby tree limb."
+                                   "A quiver of arrows hangs next to it and seems to be charmed.", 30, 40)
 desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
-shiny_helmet = Helmet('shiny helmet', "this helmet looks new. It will protect the wearer well.", 15)
-glass_bottle = Bottle('glass bottle', 'an empty glass bottle')
-space_food = Food('space food', "freeze dried food, it doesn't taste very good.", 30)
-dried_meat = Food('dried meat', "dried meat of unknown origin.", 25)
-lembas = Food('Lembas', "bread-like, wrapped in large leaves. It's very filling", 20)
+shiny_helmet = Helmet('helmet', "in the small amount of light you see a shiny helmet shoved into the ground.", 15)
+glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers at the edge of the oasis.')
+space_food = Food('space food', "There is a packet of space food on the control panel.", 30)
+dried_meat = Food('dried meat', " on the table there is some dried meat of unknown origin.", 25)
+lembas = Food('Lembas', "Kept clean by leaves, there are some lembas on the ground.", 20)
 water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 water_bottle2 = Bottle('water bottle', 'a glass bottle with water in it.', [])
 fancy_chest = Chest('Chest', 'a nice gold and wooden chest', [])
-pebble = Item('blut pebble', 'a glimmering blue pebble')
+pebble = Item('blue pebble', 'a glimmering blue pebble')
 
 # CHARACTERS
 
@@ -320,11 +316,15 @@ while True:
             current_node.move(command)
         except KeyError:
             print('You cannot go this way')
+    elif command[:7] == 'pick up':
+        item = command[8:]
+        if item in current_node.inv:
+            current_node.inv.remove(item)
+        else:
+            print('There is no item here by that name.')
     elif command == 'description':
         print(current_node.description)
-    elif command == 'jump':
-        print('You jumped. Nothing else happened')
     elif command == 'help':
-        print('Find the special item on each planet and put them in the chest in your ship.')
+        print('Find the special items on each planet and return them to the chest in your ship.')
     else:
         print('Command not recognized.')
