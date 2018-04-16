@@ -14,7 +14,7 @@ class Item(object):
         else:
             print("You can't pick up the %s, don't be silly." % self.name)
 
-    def drop(self, person, room):
+    def dropped(self, person, room):
         if self in person.inv:
             room.inv.append(self)
             person.inv.remove(self)
@@ -167,6 +167,12 @@ class Character(object):
         self.dead = False
         self.inv = items
 
+    def pick_up(self, thing, room):
+        thing.picked_up(self, room)
+
+    def drop(self, thing, room):
+        thing.dropped(self, room)
+
     def attack(self, target):
         print('%s attacks %s' % (self.name, target.name))
         target.damage()
@@ -189,6 +195,8 @@ strange_man = Character('a strange man', 'in tattered clothing holding a broken 
                                          '.', '"Please, the stone, return it to the volcano.', [broken_knife])
 old_man = Character('an old beggar', 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
                     '"Here, take my cloak."]', [desert_cloak])
+
+main = Character('You', 'sadgflius', None, [])
 
 
 # ROOMS
@@ -296,9 +304,10 @@ volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand
 
 
 # CONTROLLER
-current_node = cockpit
+current_node = ahouse
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
+
 
 while True:
     print(current_node.name)
@@ -318,10 +327,16 @@ while True:
             print('You cannot go this way')
     elif command[:7] == 'pick up':
         item = command[8:]
-        if item in current_node.inv:
-            current_node.inv.remove(item)
-        else:
-            print('There is no item here by that name.')
+        for stuff in current_node.inv:
+            if item == stuff.name:
+                main.pick_up(stuff, current_node)
+    elif command[:4] == 'drop':
+        item = command[5:]
+        for stuff in main.inv:
+            if item == stuff.name:
+                main.drop(stuff, current_node)
+            else:
+                'nope'
     elif command == 'description':
         print(current_node.description)
     elif command == 'help':
