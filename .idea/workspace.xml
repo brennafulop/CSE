@@ -2,6 +2,7 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/Notes.py" line="253" />
+    <bookmark url="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py" line="197" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3001d99a-b5ed-4ee9-bec9-edcfeb8f632c" name="Default" comment="" />
@@ -27,7 +28,7 @@
       <file leaf-file-name="Brenna Fulop - World Map OOP.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - World Map OOP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
+            <state relative-caret-position="816">
               <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
               <folding>
                 <element signature="e#542#747#0" expanded="false" />
@@ -63,36 +64,45 @@
       <file leaf-file-name="Brenna Fulop - CYOA.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="196" column="62" lean-forward="true" selection-start-line="196" selection-start-column="62" selection-end-line="196" selection-end-column="62" />
+            <state relative-caret-position="582">
+              <caret line="345" column="40" lean-forward="false" selection-start-line="345" selection-start-column="40" selection-end-line="345" selection-end-column="40" />
               <folding>
-                <element signature="e#4064#4195#0" expanded="false" />
-                <element signature="e#4340#4520#0" expanded="false" />
-                <element signature="e#7754#7952#0" expanded="false" />
-                <element signature="e#8066#8290#0" expanded="false" />
-                <element signature="e#8371#8543#0" expanded="false" />
-                <element signature="e#8626#8770#0" expanded="false" />
-                <element signature="e#8882#8971#0" expanded="false" />
-                <element signature="e#9057#9550#0" expanded="false" />
-                <element signature="e#9618#10007#0" expanded="false" />
-                <element signature="e#10089#10233#0" expanded="false" />
-                <element signature="e#10310#10473#0" expanded="false" />
-                <element signature="e#10540#10692#0" expanded="false" />
-                <element signature="e#10759#10896#0" expanded="false" />
-                <element signature="e#10979#11132#0" expanded="false" />
-                <element signature="e#11196#11429#0" expanded="false" />
-                <element signature="e#11543#11788#0" expanded="false" />
-                <element signature="e#11874#12222#0" expanded="false" />
-                <element signature="e#12317#12550#0" expanded="false" />
-                <element signature="e#12631#12775#0" expanded="false" />
-                <element signature="e#12840#13092#0" expanded="false" />
-                <element signature="e#13171#13439#0" expanded="false" />
-                <element signature="e#13545#13670#0" expanded="false" />
-                <element signature="e#13752#14228#0" expanded="false" />
-                <element signature="e#14311#14809#0" expanded="false" />
-                <element signature="e#14896#15287#0" expanded="false" />
-                <element signature="e#15359#15494#0" expanded="false" />
+                <element signature="e#4283#4459#0" expanded="false" />
+                <element signature="e#7990#8188#0" expanded="false" />
+                <element signature="e#8302#8526#0" expanded="false" />
+                <element signature="e#8607#8779#0" expanded="false" />
+                <element signature="e#8862#9006#0" expanded="false" />
+                <element signature="e#9118#9207#0" expanded="false" />
+                <element signature="e#9293#9786#0" expanded="false" />
+                <element signature="e#9854#10243#0" expanded="false" />
+                <element signature="e#10325#10469#0" expanded="false" />
+                <element signature="e#10546#10709#0" expanded="false" />
+                <element signature="e#10776#10928#0" expanded="false" />
+                <element signature="e#10995#11132#0" expanded="false" />
+                <element signature="e#11215#11368#0" expanded="false" />
+                <element signature="e#11432#11665#0" expanded="false" />
+                <element signature="e#11779#12024#0" expanded="false" />
+                <element signature="e#12110#12458#0" expanded="false" />
+                <element signature="e#12553#12786#0" expanded="false" />
+                <element signature="e#12867#13011#0" expanded="false" />
+                <element signature="e#13076#13328#0" expanded="false" />
+                <element signature="e#13407#13675#0" expanded="false" />
+                <element signature="e#13781#13906#0" expanded="false" />
+                <element signature="e#13988#14464#0" expanded="false" />
+                <element signature="e#14547#15045#0" expanded="false" />
+                <element signature="e#15132#15523#0" expanded="false" />
+                <element signature="e#15595#15730#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Brenna Fulop - Hangman.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Brenna Fulop - Hangman.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-34">
+              <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -100,7 +110,7 @@
       <file leaf-file-name="Brenna - Guessgame.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna - Guessgame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
+            <state relative-caret-position="378">
               <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
               <folding />
             </state>
@@ -110,8 +120,18 @@
       <file leaf-file-name="Brenna Fulop - Characters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - Characters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-268">
-              <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+            <state relative-caret-position="-64">
+              <caret line="9" column="32" lean-forward="false" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Brenna Fulop - Items.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Brenna Fulop - Items.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -120,8 +140,8 @@
       <file leaf-file-name="Brenna Fulop - Programmer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - Programmer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
+            <state relative-caret-position="408">
+              <caret line="24" column="41" lean-forward="false" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -184,6 +204,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,7 +217,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -333,14 +353,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25036603" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.35015774" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27099842" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27099842" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -360,7 +379,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="18" />
+      <option name="time" value="20" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -634,13 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Brenna Fulop - Hangman.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Function Notes.py" />
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - Pythagorean.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -679,21 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Brenna - Guessgame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Brenna Fulop - Items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2941">
-          <caret line="173" column="0" lean-forward="true" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - Inheritance Notes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-115">
@@ -703,23 +700,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - Programmer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Brenna Fulop - Characters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-268">
-          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        <state relative-caret-position="408">
+          <caret line="24" column="41" lean-forward="false" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - World Map OOP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
+        <state relative-caret-position="816">
           <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding>
             <element signature="e#542#747#0" expanded="false" />
@@ -751,37 +740,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Brenna Fulop - Items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Brenna Fulop - Characters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-64">
+          <caret line="9" column="32" lean-forward="false" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Brenna - Guessgame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Brenna Fulop - Hangman.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="196" column="62" lean-forward="true" selection-start-line="196" selection-start-column="62" selection-end-line="196" selection-end-column="62" />
+        <state relative-caret-position="582">
+          <caret line="345" column="40" lean-forward="false" selection-start-line="345" selection-start-column="40" selection-end-line="345" selection-end-column="40" />
           <folding>
-            <element signature="e#4064#4195#0" expanded="false" />
-            <element signature="e#4340#4520#0" expanded="false" />
-            <element signature="e#7754#7952#0" expanded="false" />
-            <element signature="e#8066#8290#0" expanded="false" />
-            <element signature="e#8371#8543#0" expanded="false" />
-            <element signature="e#8626#8770#0" expanded="false" />
-            <element signature="e#8882#8971#0" expanded="false" />
-            <element signature="e#9057#9550#0" expanded="false" />
-            <element signature="e#9618#10007#0" expanded="false" />
-            <element signature="e#10089#10233#0" expanded="false" />
-            <element signature="e#10310#10473#0" expanded="false" />
-            <element signature="e#10540#10692#0" expanded="false" />
-            <element signature="e#10759#10896#0" expanded="false" />
-            <element signature="e#10979#11132#0" expanded="false" />
-            <element signature="e#11196#11429#0" expanded="false" />
-            <element signature="e#11543#11788#0" expanded="false" />
-            <element signature="e#11874#12222#0" expanded="false" />
-            <element signature="e#12317#12550#0" expanded="false" />
-            <element signature="e#12631#12775#0" expanded="false" />
-            <element signature="e#12840#13092#0" expanded="false" />
-            <element signature="e#13171#13439#0" expanded="false" />
-            <element signature="e#13545#13670#0" expanded="false" />
-            <element signature="e#13752#14228#0" expanded="false" />
-            <element signature="e#14311#14809#0" expanded="false" />
-            <element signature="e#14896#15287#0" expanded="false" />
-            <element signature="e#15359#15494#0" expanded="false" />
+            <element signature="e#4283#4459#0" expanded="false" />
+            <element signature="e#7990#8188#0" expanded="false" />
+            <element signature="e#8302#8526#0" expanded="false" />
+            <element signature="e#8607#8779#0" expanded="false" />
+            <element signature="e#8862#9006#0" expanded="false" />
+            <element signature="e#9118#9207#0" expanded="false" />
+            <element signature="e#9293#9786#0" expanded="false" />
+            <element signature="e#9854#10243#0" expanded="false" />
+            <element signature="e#10325#10469#0" expanded="false" />
+            <element signature="e#10546#10709#0" expanded="false" />
+            <element signature="e#10776#10928#0" expanded="false" />
+            <element signature="e#10995#11132#0" expanded="false" />
+            <element signature="e#11215#11368#0" expanded="false" />
+            <element signature="e#11432#11665#0" expanded="false" />
+            <element signature="e#11779#12024#0" expanded="false" />
+            <element signature="e#12110#12458#0" expanded="false" />
+            <element signature="e#12553#12786#0" expanded="false" />
+            <element signature="e#12867#13011#0" expanded="false" />
+            <element signature="e#13076#13328#0" expanded="false" />
+            <element signature="e#13407#13675#0" expanded="false" />
+            <element signature="e#13781#13906#0" expanded="false" />
+            <element signature="e#13988#14464#0" expanded="false" />
+            <element signature="e#14547#15045#0" expanded="false" />
+            <element signature="e#15132#15523#0" expanded="false" />
+            <element signature="e#15595#15730#0" expanded="false" />
           </folding>
         </state>
       </provider>

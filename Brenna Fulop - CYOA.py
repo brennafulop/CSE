@@ -137,21 +137,21 @@ class Liquid(Consumable):
 
 
 elven_sword = Sword('elven sword', 'There is a sword on the table, it looks expensive', 30)
-broken_knife = Knife('broken knife', "he is holding a broken knife. "
-                                     "the blade of this knife has been snapped. It's still sharp.", 15)
-crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you. it has been half-buried.", 25)
-sturdy_bow = Bow('bow and arrows', "a sturdy wooden bow with engravings in the handle hangs from a nearby tree limb."
-                                   "A quiver of arrows hangs next to it and seems to be charmed.", 30, 40)
+broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet it is still sharp.", 15)
+crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the floor. it has been half-buried.", 25)
+sturdy_bow = Bow('sturdy bow', "a sturdy wooden bow with engravings in the handle hangs from a nearby tree limb."
+                               "A quiver of arrows hangs next to it and seems to be charmed.", 30, 40)
 desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
 shiny_helmet = Helmet('helmet', "in the small amount of light you see a shiny helmet shoved into the ground.", 15)
 glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers at the edge of the oasis.')
 space_food = Food('space food', "There is a packet of space food on the control panel.", 30)
-dried_meat = Food('dried meat', " on the table there is some dried meat of unknown origin.", 25)
-lembas = Food('Lembas', "Kept clean by leaves, there are some lembas on the ground.", 20)
-water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it.', [])
-water_bottle2 = Bottle('water bottle', 'a glass bottle with water in it.', [])
-fancy_chest = Chest('Chest', 'a nice gold and wooden chest', [])
-pebble = Item('blue pebble', 'a glimmering blue pebble')
+dried_meat = Food('dried meat', "On the table there is some dried meat of unknown origin.", 25)
+lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
+water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the table.', [])
+water_bottle2 = Bottle('water bottle', 'A glass bottle that has been filled with the water from the oasis sits on'
+                                       'the edge of the water.', [])
+fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
+pebble = Item('blue pebble', 'A blue pebble glimmers at you from between the leaves.')
 
 # CHARACTERS
 
@@ -181,6 +181,7 @@ class Character(object):
         if self.health <= 0:
             self.dead = True
             print('%s has died' % self.name)
+            self.inv.append(current_node)
 
     def damage(self):
         self.health -= 1
@@ -190,13 +191,13 @@ class Character(object):
             self.death()
 
 
-strange_man = Character('a strange man', 'in tattered clothing holding a broken knife. He is frightened by '
-                                         'you'
-                                         '.', '"Please, the stone, return it to the volcano.', [broken_knife])
+strange_man = Character('a strange man', 'In the corner there is a strange man '
+                                         'in tattered clothing holding a broken knife. He is frightened by '
+                                         'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
 old_man = Character('an old beggar', 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
                     '"Here, take my cloak."]', [desert_cloak])
 
-main = Character('You', 'sadgflius', None, [])
+main = Character('You', 'The main character', None, [])
 
 
 # ROOMS
@@ -273,8 +274,8 @@ ecivil = Room("Civilization", 'bridge1', 'elandingpad', 'ehouse', None, None, No
               'crumbled, except one. You think you see '
               'movement inside it.',)
 ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of the hut. ', [dried_meat,
-                                                                                             broken_knife,
-                                                                                             strange_man, lembas])
+                                                                                             strange_man, broken_knife,
+                                                                                             lembas])
 bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', 'You are on a fancy bridge over a wide '
                                                                                'and fast moving river.')
 river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the river. The water is freezing cold and it'
@@ -304,7 +305,7 @@ volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand
 
 
 # CONTROLLER
-current_node = ahouse
+current_node = ehouse
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -313,6 +314,9 @@ while True:
     print(current_node.name)
     if not current_node.visited:
         print(current_node.description)
+        if current_node.inv is not None:
+            for stuff in current_node.inv:
+                print(stuff.description)
     command = input('>_').lower().strip()
     if command == 'quit':
         quit(0)
@@ -335,10 +339,11 @@ while True:
         for stuff in main.inv:
             if item == stuff.name:
                 main.drop(stuff, current_node)
-            else:
-                'nope'
     elif command == 'description':
         print(current_node.description)
+        if current_node.inv is not None:
+            for stuff in current_node.inv:
+                print(stuff.description)
     elif command == 'help':
         print('Find the special items on each planet and return them to the chest in your ship.')
     else:
