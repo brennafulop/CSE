@@ -136,18 +136,19 @@ class Liquid(Consumable):
         person.health = person.health + self.amount
 
 
-elven_sword = Sword('elven sword', 'There is a sword on the table, it looks expensive', 30)
+elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground at the base.', 30)
 broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet it is still sharp.", 15)
 crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the floor. it has been half-buried.", 25)
-sturdy_bow = Bow('sturdy bow', "a sturdy wooden bow with engravings in the handle hangs from a nearby tree limb."
-                               "A quiver of arrows hangs next to it and seems to be charmed.", 30, 40)
+sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle hangs from a nearby tree limb."
+                               " A quiver of arrows hangs next to it and seems to be charmed.", 30, 40)
 desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
 shiny_helmet = Helmet('helmet', "in the small amount of light you see a shiny helmet shoved into the ground.", 15)
 glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers at the edge of the oasis.')
 space_food = Food('space food', "There is a packet of space food on the control panel.", 30)
 dried_meat = Food('dried meat', "On the table there is some dried meat of unknown origin.", 25)
 lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
-water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the table.', [])
+water1 = Liquid('water', 'water', 10)
+water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the table.', [water1])
 water_bottle2 = Bottle('water bottle', 'A glass bottle that has been filled with the water from the oasis sits on'
                                        'the edge of the water.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
@@ -157,11 +158,11 @@ pebble = Item('blue pebble', 'A blue pebble glimmers at you from between the lea
 
 
 class Character(object):
-    def __init__(self, name, description, dialogue, items=None):
+    def __init__(self, name, health, description, dialogue, items=None):
         if items is None:
             items = []
         self.name = name
-        self.health = 5
+        self.health = health
         self.description = description
         self.dialogue = dialogue
         self.dead = False
@@ -190,14 +191,16 @@ class Character(object):
         else:
             self.death()
 
+    def eat(self, food):
+        food.eaten(self)
 
-strange_man = Character('a strange man', 'In the corner there is a strange man '
-                                         'in tattered clothing holding a broken knife. He is frightened by '
-                                         'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
-old_man = Character('an old beggar', 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
+
+strange_man = Character('a strange man', 30, 'In the corner there is a strange man '
+                                             'in tattered clothing holding a broken knife. He is frightened by '
+                                             'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
+old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
                     '"Here, take my cloak."]', [desert_cloak])
-
-main = Character('You', 'The main character', None, [])
+main = Character('You', 50, 'The main character', None, [])
 
 
 # ROOMS
@@ -299,9 +302,11 @@ mountains = Room('Mountain Range', None, 'volcano', None, 'bridge2', None, None,
 volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', None, 'You stand at the base of the '
                                                                                      'volcano. The air is hot and stuff'
                                                                                      'y, and you can barely see through'
-                                                                                     ' the smoke. You hear a rumble.')
+                                                                                     ' the smoke. You '
+                                                                                     'hear a rumble.', [elven_sword])
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
-                                                                      'unbearably hot.', [elven_sword])
+                                                                      'unbearably hot and appears as though it might '
+                                                                      'erupt.', [])
 
 
 # CONTROLLER
@@ -344,7 +349,5 @@ while True:
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
-    elif command == 'help':
-        print('Find the special items on each planet and return them to the chest in your ship.')
     else:
         print('Command not recognized.')

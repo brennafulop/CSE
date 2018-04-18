@@ -2,7 +2,7 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/Notes.py" line="253" />
-    <bookmark url="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py" line="197" />
+    <bookmark url="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py" line="200" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3001d99a-b5ed-4ee9-bec9-edcfeb8f632c" name="Default" comment="" />
@@ -64,34 +64,35 @@
       <file leaf-file-name="Brenna Fulop - CYOA.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="582">
-              <caret line="345" column="40" lean-forward="false" selection-start-line="345" selection-start-column="40" selection-end-line="345" selection-end-column="40" />
+            <state relative-caret-position="4947">
+              <caret line="345" column="46" lean-forward="false" selection-start-line="345" selection-start-column="46" selection-end-line="345" selection-end-column="46" />
               <folding>
-                <element signature="e#4283#4459#0" expanded="false" />
-                <element signature="e#7990#8188#0" expanded="false" />
-                <element signature="e#8302#8526#0" expanded="false" />
-                <element signature="e#8607#8779#0" expanded="false" />
-                <element signature="e#8862#9006#0" expanded="false" />
-                <element signature="e#9118#9207#0" expanded="false" />
-                <element signature="e#9293#9786#0" expanded="false" />
-                <element signature="e#9854#10243#0" expanded="false" />
-                <element signature="e#10325#10469#0" expanded="false" />
-                <element signature="e#10546#10709#0" expanded="false" />
-                <element signature="e#10776#10928#0" expanded="false" />
-                <element signature="e#10995#11132#0" expanded="false" />
-                <element signature="e#11215#11368#0" expanded="false" />
-                <element signature="e#11432#11665#0" expanded="false" />
-                <element signature="e#11779#12024#0" expanded="false" />
-                <element signature="e#12110#12458#0" expanded="false" />
-                <element signature="e#12553#12786#0" expanded="false" />
-                <element signature="e#12867#13011#0" expanded="false" />
-                <element signature="e#13076#13328#0" expanded="false" />
-                <element signature="e#13407#13675#0" expanded="false" />
-                <element signature="e#13781#13906#0" expanded="false" />
-                <element signature="e#13988#14464#0" expanded="false" />
-                <element signature="e#14547#15045#0" expanded="false" />
-                <element signature="e#15132#15523#0" expanded="false" />
-                <element signature="e#15595#15730#0" expanded="false" />
+                <element signature="e#5285#5424#0" expanded="false" />
+                <element signature="e#6663#6867#0" expanded="false" />
+                <element signature="e#7020#7100#0" expanded="false" />
+                <element signature="e#8126#8324#0" expanded="false" />
+                <element signature="e#8438#8662#0" expanded="false" />
+                <element signature="e#8743#8915#0" expanded="false" />
+                <element signature="e#8998#9142#0" expanded="false" />
+                <element signature="e#9254#9343#0" expanded="false" />
+                <element signature="e#9429#9922#0" expanded="false" />
+                <element signature="e#9990#10379#0" expanded="false" />
+                <element signature="e#10461#10605#0" expanded="false" />
+                <element signature="e#10682#10845#0" expanded="false" />
+                <element signature="e#10912#11064#0" expanded="false" />
+                <element signature="e#11131#11268#0" expanded="false" />
+                <element signature="e#11351#11504#0" expanded="false" />
+                <element signature="e#11568#11801#0" expanded="false" />
+                <element signature="e#11915#12160#0" expanded="false" />
+                <element signature="e#12246#12594#0" expanded="false" />
+                <element signature="e#12689#12922#0" expanded="false" />
+                <element signature="e#13003#13147#0" expanded="false" />
+                <element signature="e#13212#13464#0" expanded="false" />
+                <element signature="e#13543#13811#0" expanded="false" />
+                <element signature="e#13917#14042#0" expanded="false" />
+                <element signature="e#14124#14600#0" expanded="false" />
+                <element signature="e#14683#15181#0" expanded="false" />
+                <element signature="e#15268#15747#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -100,7 +101,7 @@
       <file leaf-file-name="Brenna Fulop - Hangman.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - Hangman.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-34">
+            <state relative-caret-position="680">
               <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
               <folding />
             </state>
@@ -110,7 +111,7 @@
       <file leaf-file-name="Brenna - Guessgame.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna - Guessgame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="425">
               <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
               <folding />
             </state>
@@ -120,7 +121,7 @@
       <file leaf-file-name="Brenna Fulop - Characters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - Characters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-64">
+            <state relative-caret-position="153">
               <caret line="9" column="32" lean-forward="false" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
               <folding />
             </state>
@@ -130,8 +131,8 @@
       <file leaf-file-name="Brenna Fulop - Items.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - Items.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+            <state relative-caret-position="3298">
+              <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -205,6 +206,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -216,7 +218,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -353,17 +354,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25036603" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.35015774" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27099842" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27099842" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39905363" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3977813" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -379,7 +381,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="20" />
+      <option name="time" value="23" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -742,15 +744,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - Items.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+        <state relative-caret-position="3298">
+          <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - Characters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-64">
+        <state relative-caret-position="153">
           <caret line="9" column="32" lean-forward="false" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
           <folding />
         </state>
@@ -758,7 +760,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna - Guessgame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="425">
           <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
           <folding />
         </state>
@@ -766,7 +768,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - Hangman.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
+        <state relative-caret-position="680">
           <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
           <folding />
         </state>
@@ -774,34 +776,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="582">
-          <caret line="345" column="40" lean-forward="false" selection-start-line="345" selection-start-column="40" selection-end-line="345" selection-end-column="40" />
+        <state relative-caret-position="4947">
+          <caret line="345" column="46" lean-forward="false" selection-start-line="345" selection-start-column="46" selection-end-line="345" selection-end-column="46" />
           <folding>
-            <element signature="e#4283#4459#0" expanded="false" />
-            <element signature="e#7990#8188#0" expanded="false" />
-            <element signature="e#8302#8526#0" expanded="false" />
-            <element signature="e#8607#8779#0" expanded="false" />
-            <element signature="e#8862#9006#0" expanded="false" />
-            <element signature="e#9118#9207#0" expanded="false" />
-            <element signature="e#9293#9786#0" expanded="false" />
-            <element signature="e#9854#10243#0" expanded="false" />
-            <element signature="e#10325#10469#0" expanded="false" />
-            <element signature="e#10546#10709#0" expanded="false" />
-            <element signature="e#10776#10928#0" expanded="false" />
-            <element signature="e#10995#11132#0" expanded="false" />
-            <element signature="e#11215#11368#0" expanded="false" />
-            <element signature="e#11432#11665#0" expanded="false" />
-            <element signature="e#11779#12024#0" expanded="false" />
-            <element signature="e#12110#12458#0" expanded="false" />
-            <element signature="e#12553#12786#0" expanded="false" />
-            <element signature="e#12867#13011#0" expanded="false" />
-            <element signature="e#13076#13328#0" expanded="false" />
-            <element signature="e#13407#13675#0" expanded="false" />
-            <element signature="e#13781#13906#0" expanded="false" />
-            <element signature="e#13988#14464#0" expanded="false" />
-            <element signature="e#14547#15045#0" expanded="false" />
-            <element signature="e#15132#15523#0" expanded="false" />
-            <element signature="e#15595#15730#0" expanded="false" />
+            <element signature="e#5285#5424#0" expanded="false" />
+            <element signature="e#6663#6867#0" expanded="false" />
+            <element signature="e#7020#7100#0" expanded="false" />
+            <element signature="e#8126#8324#0" expanded="false" />
+            <element signature="e#8438#8662#0" expanded="false" />
+            <element signature="e#8743#8915#0" expanded="false" />
+            <element signature="e#8998#9142#0" expanded="false" />
+            <element signature="e#9254#9343#0" expanded="false" />
+            <element signature="e#9429#9922#0" expanded="false" />
+            <element signature="e#9990#10379#0" expanded="false" />
+            <element signature="e#10461#10605#0" expanded="false" />
+            <element signature="e#10682#10845#0" expanded="false" />
+            <element signature="e#10912#11064#0" expanded="false" />
+            <element signature="e#11131#11268#0" expanded="false" />
+            <element signature="e#11351#11504#0" expanded="false" />
+            <element signature="e#11568#11801#0" expanded="false" />
+            <element signature="e#11915#12160#0" expanded="false" />
+            <element signature="e#12246#12594#0" expanded="false" />
+            <element signature="e#12689#12922#0" expanded="false" />
+            <element signature="e#13003#13147#0" expanded="false" />
+            <element signature="e#13212#13464#0" expanded="false" />
+            <element signature="e#13543#13811#0" expanded="false" />
+            <element signature="e#13917#14042#0" expanded="false" />
+            <element signature="e#14124#14600#0" expanded="false" />
+            <element signature="e#14683#15181#0" expanded="false" />
+            <element signature="e#15268#15747#0" expanded="false" />
           </folding>
         </state>
       </provider>
