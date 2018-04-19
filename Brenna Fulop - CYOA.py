@@ -158,7 +158,7 @@ pebble = Item('blue pebble', 'A blue pebble glimmers at you from between the lea
 
 
 class Character(object):
-    def __init__(self, name, health, description, dialogue, items=None):
+    def __init__(self, name, health, description, dialogue, thirst, items=None):
         if items is None:
             items = []
         self.name = name
@@ -166,6 +166,7 @@ class Character(object):
         self.description = description
         self.dialogue = dialogue
         self.dead = False
+        self.thirst = thirst
         self.inv = items
 
     def pick_up(self, thing, room):
@@ -175,7 +176,7 @@ class Character(object):
         thing.dropped(self, room)
 
     def attack(self, target):
-        print('%s attacks %s' % (self.name, target.name))
+        print('%s attack %s' % (self.name, target.name))
         target.damage()
 
     def death(self):
@@ -195,7 +196,7 @@ class Character(object):
         food.eaten(self)
 
 
-strange_man = Character('a strange man', 30, 'In the corner there is a strange man '
+strange_man = Character('strange man', 30, 'In the corner there is a strange man '
                                              'in tattered clothing holding a broken knife. He is frightened by '
                                              'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
 old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
@@ -344,6 +345,12 @@ while True:
         for stuff in main.inv:
             if item == stuff.name:
                 main.drop(stuff, current_node)
+    elif command[:5] == 'attack':
+        for thing in current_node.inv:
+            if thing is Item:
+                print("You can't attack an item!")
+            elif command[6:] == thing.name:
+                main.attack(thing)
     elif command == 'description':
         print(current_node.description)
         if current_node.inv is not None:
