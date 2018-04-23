@@ -197,8 +197,8 @@ class Character(object):
 
 
 strange_man = Character('strange man', 30, 'In the corner there is a strange man '
-                                             'in tattered clothing holding a broken knife. He is frightened by '
-                                             'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
+                                           'in tattered clothing holding a broken knife. He is frightened by '
+                                           'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
 old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
                     '"Here, take my cloak."]', [desert_cloak])
 main = Character('You', 50, 'The main character', None, [])
@@ -207,7 +207,7 @@ main = Character('You', 50, 'The main character', None, [])
 # ROOMS
 
 class Room(object):
-    def __init__(self, name, north, south, east, west, up, down, description, items=None):
+    def __init__(self, name, north, south, east, west, up, down, description, items=None, characters=None):
         self.name = name
         self.north = north
         self.south = south
@@ -218,6 +218,7 @@ class Room(object):
         self.description = description
         self.visited = False
         self.inv = items
+        self.chars = characters
 
     def move(self, direction):
         global current_node
@@ -235,79 +236,83 @@ airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad'
 # Arrakis
 alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentrance', 'airlock', None, 'You are on'
                    ' Arrakis, a desert planet. To the east you see civilization, the north shows a long winding path, '
-                   'and far to the west you can barely make out what appears to be a cave.')
+                   'and far to the west you can barely make out what appears to be a cave.', [], [])
 acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, 'You reach the entrance to the '
               'civilization, which is surrounded by a large wall '
-              'Rows of houses line the path. Only one appears unlocked.', [old_man])
+              'Rows of houses line the path. Only one appears unlocked.', [], [old_man])
 ahouse = Room("Arrakis Home", None, None, None, 'acivil', None, None, 'You are in a one room house. There is a table'
               ' in front of you.'
-              ' On the other side of the room there is a cot.', [crystal_knife, water_bottle1])
+              ' On the other side of the room there is a cot.', [crystal_knife, water_bottle1], [])
 apath1 = Room("Open Desert", None, 'alandingpad', None, 'apath2', None, None, 'You have reached a crossroads.'
-              'The path diverges to the south and west.')
+              'The path diverges to the south and west.', [], [])
 apath2 = Room('Open Desert', None, 'caveentrance', 'apath1', None, 'plateau', None, 'You have reached a crossroads. '
                                                                                     'You are at the base of a very tall'
                                                                                     ' plateau, and to the south you see'
                                                                                     ' a cave. The path also diverges '
-                                                                                    'to the east.')
+                                                                                    'to the east.', [], [])
 plateau = Room('Plateau', None, None, None, None, None, 'apath2', 'You are on top of a tall plateau. You can see a'
                                                                   ' path winding through the desert to the east.'
                                                                   'To the south you see a cave. South-east reveals a '
-                                                                  'large wall with rows of houses inside.')
+                                                                  'large wall with rows of houses inside.', [], [])
 caveentrance = Room('Cave Entrance', 'apath2', 'maze1', None, None, None, None, 'You are the entrance to a wide cave. '
-                                                                                'Inside is pitch black.')
+                                                                                'Inside is pitch black.', [], [])
 maze1 = Room('Tunnel', 'caveentrance', 'maze2', 'maze3', None, None, None, "You are inside the cave system. You can't "
-                                                                           "see anything, but you can feel the walls.")
+                                                                           "see anything, but you can feel the walls.",
+              [], [])
 maze2 = Room('Tunnel', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
-                                                                 "see anything, but you can feel the walls.")
+                                                                 "see anything, but you can feel the walls.", [], [])
 maze4 = Room('Tunnel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
-                                                                 'You see light coming from the west.', [shiny_helmet])
+                                                                 'You see light coming from the west.', [shiny_helmet],
+             [])
 maze3 = Room('Tunnel', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
-                                                                 "see anything, but you can feel the walls.")
+                                                                 "see anything, but you can feel the walls.", [], [])
 oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
                                                               "is cooler here. This appears to be the only source of"
-             " above ground water on the entire planet.", [glass_bottle])
+             " above ground water on the entire planet.", [glass_bottle], [])
 
 # Endore
 elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
                                                                                       'planet. You smell smoke in the'
-                                                                                      ' air.')
+                                                                                      ' air.', [], [])
 ecivil = Room("Civilization", 'bridge1', 'elandingpad', 'ehouse', None, None, None, 'You have reached the Endore '
                                                                                     'civilization. '
               'The grass and mud huts are few and far between'
               ' and the area seems deserted. Most huts are '
               'crumbled, except one. You think you see '
-              'movement inside it.',)
+              'movement inside it.', [], [])
 ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of the hut. ', [dried_meat,
-                                                                                             strange_man, broken_knife,
-                                                                                             lembas])
+                                                                                             broken_knife,
+                                                                                             lembas], [strange_man])
 bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', 'You are on a fancy bridge over a wide '
-                                                                               'and fast moving river.')
+                                                                               'and fast moving river.', [], [])
 river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the river. The water is freezing cold and it'
                                                                ' is difficult to fight the strong current. '
-                                                               'This was a bad idea.')
+                                                               'This was a bad idea.', [], [])
 forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'You are in the forest on a well worn path'
                                                                              '. You see something glimmer at you from'
-                                                                             ' the top of a nearby tree.')
+                                                                             ' the top of a nearby tree.', [], [])
 tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree.', [pebble,
-                                                                                                         sturdy_bow])
+                                                                                                         sturdy_bow], []
+            )
 bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are  on a fragile rope bridge '
                                                                                 'above the'
                                                                                 ' river. There are a few boards missing'
                                                                                 ' and the surface is slippery. It sways'
-                                                                                ' as you move across it.')
+                                                                                ' as you move across it.', [], [])
 mountains = Room('Mountain Range', None, 'volcano', None, 'bridge2', None, None, 'You are in the mountain range. The '
                                                                                  'ground is rocky and uneven. Just past'
                                                                                  ' the range there is a volcano that is'
                                                                                  ' spewing smoke and ash. It seems clos'
-                                                                                 'e to eruption.')
+                                                                                 'e to eruption.', [], [])
 volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', None, 'You stand at the base of the '
                                                                                      'volcano. The air is hot and stuff'
                                                                                      'y, and you can barely see through'
                                                                                      ' the smoke. You '
-                                                                                     'hear a rumble.', [elven_sword])
+                                                                                     'hear a rumble.', [elven_sword], []
+               )
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
                                                                       'unbearably hot and appears as though it might '
-                                                                      'erupt.', [])
+                                                                      'erupt.', [], [])
 
 
 # CONTROLLER
@@ -346,11 +351,11 @@ while True:
             if item == stuff.name:
                 main.drop(stuff, current_node)
     elif command[:5] == 'attack':
-        for thing in current_node.inv:
-            if thing is Item:
+        for stuff in current_node.inv:
+            if stuff is Item:
                 print("You can't attack an item!")
-            elif command[6:] == thing.name:
-                main.attack(thing)
+            elif command[6:] == stuff.name:
+                main.attack(stuff)
     elif command == 'description':
         print(current_node.description)
         if current_node.inv is not None:

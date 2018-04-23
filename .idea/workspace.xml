@@ -64,34 +64,12 @@
       <file leaf-file-name="Brenna Fulop - CYOA.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="349" column="14" lean-forward="true" selection-start-line="349" selection-start-column="14" selection-end-line="349" selection-end-column="14" />
+            <state relative-caret-position="137">
+              <caret line="259" column="119" lean-forward="false" selection-start-line="259" selection-start-column="119" selection-end-line="259" selection-end-column="119" />
               <folding>
                 <element signature="e#5285#5424#0" expanded="false" />
-                <element signature="e#6697#6901#0" expanded="false" />
-                <element signature="e#8160#8358#0" expanded="false" />
-                <element signature="e#8472#8696#0" expanded="false" />
-                <element signature="e#8777#8949#0" expanded="false" />
-                <element signature="e#9032#9176#0" expanded="false" />
-                <element signature="e#9288#9377#0" expanded="false" />
-                <element signature="e#9463#9956#0" expanded="false" />
-                <element signature="e#10024#10413#0" expanded="false" />
-                <element signature="e#10495#10639#0" expanded="false" />
-                <element signature="e#10716#10879#0" expanded="false" />
-                <element signature="e#10946#11098#0" expanded="false" />
-                <element signature="e#11165#11302#0" expanded="false" />
-                <element signature="e#11385#11538#0" expanded="false" />
-                <element signature="e#11602#11835#0" expanded="false" />
-                <element signature="e#11949#12194#0" expanded="false" />
-                <element signature="e#12280#12628#0" expanded="false" />
-                <element signature="e#12723#12956#0" expanded="false" />
-                <element signature="e#13037#13181#0" expanded="false" />
-                <element signature="e#13246#13498#0" expanded="false" />
-                <element signature="e#13577#13845#0" expanded="false" />
-                <element signature="e#13951#14076#0" expanded="false" />
-                <element signature="e#14158#14634#0" expanded="false" />
-                <element signature="e#14717#15215#0" expanded="false" />
-                <element signature="e#15302#15781#0" expanded="false" />
+                <element signature="e#7847#8082#0" expanded="false" />
+                <element signature="e#8205#8403#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -182,9 +160,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-18" />
-    <option name="y" value="12" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-324" />
+    <option name="y" value="-8" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
   </component>
@@ -205,6 +183,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -216,7 +195,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,7 +330,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25036603" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -380,7 +358,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="25" />
+      <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -775,34 +753,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Brenna Fulop - CYOA.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="349" column="14" lean-forward="true" selection-start-line="349" selection-start-column="14" selection-end-line="349" selection-end-column="14" />
+        <state relative-caret-position="137">
+          <caret line="259" column="119" lean-forward="false" selection-start-line="259" selection-start-column="119" selection-end-line="259" selection-end-column="119" />
           <folding>
             <element signature="e#5285#5424#0" expanded="false" />
-            <element signature="e#6697#6901#0" expanded="false" />
-            <element signature="e#8160#8358#0" expanded="false" />
-            <element signature="e#8472#8696#0" expanded="false" />
-            <element signature="e#8777#8949#0" expanded="false" />
-            <element signature="e#9032#9176#0" expanded="false" />
-            <element signature="e#9288#9377#0" expanded="false" />
-            <element signature="e#9463#9956#0" expanded="false" />
-            <element signature="e#10024#10413#0" expanded="false" />
-            <element signature="e#10495#10639#0" expanded="false" />
-            <element signature="e#10716#10879#0" expanded="false" />
-            <element signature="e#10946#11098#0" expanded="false" />
-            <element signature="e#11165#11302#0" expanded="false" />
-            <element signature="e#11385#11538#0" expanded="false" />
-            <element signature="e#11602#11835#0" expanded="false" />
-            <element signature="e#11949#12194#0" expanded="false" />
-            <element signature="e#12280#12628#0" expanded="false" />
-            <element signature="e#12723#12956#0" expanded="false" />
-            <element signature="e#13037#13181#0" expanded="false" />
-            <element signature="e#13246#13498#0" expanded="false" />
-            <element signature="e#13577#13845#0" expanded="false" />
-            <element signature="e#13951#14076#0" expanded="false" />
-            <element signature="e#14158#14634#0" expanded="false" />
-            <element signature="e#14717#15215#0" expanded="false" />
-            <element signature="e#15302#15781#0" expanded="false" />
+            <element signature="e#7847#8082#0" expanded="false" />
+            <element signature="e#8205#8403#0" expanded="false" />
           </folding>
         </state>
       </provider>
