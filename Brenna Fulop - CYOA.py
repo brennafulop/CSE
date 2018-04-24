@@ -98,6 +98,12 @@ class Bottle(Container):
         if items is None:
             items = []
         self.inv = items
+        self.full = False
+
+    def drink(self, person):
+        if self.full is True:
+            self.full = False
+            person.thirst = 0
 
 
 class Chest(Container):
@@ -136,29 +142,28 @@ class Liquid(Consumable):
         person.health = person.health + self.amount
 
 
-elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground at the base.', 30)
+elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
 broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet it is still sharp.", 15)
-crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the floor. it has been half-buried.", 25)
-sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle hangs from a nearby tree limb."
-                               " A quiver of arrows hangs next to it and seems to be charmed.", 30, 40)
+crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the ground. it has been half-buried.", 25)
+sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle sits next to you."
+                               " A quiver of arrows is next to it and seems to be charmed.", 30, 40)
 desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
-shiny_helmet = Helmet('helmet', "in the small amount of light you see a shiny helmet shoved into the ground.", 15)
-glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers at the edge of the oasis.')
-space_food = Food('space food', "There is a packet of space food on the control panel.", 30)
-dried_meat = Food('dried meat', "On the table there is some dried meat of unknown origin.", 25)
+shiny_helmet = Helmet('helmet', "you see a shiny helmet shoved into the ground.", 15)
+glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers from on the ground.')
+space_food = Food('space food', "There is a packet of space food on the floor.", 30)
+dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 25)
 lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
-water1 = Liquid('water', 'water', 10)
-water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the table.', [water1])
-water_bottle2 = Bottle('water bottle', 'A glass bottle that has been filled with the water from the oasis sits on'
-                                       'the edge of the water.', [])
+water1 = Liquid('water', 'u', 10)
+water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the ground.', [water1])
+water_bottle2 = Bottle('water bottle', 'a glass bottle filled with water sits on the ground.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
-pebble = Item('blue pebble', 'A blue pebble glimmers at you from between the leaves.')
+pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 
 # CHARACTERS
 
 
 class Character(object):
-    def __init__(self, name, health, description, dialogue, thirst, items=None):
+    def __init__(self, name, health, description, dialogue, thirst, hunger, items=None):
         if items is None:
             items = []
         self.name = name
@@ -167,6 +172,7 @@ class Character(object):
         self.dialogue = dialogue
         self.dead = False
         self.thirst = thirst
+        self.hunger = hunger
         self.inv = items
 
     def pick_up(self, thing, room):
@@ -180,10 +186,9 @@ class Character(object):
         target.damage()
 
     def death(self):
-        if self.health <= 0:
-            self.dead = True
-            print('%s has died' % self.name)
-            self.inv.append(current_node)
+        self.dead = True
+        print('%s has died' % self.name)
+        self.inv.append(current_node)
 
     def damage(self):
         self.health -= 1
@@ -195,13 +200,26 @@ class Character(object):
     def eat(self, food):
         food.eaten(self)
 
+    def thirsty(self):
+        if self.thirst == 100:
+            print('You are too thirsty to continue. You must drink water.')
+        if self.thirst >= 101:
+            self.death()
+
+    def hungry(self):
+        if self.hunger == 100:
+            print('You are too hungry to continue. You must eat something.')
+        if self.hunger >= 101:
+            self.death()
+
 
 strange_man = Character('strange man', 30, 'In the corner there is a strange man '
                                            'in tattered clothing holding a broken knife. He is frightened by '
-                                           'you.', '"Please, the stone, return it to the volcano.', [broken_knife])
+                                           'you.', '"Please, the stone, return it to the volcano.', 0, 0,
+                        [broken_knife])
 old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
-                    '"Here, take my cloak."]', [desert_cloak])
-main = Character('You', 50, 'The main character', None, [])
+                    '"Here, take my cloak."]', 0, 0, [desert_cloak])
+main = Character('You', 50, 'The main character', None, 0, 0, [])
 
 
 # ROOMS
@@ -258,7 +276,7 @@ caveentrance = Room('Cave Entrance', 'apath2', 'maze1', None, None, None, None, 
                                                                                 'Inside is pitch black.', [], [])
 maze1 = Room('Tunnel', 'caveentrance', 'maze2', 'maze3', None, None, None, "You are inside the cave system. You can't "
                                                                            "see anything, but you can feel the walls.",
-              [], [])
+             [], [])
 maze2 = Room('Tunnel', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
                                                                  "see anything, but you can feel the walls.", [], [])
 maze4 = Room('Tunnel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
@@ -268,7 +286,7 @@ maze3 = Room('Tunnel', 'maze2', None, None, 'maze1', None, None, "You are inside
                                                                  "see anything, but you can feel the walls.", [], [])
 oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
                                                               "is cooler here. This appears to be the only source of"
-             " above ground water on the entire planet.", [glass_bottle], [])
+             " above ground water on the entire planet.", [glass_bottle, water1], [])
 
 # Endore
 elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
@@ -325,9 +343,13 @@ while True:
     print(current_node.name)
     if not current_node.visited:
         print(current_node.description)
+        if current_node.chars is not None:
+            for stuff in current_node.chars:
+                print(stuff.description)
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
+    print('Your hunger is at %s and your thirst is at %s.' % (main.hunger, main.thirst))
     command = input('>_').lower().strip()
     if command == 'quit':
         quit(0)
@@ -338,6 +360,8 @@ while True:
         try:
             current_node.visited = True
             current_node.move(command)
+            main.thirst += 10
+            main.hunger += 5
         except KeyError:
             print('You cannot go this way')
     elif command[:7] == 'pick up':
@@ -351,11 +375,17 @@ while True:
             if item == stuff.name:
                 main.drop(stuff, current_node)
     elif command[:5] == 'attack':
+        human = command[6:]
         for stuff in current_node.inv:
-            if stuff is Item:
-                print("You can't attack an item!")
-            elif command[6:] == stuff.name:
-                main.attack(stuff)
+            if human == stuff.name:
+                if stuff is Character:
+                    main.attack(stuff)
+    # elif command[:4] == 'fill':
+    #     if current_node == oasis:
+    #         for stuff in main.inv:
+    #             if stuff is Bottle:
+    #                 stuff.full is True
+
     elif command == 'description':
         print(current_node.description)
         if current_node.inv is not None:
