@@ -98,12 +98,13 @@ class Bottle(Container):
         if items is None:
             items = []
         self.inv = items
-        self.full = False
+        self.full = 3
 
     def drink(self, person):
-        if self.full is True:
-            self.full = False
+        if self.full > 0:
+            self.full -= 1
             person.thirst = 0
+            print('You drank the water. You have %s drinks left.' % self.full)
 
 
 class Chest(Container):
@@ -132,14 +133,14 @@ class Food(Consumable):
         person.health = person.health + self.nutrients
 
 
-class Liquid(Consumable):
-    def __init__(self, name, description, amount):
-        super(Liquid, self).__init__(name, description)
-        self.amount = amount
-        self.able_to = True
-
-    def drank(self, person):
-        person.health = person.health + self.amount
+# class Liquid(Consumable):
+#     def __init__(self, name, description, amount):
+#         super(Liquid, self).__init__(name, description)
+#         self.amount = amount
+#         self.able_to = True
+#
+#     def drank(self, person):
+#         person.health = person.health + self.amount
 
 
 elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
@@ -153,8 +154,7 @@ glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers from on the
 space_food = Food('space food', "There is a packet of space food on the floor.", 30)
 dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 25)
 lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
-water1 = Liquid('water', 'u', 10)
-water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the ground.', [water1])
+water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the ground.', [])
 water_bottle2 = Bottle('water bottle', 'a glass bottle filled with water sits on the ground.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
@@ -187,8 +187,13 @@ class Character(object):
 
     def death(self):
         self.dead = True
-        print('%s has died' % self.name)
-        self.inv.append(current_node)
+        if self is main:
+            print('You have died.')
+            exit(0)
+        else:
+            print('%s has died' % self.name)
+            current_node.chars.remove(self)
+            self.inv.append(current_node)
 
     def damage(self):
         self.health -= 1
@@ -203,7 +208,7 @@ class Character(object):
     def thirsty(self):
         if self.thirst == 100:
             print('You are too thirsty to continue. You must drink water.')
-        if self.thirst >= 101:
+        if self.thirst > 100:
             self.death()
 
     def hungry(self):
@@ -219,7 +224,8 @@ strange_man = Character('strange man', 30, 'In the corner there is a strange man
                         [broken_knife])
 old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
                     '"Here, take my cloak."]', 0, 0, [desert_cloak])
-main = Character('You', 50, 'The main character', None, 0, 0, [])
+main = Character('You', 50, 'The main character', None, 0, 0, [glass_bottle])
+
 
 
 # ROOMS
@@ -237,6 +243,7 @@ class Room(object):
         self.visited = False
         self.inv = items
         self.chars = characters
+        self.body_of_water = False
 
     def move(self, direction):
         global current_node
@@ -286,7 +293,7 @@ maze3 = Room('Tunnel', 'maze2', None, None, 'maze1', None, None, "You are inside
                                                                  "see anything, but you can feel the walls.", [], [])
 oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
                                                               "is cooler here. This appears to be the only source of"
-             " above ground water on the entire planet.", [glass_bottle, water1], [])
+             " above ground water on the entire planet.", [glass_bottle], [])
 
 # Endore
 elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
@@ -312,6 +319,7 @@ forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'Yo
 tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree.', [pebble,
                                                                                                          sturdy_bow], []
             )
+
 bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are  on a fragile rope bridge '
                                                                                 'above the'
                                                                                 ' river. There are a few boards missing'
@@ -326,15 +334,19 @@ volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', N
                                                                                      'volcano. The air is hot and stuff'
                                                                                      'y, and you can barely see through'
                                                                                      ' the smoke. You '
-                                                                                     'hear a rumble.', [elven_sword], []
-               )
+                                                                                     'hear a rumble.', [elven_sword],
+               [])
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
                                                                       'unbearably hot and appears as though it might '
                                                                       'erupt.', [], [])
 
+oasis.body_of_water = True
+bridge1.body_of_water = True
+bridge2.body_of_water = True
+river.body_of_water = True
 
 # CONTROLLER
-current_node = ehouse
+current_node = river
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -350,6 +362,7 @@ while True:
             for stuff in current_node.inv:
                 print(stuff.description)
     print('Your hunger is at %s and your thirst is at %s.' % (main.hunger, main.thirst))
+    main.thirsty()
     command = input('>_').lower().strip()
     if command == 'quit':
         quit(0)
@@ -360,7 +373,7 @@ while True:
         try:
             current_node.visited = True
             current_node.move(command)
-            main.thirst += 10
+            main.thirst += 50
             main.hunger += 5
         except KeyError:
             print('You cannot go this way')
@@ -380,16 +393,21 @@ while True:
             if human == stuff.name:
                 if stuff is Character:
                     main.attack(stuff)
-    # elif command[:4] == 'fill':
-    #     if current_node == oasis:
-    #         for stuff in main.inv:
-    #             if stuff is Bottle:
-    #                 stuff.full is True
-
+    elif command[:4] == 'fill':
+        if current_node.body_of_water:
+            for bottle in main.inv:
+                if bottle is Bottle:
+                    bottle.full = 3
+                    print('You filled your water bottle(s).')
+                else:
+                    print("You don't have a bottle to fill in your inventory.")
     elif command == 'description':
         print(current_node.description)
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
+    elif command == 'inventory':
+        for item in main.inv:
+            print(item.name)
     else:
         print('Command not recognized.')
