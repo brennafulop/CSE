@@ -226,9 +226,8 @@ old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parch
                     '"Here, take my cloak."]', 0, 0, [desert_cloak])
 main = Character('You', 50, 'The main character', None, 0, 0, [glass_bottle])
 
-
-
 # ROOMS
+
 
 class Room(object):
     def __init__(self, name, north, south, east, west, up, down, description, items=None, characters=None):
@@ -346,7 +345,7 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER
-current_node = river
+current_node = ehouse
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -387,20 +386,22 @@ while True:
         for stuff in main.inv:
             if item == stuff.name:
                 main.drop(stuff, current_node)
-    elif command[:5] == 'attack':
-        human = command[6:]
-        for stuff in current_node.inv:
+    elif command[:6] == 'attack':
+        human = command[7:]
+        for stuff in current_node.chars:
             if human == stuff.name:
                 if stuff is Character:
                     main.attack(stuff)
     elif command[:4] == 'fill':
+        bottle = command[5:]
         if current_node.body_of_water:
-            for bottle in main.inv:
-                if bottle is Bottle:
-                    bottle.full = 3
-                    print('You filled your water bottle(s).')
-                else:
-                    print("You don't have a bottle to fill in your inventory.")
+            for stuff in main.inv:
+                if bottle == stuff.name:
+                    if bottle is Bottle:
+                        bottle.full = 3
+                        print('You filled your water bottle(s).')
+                    else:
+                        print("You don't have a bottle to fill in your inventory.")
     elif command == 'description':
         print(current_node.description)
         if current_node.inv is not None:
