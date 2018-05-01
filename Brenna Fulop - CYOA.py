@@ -196,9 +196,9 @@ class Character(object):
             self.inv.append(current_node)
 
     def damage(self):
-        self.health -= 1
+        self.health -= 50
         if self.health >= 1:
-            print('%s has %s health.' % (self.name, self.health))
+            print('The %s has %s health.' % (self.name, self.health))
         else:
             self.death()
 
@@ -222,7 +222,8 @@ strange_man = Character('strange man', 30, 'In the corner there is a strange man
                                            'in tattered clothing holding a broken knife. He is frightened by '
                                            'you.', '"Please, the stone, return it to the volcano.', 0, 0,
                         [broken_knife])
-old_man = Character('an old beggar', 100, 'wearing a tan cloak, he appears parched.', '["Could you spare some water?", '
+old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak, he appears parched.',
+                    '["Could you spare some water?", '
                     '"Here, take my cloak."]', 0, 0, [desert_cloak])
 main = Character('You', 50, 'The main character', None, 0, 0, [glass_bottle])
 
@@ -345,7 +346,7 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER
-current_node = ehouse
+current_node = acivil
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -390,18 +391,22 @@ while True:
         human = command[7:]
         for stuff in current_node.chars:
             if human == stuff.name:
-                if stuff is Character:
+                if isinstance(stuff, Character):
                     main.attack(stuff)
+                else:
+                    'There is no one here to attack.'
     elif command[:4] == 'fill':
         bottle = command[5:]
         if current_node.body_of_water:
             for stuff in main.inv:
                 if bottle == stuff.name:
-                    if bottle is Bottle:
-                        bottle.full = 3
+                    if isinstance(stuff, Bottle):
+                        stuff.full = 3
                         print('You filled your water bottle(s).')
                     else:
                         print("You don't have a bottle to fill in your inventory.")
+        else:
+            'There is no water here to put in your bottle.'
     elif command == 'description':
         print(current_node.description)
         if current_node.inv is not None:
