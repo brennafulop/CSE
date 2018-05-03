@@ -27,6 +27,7 @@ class Weapon(Item):
     def __init__(self, name, description, damage):
         super(Weapon, self).__init__(name, description)
         self.damage = damage
+        self.equipped = False
 
     def held(self, person):
         person.damage = self.damage + person.damage
@@ -163,7 +164,7 @@ pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 
 
 class Character(object):
-    def __init__(self, name, health, description, dialogue, thirst, hunger, items=None):
+    def __init__(self, name, health, description, dialogue, thirst, hunger, hurt, items=None):
         if items is None:
             items = []
         self.name = name
@@ -173,6 +174,7 @@ class Character(object):
         self.dead = False
         self.thirst = thirst
         self.hunger = hunger
+        self.hurt = hurt
         self.inv = items
 
     def pick_up(self, thing, room):
@@ -182,8 +184,12 @@ class Character(object):
         thing.dropped(self, room)
 
     def attack(self, target):
-        print('%s attack %s' % (self.name, target.name))
-        target.damage()
+        if target is main:
+            print('The %s attacks %s' % (self.name, target.name))
+            target.take_damage(self)
+        else:
+            print('%s attack the %s' % (self.name, target.name))
+            target.take_damage(self)
 
     def death(self):
         self.dead = True
@@ -191,14 +197,17 @@ class Character(object):
             print('You have died.')
             exit(0)
         else:
-            print('%s has died' % self.name)
+            print('The %s has died' % self.name)
             current_node.chars.remove(self)
             self.inv.append(current_node)
 
-    def damage(self):
-        self.health -= 50
+    def take_damage(self, enemy):
+        self.health -= enemy.hurt
         if self.health >= 1:
-            print('The %s has %s health.' % (self.name, self.health))
+            if self is main:
+                print('%s have %s health.' % (self.name, self.health))
+            else:
+                print('The %s has %s health.' % (self.name, self.health))
         else:
             self.death()
 
@@ -217,15 +226,24 @@ class Character(object):
         if self.hunger >= 101:
             self.death()
 
+    def equip(self, thing):
+        thing.equipped = True
+        if thing.equipped:
+            self.hurt = thing.damage + self.hurt
+
 
 strange_man = Character('strange man', 30, 'In the corner there is a strange man '
                                            'in tattered clothing holding a broken knife. He is frightened by '
-                                           'you.', '"Please, the stone, return it to the volcano.', 0, 0,
+                                           'you.', '"Please, the stone, return it to the volcano.', 0, 0, 40,
                         [broken_knife])
-old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak, he appears parched.',
-                    '["Could you spare some water?", '
-                    '"Here, take my cloak."]', 0, 0, [desert_cloak])
-main = Character('You', 50, 'The main character', None, 0, 0, [glass_bottle])
+old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
+                                       'for water. He appears parched.',
+                    '"Here, take my cloak."', 0, 0, 20, [desert_cloak])
+main = Character('you', 100, 'The main character', None, 0, 0, 30, [])
+
+strange_man.equip(broken_knife)
+strange_man.attack(main)
+print(strange_man.hurt)
 
 # ROOMS
 
@@ -346,11 +364,12 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER
-current_node = acivil
+current_node = ehouse
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
-
+print('Welcome player! The goal of this game is to save the two planets from peril. To move use north, south, east, '
+      'west, up, and down (or just type the first letter of each of these commands). Good luck!')
 while True:
     print(current_node.name)
     if not current_node.visited:
@@ -373,8 +392,8 @@ while True:
         try:
             current_node.visited = True
             current_node.move(command)
-            main.thirst += 50
-            main.hunger += 5
+            main.thirst += 1
+            main.hunger += 1
         except KeyError:
             print('You cannot go this way')
     elif command[:7] == 'pick up':
@@ -403,12 +422,17 @@ while True:
                     if isinstance(stuff, Bottle):
                         stuff.full = 3
                         print('You filled your water bottle(s).')
+                    elif stuff.full == 3:
+                        print('Your bottle is already full')
                     else:
                         print("You don't have a bottle to fill in your inventory.")
         else:
             'There is no water here to put in your bottle.'
     elif command == 'description':
         print(current_node.description)
+        if current_node.chars is not None:
+            for stuff in current_node.chars:
+                print(stuff.description)
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
