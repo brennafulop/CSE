@@ -27,10 +27,10 @@ class Weapon(Item):
     def __init__(self, name, description, damage):
         super(Weapon, self).__init__(name, description)
         self.damage = damage
-        self.equipped = False
 
-    def held(self, person):
-        person.damage = self.damage + person.damage
+
+    # def held(self, person):
+    #     person.damage = self.damage + person.damage
 
 
 class Melee(Weapon):
@@ -164,7 +164,7 @@ pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 
 
 class Character(object):
-    def __init__(self, name, health, description, dialogue, thirst, hunger, hurt, items=None):
+    def __init__(self, name, health, description, dialogue, thirst, hunger, hurt, weapon_equipped=None, items=None):
         if items is None:
             items = []
         self.name = name
@@ -175,6 +175,8 @@ class Character(object):
         self.thirst = thirst
         self.hunger = hunger
         self.hurt = hurt
+        self.equipped = False
+        self.weapon_equipped = weapon_equipped
         self.inv = items
 
     def pick_up(self, thing, room):
@@ -184,7 +186,7 @@ class Character(object):
         thing.dropped(self, room)
 
     def attack(self, target):
-        if target is main:
+        if target is player:
             print('The %s attacks %s' % (self.name, target.name))
             target.take_damage(self)
         else:
@@ -193,18 +195,19 @@ class Character(object):
 
     def death(self):
         self.dead = True
-        if self is main:
+        if self is player:
             print('You have died.')
             exit(0)
         else:
             print('The %s has died' % self.name)
             current_node.chars.remove(self)
             self.inv.append(current_node)
+            pass
 
     def take_damage(self, enemy):
         self.health -= enemy.hurt
         if self.health >= 1:
-            if self is main:
+            if self is player:
                 print('%s have %s health.' % (self.name, self.health))
             else:
                 print('The %s has %s health.' % (self.name, self.health))
@@ -227,23 +230,28 @@ class Character(object):
             self.death()
 
     def equip(self, thing):
-        thing.equipped = True
-        if thing.equipped:
-            self.hurt = thing.damage + self.hurt
+        self.equipped = True
+        self.weapon_equipped.append(thing)
+        self.hurt = thing.damage + self.hurt
+
+    def un_equip(self, thing):
+        if self.equipped:
+            self.equipped = False
+            self.weapon_equipped.remove(thing)
+            self.hurt -= thing.damage
+        else:
+            print('You must have something equipped to un-equip it.')
 
 
-strange_man = Character('strange man', 30, 'In the corner there is a strange man '
+
+strange_man = Character('strange man', 50, 'In the corner there is a strange man '
                                            'in tattered clothing holding a broken knife. He is frightened by '
                                            'you.', '"Please, the stone, return it to the volcano.', 0, 0, 40,
-                        [broken_knife])
+                        [broken_knife], [])
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
-                    '"Here, take my cloak."', 0, 0, 20, [desert_cloak])
-main = Character('you', 100, 'The main character', None, 0, 0, 30, [])
-
-strange_man.equip(broken_knife)
-strange_man.attack(main)
-print(strange_man.hurt)
+                    '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
+player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [])
 
 # ROOMS
 
@@ -324,7 +332,6 @@ ecivil = Room("Civilization", 'bridge1', 'elandingpad', 'ehouse', None, None, No
               'crumbled, except one. You think you see '
               'movement inside it.', [], [])
 ehouse = Room('Hut', None, None, None, 'ecivil', None, None, 'You are inside of the hut. ', [dried_meat,
-                                                                                             broken_knife,
                                                                                              lembas], [strange_man])
 bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', 'You are on a fancy bridge over a wide '
                                                                                'and fast moving river.', [], [])
@@ -364,7 +371,7 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER
-current_node = ehouse
+current_node = ahouse
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -380,8 +387,8 @@ while True:
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
-    print('Your hunger is at %s and your thirst is at %s.' % (main.hunger, main.thirst))
-    main.thirsty()
+    print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
+    player.thirsty()
     command = input('>_').lower().strip()
     if command == 'quit':
         quit(0)
@@ -392,32 +399,54 @@ while True:
         try:
             current_node.visited = True
             current_node.move(command)
-            main.thirst += 1
-            main.hunger += 1
+            player.thirst += 1
+            player.hunger += 1
         except KeyError:
             print('You cannot go this way')
     elif command[:7] == 'pick up':
         item = command[8:]
         for stuff in current_node.inv:
             if item == stuff.name:
-                main.pick_up(stuff, current_node)
+                player.pick_up(stuff, current_node)
+            elif isinstance(item, Weapon):
+                command = input('Would you like to equip the %s? >_' % item.name)
+                if command == 'yes':
+                    if player.equipped:
+                        command = input('You already have an item equipped, would you like to replace it? >_')
+                        if command == 'yes':
+                            player.un_equip(item)
+                    else:
+                        player.equip(item)
+    elif command[:4] == 'take':
+        item = command[5:]
+        for stuff in current_node.inv:
+            if item == stuff.name:
+                player.pick_up(stuff, current_node)
+            elif isinstance(item, Weapon):
+                command = input('Would you like to equip the %s? >_' % item.name)
+                if command == 'yes':
+                    player.equip(item)
     elif command[:4] == 'drop':
         item = command[5:]
-        for stuff in main.inv:
+        for stuff in player.inv:
             if item == stuff.name:
-                main.drop(stuff, current_node)
+                player.drop(stuff, current_node)
     elif command[:6] == 'attack':
         human = command[7:]
         for stuff in current_node.chars:
             if human == stuff.name:
                 if isinstance(stuff, Character):
-                    main.attack(stuff)
+                    player.attack(stuff)
+                    if stuff.dead:
+                        pass
+                    else:
+                        stuff.attack(player)
                 else:
                     'There is no one here to attack.'
     elif command[:4] == 'fill':
         bottle = command[5:]
         if current_node.body_of_water:
-            for stuff in main.inv:
+            for stuff in player.inv:
                 if bottle == stuff.name:
                     if isinstance(stuff, Bottle):
                         stuff.full = 3
@@ -428,6 +457,15 @@ while True:
                         print("You don't have a bottle to fill in your inventory.")
         else:
             'There is no water here to put in your bottle.'
+    elif 'equip' in command:
+        thingy = command[6:]
+        for stuff in player.inv:
+            if thingy == stuff.name:
+                try:
+                    player.equip(stuff)
+                    print('You have equipped the %s' % stuff.name)
+                except not isinstance(stuff, Weapon):
+                    print('You can only equip weapons.')
     elif command == 'description':
         print(current_node.description)
         if current_node.chars is not None:
@@ -437,7 +475,9 @@ while True:
             for stuff in current_node.inv:
                 print(stuff.description)
     elif command == 'inventory':
-        for item in main.inv:
+        for item in player.inv:
             print(item.name)
+    elif command == 'beam me up scotty!':
+        current_node = airlock
     else:
         print('Command not recognized.')
