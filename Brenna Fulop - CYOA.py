@@ -29,10 +29,6 @@ class Weapon(Item):
         self.damage = damage
 
 
-    # def held(self, person):
-    #     person.damage = self.damage + person.damage
-
-
 class Melee(Weapon):
     def __init__(self, name, description, damage):
         super(Melee, self).__init__(name, description, damage)
@@ -152,13 +148,18 @@ sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handl
 desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
 shiny_helmet = Helmet('helmet', "you see a shiny helmet shoved into the ground.", 15)
 glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers from on the ground.')
-space_food = Food('space food', "There is a packet of space food on the floor.", 30)
-dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 25)
-lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
+space_food = Food('space food', "There is a packet of space food on the floor.", 100)
+dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 65)
+lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 60)
+apple = Food('apple', 'You see a shiny red apple.', 15)
+orange = Food('orange', 'There is an orange.', 15)
+grapefruit = Food('')
 water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the ground.', [])
 water_bottle2 = Bottle('water bottle', 'a glass bottle filled with water sits on the ground.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
+testerknife = Knife('knife', 'a plain knife', 15)
+testerknife2 = Knife('knife2', 'a plain knife', 15)
 
 # CHARACTERS
 
@@ -243,7 +244,6 @@ class Character(object):
             print('You must have something equipped to un-equip it.')
 
 
-
 strange_man = Character('strange man', 50, 'In the corner there is a strange man '
                                            'in tattered clothing holding a broken knife. He is frightened by '
                                            'you.', '"Please, the stone, return it to the volcano.', 0, 0, 40,
@@ -251,7 +251,7 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
                     '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
-player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [])
+player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [testerknife, testerknife2])
 
 # ROOMS
 
@@ -408,15 +408,23 @@ while True:
         for stuff in current_node.inv:
             if item == stuff.name:
                 player.pick_up(stuff, current_node)
-            elif isinstance(item, Weapon):
-                command = input('Would you like to equip the %s? >_' % item.name)
+            if isinstance(stuff, Weapon):
+                command = input('Would you like to equip the %s? >_' % stuff.name)
                 if command == 'yes':
                     if player.equipped:
-                        command = input('You already have an item equipped, would you like to replace it? >_')
-                        if command == 'yes':
-                            player.un_equip(item)
+                        for things in player.weapon_equipped:
+                            command = input('You already have an item equipped, would you like to replace it? >_')
+                            if command == 'yes':
+                                player.un_equip(things)
+                                player.equip(stuff)
+                                print('You have equipped the %s' % stuff.name)
+                            else:
+                                print('You did not equip the new weapon.')
                     else:
-                        player.equip(item)
+                        player.equip(stuff)
+                        print('You have equipped the %s' % stuff.name)
+                else:
+                    print('You did not equip the weapon.')
     elif command[:4] == 'take':
         item = command[5:]
         for stuff in current_node.inv:
@@ -461,11 +469,21 @@ while True:
         thingy = command[6:]
         for stuff in player.inv:
             if thingy == stuff.name:
-                try:
-                    player.equip(stuff)
-                    print('You have equipped the %s' % stuff.name)
-                except not isinstance(stuff, Weapon):
-                    print('You can only equip weapons.')
+                if player.equipped:
+                    for things in player.weapon_equipped:
+                        command = input('You already have an item equipped, would you like to replace it? >_')
+                        if command == 'yes':
+                            player.un_equip(things)
+                            player.equip(stuff)
+                            print('You have equipped the %s' % stuff.name)
+                        else:
+                            print('You did not equip the new weapon.')
+                else:
+                    try:
+                        player.equip(stuff)
+                        print('You have equipped the %s' % stuff.name)
+                    except not isinstance(stuff, Weapon):
+                        print('You can only equip weapons.')
     elif command == 'description':
         print(current_node.description)
         if current_node.chars is not None:
@@ -479,5 +497,10 @@ while True:
             print(item.name)
     elif command == 'beam me up scotty!':
         current_node = airlock
+    elif command == 'damage':
+        print(player.hurt)
+    elif command == 'weapons':
+        for item in player.weapon_equipped:
+            print(item.name)
     else:
         print('Command not recognized.')
