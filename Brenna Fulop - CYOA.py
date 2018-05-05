@@ -153,14 +153,13 @@ dried_meat = Food('dried meat', "On the floor there is some dried meat of unknow
 lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 60)
 apple = Food('apple', 'You see a shiny red apple.', 15)
 orange = Food('orange', 'There is an orange.', 15)
-grapefruit = Food('')
-water_bottle1 = Bottle('water bottle', 'a glass bottle with water in it sits on the ground.', [])
-water_bottle2 = Bottle('water bottle', 'a glass bottle filled with water sits on the ground.', [])
+grapefruit = Food('grapefruit', 'There is a grapefruit.', 15)
+water_bottle1 = Bottle('glass bottle', 'a glass bottle with water in it sits on the ground.', [])
+water_bottle2 = Bottle('glass bottle', 'a glass bottle filled with water sits on the ground.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
-testerknife = Knife('knife', 'a plain knife', 15)
-testerknife2 = Knife('knife2', 'a plain knife', 15)
 
+water_bottle1.full = 0
 # CHARACTERS
 
 
@@ -251,7 +250,7 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
                     '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
-player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [testerknife, testerknife2])
+player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [water_bottle1])
 
 # ROOMS
 
@@ -342,8 +341,8 @@ forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'Yo
                                                                              '. You see something glimmer at you from'
                                                                              ' the top of a nearby tree.', [], [])
 tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree.', [pebble,
-                                                                                                         sturdy_bow], []
-            )
+                                                                                                         sturdy_bow,
+            apple, orange, grapefruit], [])
 
 bridge2 = Room('Rope Bridge', None, None, 'mountains', 'forest', None, 'river', 'You are  on a fragile rope bridge '
                                                                                 'above the'
@@ -371,7 +370,7 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER
-current_node = ahouse
+current_node = river
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -408,32 +407,45 @@ while True:
         for stuff in current_node.inv:
             if item == stuff.name:
                 player.pick_up(stuff, current_node)
-            if isinstance(stuff, Weapon):
-                command = input('Would you like to equip the %s? >_' % stuff.name)
-                if command == 'yes':
-                    if player.equipped:
-                        for things in player.weapon_equipped:
-                            command = input('You already have an item equipped, would you like to replace it? >_')
-                            if command == 'yes':
-                                player.un_equip(things)
-                                player.equip(stuff)
-                                print('You have equipped the %s' % stuff.name)
-                            else:
-                                print('You did not equip the new weapon.')
+                if isinstance(stuff, Weapon):
+                    command = input('Would you like to equip the %s? >_' % stuff.name)
+                    if command == 'yes':
+                        if player.equipped:
+                            for things in player.weapon_equipped:
+                                command = input('You already have an item equipped, would you like to replace it? >_')
+                                if command == 'yes':
+                                    player.un_equip(things)
+                                    player.equip(stuff)
+                                    print('You have equipped the %s' % stuff.name)
+                                else:
+                                    print('You did not equip the new weapon.')
+                        else:
+                            player.equip(stuff)
+                            print('You have equipped the %s' % stuff.name)
                     else:
-                        player.equip(stuff)
-                        print('You have equipped the %s' % stuff.name)
-                else:
-                    print('You did not equip the weapon.')
+                        print('You did not equip the weapon.')
     elif command[:4] == 'take':
         item = command[5:]
         for stuff in current_node.inv:
             if item == stuff.name:
                 player.pick_up(stuff, current_node)
-            elif isinstance(item, Weapon):
-                command = input('Would you like to equip the %s? >_' % item.name)
-                if command == 'yes':
-                    player.equip(item)
+                if isinstance(stuff, Weapon):
+                    command = input('Would you like to equip the %s? >_' % stuff.name)
+                    if command == 'yes':
+                        if player.equipped:
+                            for things in player.weapon_equipped:
+                                command = input('You already have an item equipped, would you like to replace it? >_')
+                                if command == 'yes':
+                                    player.un_equip(things)
+                                    player.equip(stuff)
+                                    print('You have equipped the %s' % stuff.name)
+                                else:
+                                    print('You did not equip the new weapon.')
+                        else:
+                            player.equip(stuff)
+                            print('You have equipped the %s' % stuff.name)
+                    else:
+                        print('You did not equip the weapon.')
     elif command[:4] == 'drop':
         item = command[5:]
         for stuff in player.inv:
@@ -450,7 +462,7 @@ while True:
                     else:
                         stuff.attack(player)
                 else:
-                    'There is no one here to attack.'
+                    print('There is no one here to attack.')
     elif command[:4] == 'fill':
         bottle = command[5:]
         if current_node.body_of_water:
