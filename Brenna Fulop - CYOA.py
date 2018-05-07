@@ -376,6 +376,7 @@ short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
 print('Welcome player! The goal of this game is to save the two planets from peril. To move use north, south, east, '
       'west, up, and down (or just type the first letter of each of these commands). Good luck!')
+print('')
 while True:
     print(current_node.name)
     if not current_node.visited:
@@ -496,6 +497,14 @@ while True:
                         print('You have equipped the %s' % stuff.name)
                     except not isinstance(stuff, Weapon):
                         print('You can only equip weapons.')
+    elif command[4:] == 'drink':
+        thing = command[6:]
+        for stuff in player.inv:
+            if thing == stuff.name:
+                if isinstance(stuff, Bottle):
+                    if stuff.full > 0:
+                        player.thirst = 0
+                        stuff.full -= 1
     elif command == 'description':
         print(current_node.description)
         if current_node.chars is not None:
