@@ -497,14 +497,17 @@ while True:
                         print('You have equipped the %s' % stuff.name)
                     except not isinstance(stuff, Weapon):
                         print('You can only equip weapons.')
-    elif command[4:] == 'drink':
-        thing = command[6:]
+    elif command == 'drink water':
         for stuff in player.inv:
-            if thing == stuff.name:
-                if isinstance(stuff, Bottle):
-                    if stuff.full > 0:
-                        player.thirst = 0
-                        stuff.full -= 1
+            if isinstance(stuff, Bottle):
+                if stuff.full > 0:
+                    player.thirst = 0
+                    stuff.full -= 1
+                    print('You have cured your thirst.')
+                else:
+                    print('Your bottle is empty.')
+            else:
+                print("You don't have a bottle")
     elif command == 'description':
         print(current_node.description)
         if current_node.chars is not None:
