@@ -1,4 +1,4 @@
-# ITEMS
+# ITEMS------------------------------------------------------------------------------------------------------------
 class Item(object):
     def __init__(self, name, description):
         self.name = name
@@ -118,7 +118,7 @@ class Consumable(Item):
 
     def consumed(self, person):
         self.consume = True
-        person.inventory.remove(self)
+        person.inv.remove(self)
 
 
 class Food(Consumable):
@@ -127,17 +127,8 @@ class Food(Consumable):
         self.nutrients = nutrients
 
     def eaten(self, person):
-        person.health = person.health + self.nutrients
-
-
-# class Liquid(Consumable):
-#     def __init__(self, name, description, amount):
-#         super(Liquid, self).__init__(name, description)
-#         self.amount = amount
-#         self.able_to = True
-#
-#     def drank(self, person):
-#         person.health = person.health + self.amount
+        person.hunger = person.hunger - self.nutrients
+        self.consumed(person)
 
 
 elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
@@ -160,7 +151,7 @@ fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest 
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 
 water_bottle1.full = 0
-# CHARACTERS
+# CHARACTERS---------------------------------------------------------------------------------------------------------
 
 
 class Character(object):
@@ -176,6 +167,8 @@ class Character(object):
         self.hunger = hunger
         self.hurt = hurt
         self.equipped = False
+        self.winning = 0
+        self.win = False
         self.weapon_equipped = weapon_equipped
         self.inv = items
 
@@ -242,6 +235,12 @@ class Character(object):
         else:
             print('You must have something equipped to un-equip it.')
 
+    def win(self):
+        if self.winning == 2:
+            self.win = True
+            print('You win!')
+            exit(0)
+
 
 strange_man = Character('strange man', 50, 'In the corner there is a strange man '
                                            'in tattered clothing holding a broken knife. He is frightened by '
@@ -250,9 +249,9 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
                     '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
-player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [water_bottle1, water_bottle2])
+player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [pebble])
 
-# ROOMS
+# ROOMS-----------------------------------------------------------------------------------------------------------
 
 
 class Room(object):
@@ -306,18 +305,20 @@ plateau = Room('Plateau', None, None, None, None, None, 'apath2', 'You are on to
                                                                   'large wall with rows of houses inside.', [], [])
 caveentrance = Room('Cave Entrance', 'apath2', 'maze1', None, None, None, None, 'You are the entrance to a wide cave. '
                                                                                 'Inside is pitch black.', [], [])
-maze1 = Room('Tunnel', 'caveentrance', 'maze2', 'maze3', None, None, None, "You are inside the cave system. You can't "
-                                                                           "see anything, but you can feel the walls.",
+maze1 = Room('Maze', 'caveentrance', 'maze2', 'maze5', None, None, None, "You are inside the cave system. You can't "
+                                                                         "see anything, but you can feel the walls.",
              [], [])
-maze2 = Room('Tunnel', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
-                                                                 "see anything, but you can feel the walls.", [], [])
-maze4 = Room('Tunnel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
-                                                                 'You see light coming from the west.', [shiny_helmet],
+maze2 = Room('Maze', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
+                                                               "see anything, but you can feel the walls.", [], [])
+maze4 = Room('Mazel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
+                                                                'You see light coming from the west.', [shiny_helmet],
              [])
-maze3 = Room('Tunnel', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
-                                                                 "see anything, but you can feel the walls.", [], [])
-oasis = Room('Oaisis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
-                                                              "is cooler here. This appears to be the only source of"
+maze3 = Room('Maze', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
+                                                               "see anything, but you can feel the walls.", [], [])
+maze5 = Room('Maze', None, None, None, maze1, None, None, "You are inside the cave system You can't "
+                                                          "see anything, but you can feel the walls.", [], [])
+oasis = Room('Oasis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
+                                                             "is cooler here. This appears to be the only source of"
              " above ground water on the entire planet.", [glass_bottle], [])
 
 # Endore
@@ -369,7 +370,7 @@ bridge1.body_of_water = True
 bridge2.body_of_water = True
 river.body_of_water = True
 
-# CONTROLLER
+# CONTROLLER ---------------------------------------------------------------------------------------------------
 current_node = river
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
@@ -509,6 +510,17 @@ while True:
                     print('Your bottle is empty.')
             else:
                 print("You don't have a bottle")
+    elif 'eat' in command:
+        thingy = command[4:]
+        for stuff in player.inv:
+            if thingy == stuff.name:
+                if isinstance(stuff, Food):
+                    player.eat(stuff)
+                    print('You have eaten the %s' % stuff.name)
+                    break
+                else:
+                    print('You can only eat food.')
+                    break
     elif command == 'description':
         print(current_node.description)
         if current_node.chars is not None:
@@ -518,8 +530,9 @@ while True:
             for stuff in current_node.inv:
                 print(stuff.description)
     elif command == 'inventory':
+        print('You are carrying:')
         for item in player.inv:
-            print(item.name)
+            print("> " + item.name)
     elif command == 'beam me up scotty':
         current_node = airlock
     elif command == 'mr stark i dont feel so good':
@@ -529,5 +542,20 @@ while True:
     elif command == 'weapons':
         for item in player.weapon_equipped:
             print(item.name)
+    elif command == 'drop blue pebble':
+        if current_node == volcanotop:
+            'You have saved the planet!'
+            player.winning += 1
+    elif current_node == oasis:
+        if oasis.visited is False:
+            print('Give the directions to the oasis to a member of the town in order to save the planet.')
+        else:
+            print('Hurry! Give the directions to the town!')
+    elif command == 'ssew':
+        if current_node == acivil:
+            print('You have saved the planet!')
+            player.winning += 1
+        else:
+            print('Tell the town, not me!')
     else:
         print('Command not recognized.')
