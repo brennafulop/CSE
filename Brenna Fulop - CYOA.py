@@ -154,8 +154,8 @@ lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some l
 apple = Food('apple', 'You see a shiny red apple.', 15)
 orange = Food('orange', 'There is an orange.', 15)
 grapefruit = Food('grapefruit', 'There is a grapefruit.', 15)
-water_bottle1 = Bottle('glass bottle', 'a glass bottle with water in it sits on the ground.', [])
-water_bottle2 = Bottle('glass bottle', 'a glass bottle filled with water sits on the ground.', [])
+water_bottle1 = Bottle('water bottle', 'a water bottle filled with water sits on the ground.', [])
+water_bottle2 = Bottle('water bottle', 'a water bottle filled with water sits on the ground.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 
@@ -250,7 +250,7 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
                     '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
-player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [water_bottle1])
+player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [water_bottle1, water_bottle2])
 
 # ROOMS
 
@@ -471,7 +471,7 @@ while True:
                 if bottle == stuff.name:
                     if isinstance(stuff, Bottle):
                         stuff.full = 3
-                        print('You filled your water bottle(s).')
+                        print('You filled your water bottle.')
                     elif stuff.full == 3:
                         print('Your bottle is already full')
                     else:
@@ -504,6 +504,7 @@ while True:
                     player.thirst = 0
                     stuff.full -= 1
                     print('You have cured your thirst.')
+                    break
                 else:
                     print('Your bottle is empty.')
             else:
@@ -519,8 +520,10 @@ while True:
     elif command == 'inventory':
         for item in player.inv:
             print(item.name)
-    elif command == 'beam me up scotty!':
+    elif command == 'beam me up scotty':
         current_node = airlock
+    elif command == 'mr stark i dont feel so good':
+        player.death()
     elif command == 'damage':
         print(player.hurt)
     elif command == 'weapons':
