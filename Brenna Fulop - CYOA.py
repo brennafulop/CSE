@@ -145,7 +145,8 @@ broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet
 crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the ground. it has been half-buried.", 25)
 sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle sits next to you."
                                " A quiver of arrows is next to it and seems to be charmed.", 30, 40)
-desert_cloak = Cloak('desert cloak', "a tan and sturdy cloak that will protect you from the forces of the desert.", 10)
+desert_cloak = Cloak('desert cloak', "There is a tan and sturdy cloak that will protect you from the forces of the "
+                                     "desert.", 10)
 shiny_helmet = Helmet('helmet', "you see a shiny helmet shoved into the ground.", 15)
 glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers from on the ground.')
 space_food = Food('space food', "There is a packet of space food on the floor.", 100)
@@ -161,7 +162,6 @@ pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4.Go east \n5.'
                                               'Go west')
 
-water_bottle1.full = 0
 # CHARACTERS---------------------------------------------------------------------------------------------------------
 
 
@@ -178,6 +178,7 @@ class Character(object):
         self.hunger = hunger
         self.hurt = hurt
         self.equipped = False
+        self.won = False
         self.winning = 0
         self.weapon_equipped = weapon_equipped
         self.inv = items
@@ -204,8 +205,9 @@ class Character(object):
         else:
             print('The %s has died' % self.name)
             current_node.chars.remove(self)
-            self.inv.append(current_node)
-            pass
+            print('His things scatter on the floor.')
+            for thing in self.inv:
+                current_node.inv.append(thing)
 
     def take_damage(self, enemy):
         self.health -= enemy.hurt
@@ -246,6 +248,7 @@ class Character(object):
             print('You must have something equipped to un-equip it.')
 
     def win(self):
+        self.won = True
         print('You win! Congratulations You have saved both of the planets in peril. \nYou fly at warp speed back to'
               ' Earth, satisfied that you completed your mission.')
         exit(0)
@@ -258,13 +261,13 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
                     '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
-player = Character('you', 100, 'The main character', None, 0, 0, 30, [], [pebble, oasismap])
+player = Character('you', 100, 'The main character', None, 0, 0, 100, [], [oasismap])
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
 
 
 class Room(object):
-    def __init__(self, name, north, south, east, west, up, down, description, items=None, characters=None):
+    def __init__(self, name, north, south, east, west, up, down, description, items, characters=None):
         self.name = name
         self.north = north
         self.south = south
@@ -289,7 +292,7 @@ cockpit = Room("Cockpit", 'airlock', None, None, None, None, None, "You are insi
                "There is a small chest to your right. There is a door to the North.", [fancy_chest, space_food])
 airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad', None, None, "You are inside your"
                " Spaceship's airlock room.\nThrough the clear wall you can see a planet covered in trees to"
-               " the north and a planet covered in sand to the west")
+               " the north and a planet covered in sand to the west", [])
 
 # Arrakis
 alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentrance', 'airlock', None, 'You are on'
@@ -514,6 +517,14 @@ while True:
                                     player.winning += 1
                                     if player.winning == 2:
                                         player.win()
+                                if isinstance(stuffs, Bottle):
+                                    if stuffs.full > 0:
+                                        print(human)
+
+                            else:
+                                print('You give the %s to the %s' % (stuffs, human))
+                                player.inv.remove(thingy)
+                                stuff.inv.append(thingy)
     elif command[:4] == 'fill':
         bottle = command[5:]
         if current_node.body_of_water:
