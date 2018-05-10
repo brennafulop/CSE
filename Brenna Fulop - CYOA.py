@@ -158,7 +158,7 @@ water_bottle1 = Bottle('water bottle', 'a water bottle filled with water sits on
 water_bottle2 = Bottle('water bottle', 'a water bottle filled with water sits on the ground.', [])
 fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
-oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4. Go east \n5.'
+oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4.Go east \n5.'
                                               'Go west')
 
 water_bottle1.full = 0
@@ -179,7 +179,6 @@ class Character(object):
         self.hurt = hurt
         self.equipped = False
         self.winning = 0
-        self.win = False
         self.weapon_equipped = weapon_equipped
         self.inv = items
 
@@ -247,10 +246,9 @@ class Character(object):
             print('You must have something equipped to un-equip it.')
 
     def win(self):
-        if self.winning == 2:
-            self.win = True
-            print('You win!')
-            exit(0)
+        print('You win! Congratulations You have saved both of the planets in peril. \nYou fly at warp speed back to'
+              ' Earth, satisfied that you completed your mission.')
+        exit(0)
 
 
 strange_man = Character('strange man', 50, 'In the corner there is a strange man '
@@ -396,7 +394,7 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
-current_node = cockpit
+current_node = acivil
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -477,7 +475,15 @@ while True:
         item = command[5:]
         for stuff in player.inv:
             if item == stuff.name:
-                player.drop(stuff, current_node)
+                if stuff.name == 'blue pebble':
+                    if current_node is volcanotop:
+                        player.drop(stuff, current_node)
+                        print('You have saved the planet!')
+                        player.winning += 1
+                        if player.winning == 2:
+                            player.win()
+                else:
+                    player.drop(stuff, current_node)
     elif command[:6] == 'attack':
         human = command[7:]
         for stuff in current_node.chars:
@@ -490,6 +496,24 @@ while True:
                         stuff.attack(player)
                 else:
                     print('There is no one here to attack.')
+    elif 'give' in command:
+        human = command[5:]
+        for stuff in current_node.chars:
+            if human == stuff.name:
+                if isinstance(stuff, Character):
+                    command = input('What you you like to give the %s? >_' % stuff.name)
+                    stuffs = command
+                    for thingy in player.inv:
+                        if stuffs == thingy.name:
+                            if human == 'old beggar':
+                                if stuffs == 'map':
+                                    print('You give the %s to the %s' % (stuffs, human))
+                                    player.inv.remove(thingy)
+                                    stuff.inv.append(thingy)
+                                    print('Congratulations! You have saved Arrakis by providing water to the town!')
+                                    player.winning += 1
+                                    if player.winning == 2:
+                                        player.win()
     elif command[:4] == 'fill':
         bottle = command[5:]
         if current_node.body_of_water:
@@ -547,11 +571,11 @@ while True:
                     print('You can only eat food.')
                     break
     elif 'read' in command:
-        thingy = command[:4]
+        thingy = command[5:]
         for stuff in player.inv:
             if thingy == stuff.name:
                 if isinstance(stuff, Map):
-                    print('You read the %s' % stuff.name)
+                    print('The %s reads:' % stuff.name)
                     stuff.read()
     elif command == 'description':
         print(current_node.description)
@@ -574,20 +598,14 @@ while True:
     elif command == 'weapons':
         for item in player.weapon_equipped:
             print(item.name)
-    elif command == 'drop blue pebble':
-        if current_node == volcanotop:
-            'You have saved the planet!'
-            player.winning += 1
     elif current_node == oasis:
         if oasis.visited is False:
-            print('Give the directions to the oasis to a member of the town in order to save the planet.')
+            print('Give the map to a member of the town in order to save the planet.')
         else:
             print('Hurry! Give the directions to the town!')
-    elif command == 'ssew':
-        if current_node == acivil:
-            print('You have saved the planet!')
-            player.winning += 1
-        else:
-            print('Tell the town, not me!')
+    elif command == 'score':
+        print(player.winning)
+    elif command == 'volcano':
+        current_node = volcanotop
     else:
         print('Command not recognized.')
