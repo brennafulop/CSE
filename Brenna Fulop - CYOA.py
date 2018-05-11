@@ -74,8 +74,13 @@ class Wearable(Item):
 
 
 class Cloak(Wearable):
-    def __init__(self, name, description, protection):
-        super(Cloak, self).__init__(name, description, protection)
+    def __init__(self, name, description):
+        super(Cloak, self).__init__(name, description)
+        self.freely_given = True
+
+    def protection(self, person):
+        if self.freely_given is True:
+            person.get_thirsty = False
 
 
 class Helmet(Wearable):
@@ -145,7 +150,7 @@ broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet
 crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the ground. it has been half-buried.", 25)
 sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle sits next to you."
                                " A quiver of arrows is next to it and seems to be charmed.", 30, 40)
-desert_cloak = Cloak('desert cloak', "There is a tan and sturdy cloak that will protect you from the forces of the "
+desert_cloak = Cloak('desert cloak', "There is a sturdy desert cloak that will protect you from the forces of the "
                                      "desert.", 10)
 shiny_helmet = Helmet('helmet', "you see a shiny helmet shoved into the ground.", 15)
 glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers from on the ground.')
@@ -174,6 +179,7 @@ class Character(object):
         self.description = description
         self.dialogue = dialogue
         self.dead = False
+        self.get_thirsty = True
         self.thirst = thirst
         self.hunger = hunger
         self.hurt = hurt
@@ -260,8 +266,8 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
                         [broken_knife], [])
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
-                    '"Here, take my cloak."', 0, 0, 20, [desert_cloak], [])
-player = Character('you', 100, 'The main character', None, 0, 0, 100, [], [oasismap])
+                    '"Here, take my cloak."', 0, 0, 20, [], [desert_cloak])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [oasismap, glass_bottle])
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
 
@@ -426,7 +432,8 @@ while True:
         try:
             current_node.visited = True
             current_node.move(command)
-            player.thirst += 1
+            if player.get_thirsty is True:
+                player.thirst += 1
             player.hunger += 1
         except KeyError:
             print('You cannot go this way')
@@ -517,10 +524,20 @@ while True:
                                     player.winning += 1
                                     if player.winning == 2:
                                         player.win()
-                                if isinstance(stuffs, Bottle):
-                                    if stuffs.full > 0:
-                                        print(human)
+                                elif isinstance(thingy, Bottle):
+                                    if thingy.full > 0:
+                                        print('You give the %s to the %s' % (thingy.name, human))
+                                        stuff.inv.append(thingy)
+                                        player.inv.remove(thingy)
+                                        print(stuff.dialogue)
+                                        player.inv.append(desert_cloak)
+                                        stuff.inv.remove(desert_cloak)
+                                        print('He gives you the %s.' % desert_cloak.name)
 
+                                else:
+                                    print('You give the %s to the %s' % (stuffs, human))
+                                    player.inv.remove(thingy)
+                                    stuff.inv.append(thingy)
                             else:
                                 print('You give the %s to the %s' % (stuffs, human))
                                 player.inv.remove(thingy)
