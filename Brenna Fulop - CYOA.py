@@ -131,22 +131,21 @@ class Map(Item):
 
 elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
 broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet it is still sharp.", 15)
-crystal_knife = Knife('crystal knife', "a crystal knife glimmers at you from the ground. it has been half-buried.", 25)
+crystal_knife = Knife('crystal knife', "A crystal knife glimmers at you from the ground. it has been half-buried.", 25)
 sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle sits next to you."
                                " A quiver of arrows is next to it and seems to be charmed.", 30, 40)
 desert_cloak = Cloak('desert cloak', "There is a sturdy desert cloak that will protect you from the forces of the "
                                      "desert.", 10)
-shiny_helmet = Helmet('helmet', "you see a shiny helmet shoved into the ground.", 15)
-glass_bottle = Bottle('glass bottle', 'an full glass bottle shimmers from on the ground.')
+silver_helmet = Helmet('silver helmet', "You see a silver helmet shoved into the ground.", 30)
+glass_bottle = Bottle('glass bottle', 'A full glass bottle shimmers from on the ground.')
 space_food = Food('space food', "There is a packet of space food on the floor.", 100)
 dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 65)
 lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 60)
 apple = Food('apple', 'You see a shiny red apple.', 15)
 orange = Food('orange', 'There is an orange.', 15)
 grapefruit = Food('grapefruit', 'There is a grapefruit.', 15)
-water_bottle1 = Bottle('water bottle', 'a water bottle filled with water sits on the ground.', [])
-water_bottle2 = Bottle('water bottle', 'a water bottle filled with water sits on the ground.', [])
-fancy_chest = Chest('chest', 'Next to the control panel there is a wooden chest with gold accents.', [])
+water_bottle1 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
+water_bottle2 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
 oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4.Go east \n5.'
                                               'Go west')
@@ -259,7 +258,7 @@ class Character(object):
         exit(0)
 
 
-strange_man = Character('strange man', 50, 'In the corner there is a strange man '
+strange_man = Character('strange man', 50, 'In the corner there is an elven man '
                                            'in tattered clothing holding a broken knife. He is frightened by '
                                            'you.', '"Please, the stone, return it to the volcano.', 0, 0, 40,
                         [broken_knife], [])
@@ -267,8 +266,7 @@ old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approa
                                        'for water. He appears parched.',
                     '"Thank you so much, my dear child. Here, take my cloak, it will protect you well"', 0, 0, 20,  [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [oasismap, glass_bottle, crystal_knife,
-                                                                              elven_sword])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [])
 
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
@@ -297,7 +295,7 @@ class Room(object):
 # Spaceship
 cockpit = Room("Cockpit", 'airlock', None, None, None, None, None, "You are inside your ship, in front of you are the\n"
                "controls. You can see two moon-sized planets through the glass in front of you. \n"
-               "There is a small chest to your right. There is a door to the North.", [fancy_chest, space_food])
+               "There is a door to the North.", [space_food, water_bottle2])
 airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad', None, None, "You are inside your"
                " Spaceship's airlock room.\nThrough the clear wall you can see a planet covered in trees to"
                " the north and a planet covered in sand to the west", [])
@@ -308,16 +306,17 @@ alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentranc
                    ' and far to the west you can barely make out what appears to be a cave.', [], [])
 acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, 'You reach the entrance to the '
               'civilization, which is surrounded by a large wall \n'
-              'Rows of houses line the path. Only one appears unlocked.', [], [old_man])
+              'Rows of houses line the path. Only one to the east appears unlocked. There is also a path to the west',
+              [], [old_man])
 ahouse = Room("Arrakis Home", None, None, None, 'acivil', None, None, 'You are in a one room house. There is a table'
               ' in front of you.\n'
-              ' On the other side of the room there is a cot.', [crystal_knife, water_bottle1], [])
+              'On the other side of the room there is a cot.', [crystal_knife, water_bottle1], [])
 apath1 = Room("Open Desert", None, 'alandingpad', None, 'apath2', None, None, 'You have reached a crossroads.\n'
               'The path diverges to the south and west.', [], [])
 apath2 = Room('Open Desert', None, 'caveentrance', 'apath1', None, 'plateau', None, 'You have reached a crossroads.\n'
                                                                                     'You are at the base of a very tall'
                                                                                     ' plateau, and to the south you see'
-                                                                                    '\n a cave. The path also diverges '
+                                                                                    '\na cave. The path also diverges '
                                                                                     'to the east.', [], [])
 plateau = Room('Plateau', None, None, None, None, None, 'apath2', 'You are on top of a tall plateau. You can see a'
                                                                   ' path winding through the desert to the east.\n'
@@ -330,8 +329,8 @@ maze1 = Room('Maze', 'caveentrance', 'maze2', 'maze5', None, None, None, "You ar
              [], [])
 maze2 = Room('Maze', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
                                                                "see anything, but you can feel the walls.", [], [])
-maze4 = Room('Mazel', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
-                                                                'You see light coming from the west.', [shiny_helmet],
+maze4 = Room('Maze', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
+                                                               'You see light coming from the west.', [silver_helmet],
              [])
 maze3 = Room('Maze', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
                                                                "see anything, but you can feel the walls.", [], [])
@@ -405,12 +404,13 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
-current_node = acivil
+current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
 print('Welcome player! The goal of this game is to save the two planets from peril. \nTo move use north, south, east, '
-      'west, up, and down (or just type the first letter of each of these commands). \nFor help type "?" \nGood luck!')
+      'west, up, and down (or just type the first letter of each of these commands). \nFor help type "?", to quit type '
+      '"quit" \nGood luck!')
 print('')
 while True:
     print('\n'+current_node.name+'\n')
@@ -424,10 +424,13 @@ while True:
                 print(stuff.description)
     print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
     player.thirsty()
+    if current_node == oasis:
+        if oasis.visited is False:
+            print('Give the map to a member of the town in order to save the planet.')
+        else:
+            print('Hurry! Give the directions to the town!')
     command = input('>_').lower().strip()
-    if command == 'quit':
-        quit(0)
-    elif command in short_directions:
+    if command in short_directions:
         pos = short_directions.index(command)
         command = directions[pos]
     if command in directions:
@@ -439,6 +442,12 @@ while True:
             player.hunger += 1
         except KeyError:
             print('You cannot go this way')
+    elif command == 'quit':
+        command = input("Are you sure you want to quit? >_")
+        if command == 'yes':
+            exit(0)
+        elif command == 'no':
+            print("Perseverance is key")
     elif command[:7] == 'pick up':
         item = command[8:]
         for stuff in current_node.inv:
@@ -617,9 +626,12 @@ while True:
             for stuff in current_node.inv:
                 print(stuff.description)
     elif command == 'inventory':
-        print('You are carrying:')
-        for item in player.inv:
-            print("> " + item.name)
+        if player.inv is not None:
+            print('You are carrying:')
+            for item in player.inv:
+                print("> " + item.name)
+        elif player.inv is None:
+            print("You don't seem to be carrying anything")
     elif command == 'beam me up scotty':
         current_node = airlock
     elif command == 'mr stark i dont feel so good':
@@ -631,11 +643,6 @@ while True:
     elif command == 'weapons':
         for item in player.weapon_equipped:
             print(item.name)
-    elif current_node == oasis:
-        if oasis.visited is False:
-            print('Give the map to a member of the town in order to save the planet.')
-        else:
-            print('Hurry! Give the directions to the town!')
     elif command == 'score':
         print(player.winning)
     elif command == 'volcano':
