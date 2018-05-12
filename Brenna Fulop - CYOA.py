@@ -61,26 +61,10 @@ class Wearable(Item):
         self.wearing = False
         self.protection = protection
 
-    def put_on(self):
-        if not self.wearing:
-            self.wearing = True
-            print("You are wearing the %s" % self.name)
-        else:
-            self.wearing = False
-
-    def protecting(self, person):
-        if self.wearing:
-            person.health = person.health + self.protection
-
 
 class Cloak(Wearable):
-    def __init__(self, name, description):
-        super(Cloak, self).__init__(name, description)
-        self.freely_given = True
-
-    def protection(self, person):
-        if self.freely_given is True:
-            person.get_thirsty = False
+    def __init__(self, name, description, protection):
+        super(Cloak, self).__init__(name, description, protection)
 
 
 class Helmet(Wearable):
@@ -171,7 +155,8 @@ oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.
 
 
 class Character(object):
-    def __init__(self, name, health, description, dialogue, thirst, hunger, hurt, weapon_equipped=None, items=None):
+    def __init__(self, name, health, description, dialogue, thirst, hunger, hurt, armour=None,
+                 weapon_equipped=None, items=None):
         if items is None:
             items = []
         self.name = name
@@ -186,6 +171,7 @@ class Character(object):
         self.equipped = False
         self.won = False
         self.winning = 0
+        self.armour = armour
         self.weapon_equipped = weapon_equipped
         self.inv = items
 
@@ -241,15 +227,28 @@ class Character(object):
             self.death()
 
     def equip(self, thing):
-        self.equipped = True
-        self.weapon_equipped.append(thing)
-        self.hurt = thing.damage + self.hurt
+        if isinstance(thing, Weapon):
+            self.equipped = True
+            self.weapon_equipped.append(thing)
+            self.hurt = thing.damage + self.hurt
+        elif isinstance(thing, Wearable):
+            self.equipped = True
+            self.armour.append(thing)
+            self.health = thing.protection + self.health
+            if isinstance(thing, Cloak):
+                self.get_thirsty = False
 
     def un_equip(self, thing):
         if self.equipped:
             self.equipped = False
-            self.weapon_equipped.remove(thing)
-            self.hurt -= thing.damage
+            if isinstance(thing, Weapon):
+                self.weapon_equipped.remove(thing)
+                self.inv.append(thing)
+                self.hurt -= thing.damage
+            elif isinstance(thing, Wearable):
+                self.inv.append(thing)
+                self.armour.remove(thing)
+                self.health -= thing.protection
         else:
             print('You must have something equipped to un-equip it.')
 
@@ -266,8 +265,11 @@ strange_man = Character('strange man', 50, 'In the corner there is a strange man
                         [broken_knife], [])
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
-                    '"Here, take my cloak."', 0, 0, 20, [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [oasismap, glass_bottle])
+                    '"Thank you so much, my dear child. Here, take my cloak, it will protect you well"', 0, 0, 20,  [],
+                    [], [desert_cloak])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [oasismap, glass_bottle, crystal_knife,
+                                                                              elven_sword])
+
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
 
@@ -560,21 +562,22 @@ while True:
         thingy = command[6:]
         for stuff in player.inv:
             if thingy == stuff.name:
-                if player.equipped:
-                    for things in player.weapon_equipped:
-                        command = input('You already have an item equipped, would you like to replace it? >_')
-                        if command == 'yes':
-                            player.un_equip(things)
-                            player.equip(stuff)
-                            print('You have equipped the %s' % stuff.name)
-                        else:
-                            print('You did not equip the new weapon.')
-                else:
-                    try:
+                if isinstance(stuff, Weapon):
+                    if player.equipped:
+                        for things in player.weapon_equipped:
+                            command = input('You already have an item equipped, would you like to replace it? >_')
+                            if command == 'yes':
+                                player.un_equip(things)
+                                player.equip(stuff)
+                                print('You have equipped the %s' % stuff.name)
+                            else:
+                                print('You did not equip the new weapon.')
+                    else:
                         player.equip(stuff)
                         print('You have equipped the %s' % stuff.name)
-                    except not isinstance(stuff, Weapon):
-                        print('You can only equip weapons.')
+                elif isinstance(stuff, Wearable):
+                    player.equip(stuff)
+                    print('You have equipped the %s' % stuff.name)
     elif command == 'drink water':
         for stuff in player.inv:
             if isinstance(stuff, Bottle):
@@ -623,6 +626,8 @@ while True:
         player.death()
     elif command == 'damage':
         print(player.hurt)
+    elif command == 'health':
+        print(player.health)
     elif command == 'weapons':
         for item in player.weapon_equipped:
             print(item.name)
