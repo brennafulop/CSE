@@ -258,10 +258,11 @@ class Character(object):
         exit(0)
 
 
-strange_man = Character('strange man', 50, 'In the corner there is an elven man '
-                                           'in tattered clothing holding a broken knife. He is frightened by '
-                                           'you.', '"Please, the stone, return it to the volcano.', 0, 0, 40,
-                        [broken_knife], [])
+strange_man = Character('elven man', 100, 'In the corner there is an elven man '
+                                          'in tattered clothing holding a broken knife. He is frightened by '
+                                          'you.', 'The elven man looks at you and says, "Please, the stone, return it '
+                                                  'to the volcano."', 0, 0, 40,
+                        [], [broken_knife], [broken_knife])
 old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
                                        'for water. He appears parched.',
                     '"Thank you so much, my dear child. Here, take my cloak, it will protect you well"', 0, 0, 20,  [],
@@ -422,13 +423,16 @@ while True:
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
-    print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
-    player.thirsty()
     if current_node == oasis:
         if oasis.visited is False:
             print('Give the map to a member of the town in order to save the planet.')
         else:
             print('Hurry! Give the directions to the town!')
+    if current_node == ehouse:
+        for people in ehouse.chars:
+            print(people.dialogue)
+    print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
+    player.thirsty()
     command = input('>_').lower().strip()
     if command in short_directions:
         pos = short_directions.index(command)
