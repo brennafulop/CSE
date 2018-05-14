@@ -544,11 +544,11 @@ while True:
                                         print('You give the %s to the %s' % (thingy.name, human))
                                         stuff.inv.append(thingy)
                                         player.inv.remove(thingy)
-                                        print(stuff.dialogue)
-                                        player.inv.append(desert_cloak)
-                                        stuff.inv.remove(desert_cloak)
-                                        print('He gives you the %s.' % desert_cloak.name)
-
+                                        if desert_cloak in stuff.inv:
+                                            print(stuff.dialogue)
+                                            player.inv.append(desert_cloak)
+                                            stuff.inv.remove(desert_cloak)
+                                            print('He gives you the %s.' % desert_cloak.name)
                                 else:
                                     print('You give the %s to the %s' % (stuffs, human))
                                     player.inv.remove(thingy)

@@ -109,7 +109,7 @@ directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
 while True:
-    print (current_node.name)
+    print(current_node.name)
     if not current_node.visited:
         print(current_node.description)
     command = input('>_').lower().strip()
