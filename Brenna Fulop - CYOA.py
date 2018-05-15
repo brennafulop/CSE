@@ -117,6 +117,8 @@ class Food(Consumable):
 
     def eaten(self, person):
         person.hunger = person.hunger - self.nutrients
+        if person.hunger < 0:
+            person.hunger = 0
         self.consumed(person)
 
 
@@ -138,12 +140,12 @@ desert_cloak = Cloak('desert cloak', "There is a sturdy desert cloak that will p
                                      "desert.", 10)
 silver_helmet = Helmet('silver helmet', "You see a silver helmet shoved into the ground.", 30)
 glass_bottle = Bottle('glass bottle', 'A full glass bottle shimmers from on the ground.')
-space_food = Food('space food', "There is a packet of space food on the floor.", 100)
-dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 65)
-lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 60)
-apple = Food('apple', 'You see a shiny red apple.', 15)
-orange = Food('orange', 'There is an orange.', 15)
-grapefruit = Food('grapefruit', 'There is a grapefruit.', 15)
+space_food = Food('space food', "There is a packet of space food on the floor.", 35)
+dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 30)
+lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
+apple = Food('apple', 'You see a shiny red apple.', 5)
+orange = Food('orange', 'There is an orange.', 5)
+grapefruit = Food('grapefruit', 'There is a grapefruit.', 5)
 water_bottle1 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
 water_bottle2 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
 pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
@@ -599,10 +601,6 @@ while True:
                     stuff.full -= 1
                     print('You have cured your thirst.')
                     break
-                else:
-                    print('Your bottle is empty.')
-            else:
-                print("You don't have a bottle")
     elif 'eat' in command:
         thingy = command[4:]
         for stuff in player.inv:
@@ -621,7 +619,7 @@ while True:
                 if isinstance(stuff, Map):
                     print('The %s reads:' % stuff.name)
                     stuff.read()
-    elif command == 'description':
+    elif command == 'look':
         print(current_node.description)
         if current_node.chars is not None:
             for stuff in current_node.chars:
