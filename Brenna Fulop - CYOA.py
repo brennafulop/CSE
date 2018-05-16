@@ -148,7 +148,7 @@ orange = Food('orange', 'There is an orange.', 5)
 grapefruit = Food('grapefruit', 'There is a grapefruit.', 5)
 water_bottle1 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
 water_bottle2 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
-pebble = Item('blue pebble', 'A blue pebble glimmers at you.')
+stone = Item('blue stone', 'A blue stone glimmers at you.')
 oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4.Go east \n5.'
                                               'Go west')
 
@@ -265,11 +265,11 @@ strange_man = Character('elven man', 100, 'In the corner there is an elven man '
                                           'you.', 'The elven man looks at you and says, "Please, the stone, return it '
                                                   'to the volcano."', 0, 0, 40,
                         [], [broken_knife], [broken_knife])
-old_man = Character('old beggar', 100, 'An old beggar wearing a tan cloak approaches you and asks '
-                                       'for water. He appears parched.',
-                    '"Thank you so much, my dear child. Here, take my cloak, it will protect you well"', 0, 0, 20,  [],
+old_man = Character('old beggar', 100, 'There is an old beggar wearing a tan cloak.',
+                    ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
+                     ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [water_bottle2])
 
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
@@ -306,7 +306,7 @@ airlock = Room('Airlock', 'elandingpad', 'cockpit', "clandingpad", 'alandingpad'
 # Arrakis
 alandingpad = Room("Arrakis Landing Pad", 'apath1', None, 'acivil', 'caveentrance', 'airlock', None, 'You are on'
                    ' Arrakis, a desert planet. \nTo the east you see civilization, the north shows a long winding path,'
-                   ' and far to the west you can barely make out what appears to be a cave.', [], [])
+                   ' \nand far to the west you can barely make out what appears to be a cave.', [], [])
 acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, 'You reach the entrance to the '
               'civilization, which is surrounded by a large wall \n'
               'Rows of houses line the path. Only one to the east appears unlocked. There is also a path to the west',
@@ -367,12 +367,11 @@ river2 = Room('River', None, None, None, None, 'bridge2', None, 'You are in the 
                                                                 ' it is difficult to fight the strong current. \n'
                                                                 'This was a bad idea.', [], [])
 forest = Room('Forest Path', None, 'bridge1', 'bridge2', None, 'tree', None, 'You are in the forest on a well worn path'
-                                                                             '. To the south there is a fancy bridge, '
-                                                                             'and'
-                                                                             ' to the east there is an old rope bridge'
-                                                                             '. \nYou see something glimmer at you from'
-                                                                             ' the top of a nearby tree.', [], [])
-tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree.', [pebble,
+                                                                             '. To the south there is a fancy bridge,'
+                                                                             ' and to the east there is an '
+                                                                             'old rope bridge',
+                                                                             [], [])
+tree = Room('Tree', None, None, None, None, None, 'forest', 'You are in the highest branch of a tree.', [stone,
                                                                                                          sturdy_bow,
             apple, orange, grapefruit], [])
 
@@ -397,9 +396,10 @@ volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', N
                                                                                      ' there is the top of the volcano',
                [elven_sword],
                [])
-volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', 'You stand at the mouth of the volcano. It is '
-                                                                      'unbearably hot and appears as though it might '
-                                                                      'erupt.', [], [])
+volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', ['You stand at the mouth of the volcano. It is '
+                                                                       'unbearably hot and appears as though it might '
+                                                                       'erupt.', 'You stand at the mouth of the volcano'
+                                                                                 '.'], [], [])
 
 oasis.body_of_water = True
 bridge1.body_of_water = True
@@ -411,20 +411,46 @@ current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
-print('Welcome player! The goal of this game is to save the two planets from peril. \nTo move use north, south, east, '
-      'west, up, and down (or just type the first letter of each of these commands). \nFor help type "?", to quit type '
-      '"quit" \nGood luck!')
-print('')
+print('Welcome player! The goal of this game is to save the two planets from peril. \n')
+instructions = input('Would you like some instructions?')
+if instructions == 'yes':
+    print("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
+          "\n To pick something up use 'pick up (item's full name) or take (item's full name). For example, \nif an"
+          " item is described as 'elven sword' say 'pick up elven sword'. \nTo eat, say 'eat (item's full name).'"
+          "To drop an item, it's exactly the same, just say 'drop (item's full name)."
+          "\n To drink, just say 'drink water' and if you have a bottle in your inventory you will \ndrink 1/3 of the"
+          " water. \nTo fill an empty water bottle, go to a room that contains "
+          "\nTo attack someone type 'attack (person's full name). \nTo give someone something type give"
+          " (person's full name) and hit enter. \nThe game should then ask what to give to them, so just type the item"
+          "'s full name and hit enter.")
 while True:
     print('\n'+current_node.name+'\n')
     if not current_node.visited:
-        print(current_node.description)
-        if current_node.chars is not None:
-            for stuff in current_node.chars:
-                print(stuff.description)
-        if current_node.inv is not None:
-            for stuff in current_node.inv:
-                print(stuff.description)
+        if current_node == volcanotop:
+            for stuff in volcanotop.inv:
+                if stuff is stone:
+                    print(volcanotop.description[1])
+                else:
+                    print(volcanotop.description[0])
+        else:
+            print(current_node.description)
+            if current_node.chars is not None:
+                for stuff in current_node.chars:
+                    print(stuff.description)
+            if current_node.inv is not None:
+                for stuff in current_node.inv:
+                    print(stuff.description)
+            if current_node == acivil:
+                for stuff in old_man.inv:
+                    if isinstance(stuff, Bottle):
+                        break
+                    else:
+                        print(old_man.dialogue[1])
+            if current_node == forest:
+                for stuff in tree.inv:
+                    if stuff is stone:
+                        print('You see something glimmer at you from the top of a nearby tree.')
+            print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
     if current_node == oasis:
         if oasis.visited is False:
             print('Give the map to a member of the town in order to save the planet.')
@@ -433,7 +459,6 @@ while True:
     if current_node == ehouse:
         for people in ehouse.chars:
             print(people.dialogue)
-    print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
     player.thirsty()
     command = input('>_').lower().strip()
     if command in short_directions:
@@ -547,7 +572,7 @@ while True:
                                         stuff.inv.append(thingy)
                                         player.inv.remove(thingy)
                                         if desert_cloak in stuff.inv:
-                                            print(stuff.dialogue)
+                                            print(stuff.dialogue[0])
                                             player.inv.append(desert_cloak)
                                             stuff.inv.remove(desert_cloak)
                                             print('He gives you the %s.' % desert_cloak.name)
@@ -627,6 +652,16 @@ while True:
         if current_node.inv is not None:
             for stuff in current_node.inv:
                 print(stuff.description)
+        if current_node == acivil:
+            for stuff in old_man.inv:
+                if isinstance(stuff, Bottle):
+                    break
+                else:
+                    print(old_man.dialogue[1])
+        if current_node == forest:
+            for stuff in tree.inv:
+                if stuff is stone:
+                    print('You see something glimmer at you from the top of a nearby tree.')
     elif command == 'inventory':
         if player.inv is not None:
             print('You are carrying:')
