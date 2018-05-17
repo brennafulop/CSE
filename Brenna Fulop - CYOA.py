@@ -415,14 +415,22 @@ print('Welcome player! The goal of this game is to save the two planets from per
 instructions = input('Would you like some instructions?')
 if instructions == 'yes':
     print("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
-          "\n To pick something up use 'pick up (item's full name) or take (item's full name). For example, \nif an"
+          "\nTo pick something up use 'pick up (item's full name) or take (item's full name). For example, \nif an"
           " item is described as 'elven sword' say 'pick up elven sword'. \nTo eat, say 'eat (item's full name).'"
           "To drop an item, it's exactly the same, just say 'drop (item's full name)."
-          "\n To drink, just say 'drink water' and if you have a bottle in your inventory you will \ndrink 1/3 of the"
-          " water. \nTo fill an empty water bottle, go to a room that contains "
+          "\nTo drink, just say 'drink water' and if you have a bottle in your inventory you will \ndrink 1/3 of the"
+          " water in the bottle."
+          "\nTo fill an empty water bottle, go to a room that contains water and type 'fill (item's name)'"
           "\nTo attack someone type 'attack (person's full name). \nTo give someone something type give"
           " (person's full name) and hit enter. \nThe game should then ask what to give to them, so just type the item"
-          "'s full name and hit enter.")
+          "'s full name and hit enter. \nWhen you pick up an item, the game will ask if you would like to equip it."
+          "You can also equip any weapon or wearable \nat any time by typing 'equip (item name)' \nIf you have an item"
+          "that you think you should be able to read, type 'read (item name)' \nIf you need the description of a room,"
+          " type 'look'. \nTo see your current stats type 'stats."
+          " \nTo get back to your ship from any location, type 'beam me up scotty' \nTo see this message"
+          " again, type '?'. \nFinally, to quit the game at any point type 'quit'")
+elif instructions == 'no':
+    print("Brave choice! If you get confused type '?' at any point for the instructions")
 while True:
     print('\n'+current_node.name+'\n')
     if not current_node.visited:
@@ -450,7 +458,6 @@ while True:
                 for stuff in tree.inv:
                     if stuff is stone:
                         print('You see something glimmer at you from the top of a nearby tree.')
-            print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
     if current_node == oasis:
         if oasis.visited is False:
             print('Give the map to a member of the town in order to save the planet.')
@@ -460,6 +467,8 @@ while True:
         for people in ehouse.chars:
             print(people.dialogue)
     player.thirsty()
+    player.hungry()
+    print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
     command = input('>_').lower().strip()
     if command in short_directions:
         pos = short_directions.index(command)
@@ -469,8 +478,8 @@ while True:
             current_node.visited = True
             current_node.move(command)
             if player.get_thirsty is True:
-                player.thirst += 1
-            player.hunger += 1
+                player.thirst += 10
+            player.hunger += 5
         except KeyError:
             print('You cannot go this way')
     elif command == 'quit':
@@ -527,12 +536,12 @@ while True:
         item = command[5:]
         for stuff in player.inv:
             if item == stuff.name:
-                if stuff.name == 'blue pebble':
+                if stuff.name == 'blue stone':
                     if current_node is volcanotop:
                         player.drop(stuff, current_node)
                         print('You have saved the planet!')
-                        player.winning += 1
-                        if player.winning == 2:
+                        player.winning += 50
+                        if player.winning == 100:
                             player.win()
                 else:
                     player.drop(stuff, current_node)
@@ -563,8 +572,8 @@ while True:
                                     player.inv.remove(thingy)
                                     stuff.inv.append(thingy)
                                     print('Congratulations! You have saved Arrakis by providing water to the town!')
-                                    player.winning += 1
-                                    if player.winning == 2:
+                                    player.winning += 50
+                                    if player.winning == 100:
                                         player.win()
                                 elif isinstance(thingy, Bottle):
                                     if thingy.full > 0:
@@ -673,16 +682,8 @@ while True:
         current_node = airlock
     elif command == 'mr stark i dont feel so good':
         player.death()
-    elif command == 'damage':
-        print(player.hurt)
-    elif command == 'health':
-        print(player.health)
-    elif command == 'weapons':
-        for item in player.weapon_equipped:
-            print(item.name)
-    elif command == 'score':
-        print(player.winning)
-    elif command == 'volcano':
-        current_node = volcanotop
+    elif command == 'stats':
+        print('Health: %s \nDamage: %s \nWeapon equipped: %s \nCurrent score (out of 100): %s' % (player.health,
+              player.hurt, player.weapon_equipped[0].name, player.winning))
     else:
         print('Command not recognized.')
