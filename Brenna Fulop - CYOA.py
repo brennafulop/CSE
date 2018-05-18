@@ -268,7 +268,7 @@ old_man = Character('old beggar', 100, 'There is an old beggar.',
                     ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
                      ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [water_bottle2])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [stone])
 
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
@@ -406,7 +406,7 @@ bridge2.body_of_water = True
 river.body_of_water = True
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
-current_node = cockpit
+current_node = volcanotop
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
@@ -436,9 +436,11 @@ while True:
         if current_node == volcanotop:
             for stuff in volcanotop.inv:
                 if stuff is stone:
-                    print(volcanotop.description[1])
-                else:
-                    print(volcanotop.description[0])
+                    volcanotop.description = volcanotop.description[1]
+
+            else:
+                volcanotop.description = volcanotop.description[0]
+
         else:
             print(current_node.description)
             if current_node.chars is not None:
