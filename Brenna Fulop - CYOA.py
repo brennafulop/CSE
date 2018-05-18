@@ -132,7 +132,7 @@ class Map(Item):
 
 
 elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
-broken_knife = Knife('broken knife', "The broken knife, it has been snapped, yet it is still sharp.", 15)
+broken_knife = Knife('broken knife', "There is a broken knife, it has been snapped, yet it is still sharp.", 15)
 crystal_knife = Knife('crystal knife', "A crystal knife glimmers at you from the ground. it has been half-buried.", 25)
 sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle sits next to you."
                                " A quiver of arrows is next to it and seems to be charmed.", 30, 40)
@@ -233,7 +233,6 @@ class Character(object):
             self.weapon_equipped.append(thing)
             self.hurt = thing.damage + self.hurt
         elif isinstance(thing, Wearable):
-            self.equipped = True
             self.armour.append(thing)
             self.health = thing.protection + self.health
             if isinstance(thing, Cloak):
@@ -265,7 +264,7 @@ strange_man = Character('elven man', 100, 'In the corner there is an elven man '
                                           'you.', 'The elven man looks at you and says, "Please, the stone, return it '
                                                   'to the volcano."', 0, 0, 40,
                         [], [broken_knife], [broken_knife])
-old_man = Character('old beggar', 100, 'There is an old beggar wearing a tan cloak.',
+old_man = Character('old beggar', 100, 'There is an old beggar.',
                     ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
                      ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
@@ -702,6 +701,7 @@ while True:
               "'s full name and hit enter. \nWhen you pick up a weapon the game will ask if you would like to equip it."
               "\nYou can equip any weapon or wearable at any time by typing 'equip (item name)' \nIf you have an item "
               "that you think you should be able to read, type 'read (item name)' \nIf you need the "
+              "yes"
               "description of a room,"
               " type 'look'. \nTo see your current stats type 'stats'."
               " \nTo get back to your ship from any location, type 'beam me up scotty'. \nTo see this message"
