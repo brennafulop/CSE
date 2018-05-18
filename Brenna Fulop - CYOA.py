@@ -268,7 +268,7 @@ old_man = Character('old beggar', 100, 'There is an old beggar.',
                     ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
                      ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [stone])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [ ])
 
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
@@ -405,6 +405,43 @@ bridge1.body_of_water = True
 bridge2.body_of_water = True
 river.body_of_water = True
 
+
+def print_description():
+    global current_node
+    if current_node == volcanotop:
+        found_stone = False
+        # Find if the stone is in the volcano
+        for stuff in volcanotop.inv:
+            if stuff is stone:
+                found_stone = True
+
+        # Handle it after
+        if found_stone:
+            print(volcanotop.description[1])
+
+        else:
+            print(volcanotop.description[0])
+    else:
+        print(current_node.description)
+        if current_node.chars is not None:
+            for stuff in current_node.chars:
+                print(stuff.description)
+        if current_node.inv is not None:
+            for stuff in current_node.inv:
+                print(stuff.description)
+        if current_node == acivil:
+            for stuff in old_man.inv:
+                if isinstance(stuff, Bottle):
+                    break
+                else:
+                    print(old_man.dialogue[1])
+        if current_node == forest:
+            for stuff in tree.inv:
+                if stuff is stone:
+                    print('You see something glimmer at you from the top of a nearby tree.')
+
+
+
 # CONTROLLER ---------------------------------------------------------------------------------------------------
 current_node = volcanotop
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
@@ -433,32 +470,7 @@ elif instructions == 'no':
 while True:
     print('\n'+current_node.name+'\n')
     if not current_node.visited:
-        if current_node == volcanotop:
-            for stuff in volcanotop.inv:
-                if stuff is stone:
-                    volcanotop.description = volcanotop.description[1]
-
-            else:
-                volcanotop.description = volcanotop.description[0]
-
-        else:
-            print(current_node.description)
-            if current_node.chars is not None:
-                for stuff in current_node.chars:
-                    print(stuff.description)
-            if current_node.inv is not None:
-                for stuff in current_node.inv:
-                    print(stuff.description)
-            if current_node == acivil:
-                for stuff in old_man.inv:
-                    if isinstance(stuff, Bottle):
-                        break
-                    else:
-                        print(old_man.dialogue[1])
-            if current_node == forest:
-                for stuff in tree.inv:
-                    if stuff is stone:
-                        print('You see something glimmer at you from the top of a nearby tree.')
+        print_description()
     if current_node == oasis:
         if oasis.visited is False:
             print('Give the map to a member of the town in order to save the planet.')
@@ -655,23 +667,7 @@ while True:
                     print('The %s reads:' % stuff.name)
                     stuff.read()
     elif command == 'look':
-        print(current_node.description)
-        if current_node.chars is not None:
-            for stuff in current_node.chars:
-                print(stuff.description)
-        if current_node.inv is not None:
-            for stuff in current_node.inv:
-                print(stuff.description)
-        if current_node == acivil:
-            for stuff in old_man.inv:
-                if isinstance(stuff, Bottle):
-                    break
-                else:
-                    print(old_man.dialogue[1])
-        if current_node == forest:
-            for stuff in tree.inv:
-                if stuff is stone:
-                    print('You see something glimmer at you from the top of a nearby tree.')
+        print_description()
     elif command == 'inventory':
         if player.inv is not None:
             print('You are carrying:')
