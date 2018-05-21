@@ -441,9 +441,9 @@ def print_description():
                     print('You see something glimmer at you from the top of a nearby tree.')
 
 
-
 # CONTROLLER ---------------------------------------------------------------------------------------------------
-current_node = volcanotop
+
+current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 
