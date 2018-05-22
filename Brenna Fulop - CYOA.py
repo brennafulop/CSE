@@ -268,7 +268,7 @@ old_man = Character('old beggar', 100, 'There is an old beggar.',
                     ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
                      ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [ ])
+player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [])
 
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
@@ -411,8 +411,8 @@ def print_description():
     if current_node == volcanotop:
         found_stone = False
         # Find if the stone is in the volcano
-        for stuff in volcanotop.inv:
-            if stuff is stone:
+        for thing in volcanotop.inv:
+            if thing is stone:
                 found_stone = True
 
         # Handle it after
@@ -424,20 +424,20 @@ def print_description():
     else:
         print(current_node.description)
         if current_node.chars is not None:
-            for stuff in current_node.chars:
-                print(stuff.description)
+            for thing in current_node.chars:
+                print(thing.description)
         if current_node.inv is not None:
-            for stuff in current_node.inv:
-                print(stuff.description)
+            for thing in current_node.inv:
+                print(thing.description)
         if current_node == acivil:
-            for stuff in old_man.inv:
-                if isinstance(stuff, Bottle):
+            for thing in old_man.inv:
+                if isinstance(thing, Bottle):
                     break
                 else:
                     print(old_man.dialogue[1])
         if current_node == forest:
-            for stuff in tree.inv:
-                if stuff is stone:
+            for thing in tree.inv:
+                if thing is stone:
                     print('You see something glimmer at you from the top of a nearby tree.')
 
 
@@ -446,28 +446,41 @@ def print_description():
 current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
+instruction = ("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
+               "\nTo pick something up use 'pick up (item's full name)' or 'take (item's full name)'. For example, "
+               "\nif an"
+               " item is described as 'elven sword' say 'pick up elven sword'. \nTo drop an item, it's exactly the "
+               "same, "
+               "just say 'drop (item's full name)'. \nTo eat, say 'eat (item's full name)'."
+               "\nTo drink, just say 'drink water' and if you have a bottle in your inventory you will \ndrink 1/3 of "
+               "the"
+               " water in the bottle."
+               "\nTo fill an empty water bottle, go to a room that contains water and type 'fill (item's name)'"
+               "\nTo attack someone type 'attack (person's full name)'. \nTo give someone something type 'give"
+               " (person's full name)' and hit enter. \nThe game should then ask what to give to them, so just type t"
+               "he item"
+               "'s full name and hit enter. \nWhen you pick up a weapon the game will ask if you would like to "
+               "equip it."
+               "\nYou can equip any weapon or wearable at any time by typing 'equip (item name)' \nIf you have an item "
+               "that you think you should be able to read, type 'read (item name)' \nIf you need the description "
+               "of a room,"
+               " type 'look'. \nTo see your current stats type 'stats'."
+               " \nTo get back to your ship from any location, type 'beam me up scotty'. \nTo see this message"
+               " again, type '?'. \nFinally, to quit the game at any point type 'quit'")
 
 print('Welcome player! The goal of this game is to save the two planets from peril. \n')
 instructions = input('Would you like some instructions? >_')
 if instructions == 'yes':
-    print("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
-          "\nTo pick something up use 'pick up (item's full name)' or 'take (item's full name)'. For example, \nif an"
-          " item is described as 'elven sword' say 'pick up elven sword'. \nTo drop an item, it's exactly the same, "
-          "just say 'drop (item's full name)'. \nTo eat, say 'eat (item's full name)'."
-          "\nTo drink, just say 'drink water' and if you have a bottle in your inventory you will \ndrink 1/3 of the"
-          " water in the bottle."
-          "\nTo fill an empty water bottle, go to a room that contains water and type 'fill (item's name)'"
-          "\nTo attack someone type 'attack (person's full name)'. \nTo give someone something type 'give"
-          " (person's full name)' and hit enter. \nThe game should then ask what to give to them, so just type the item"
-          "'s full name and hit enter. \nWhen you pick up a weapon the game will ask if you would like to equip it."
-          "\nYou can equip any weapon or wearable at any time by typing 'equip (item name)' \nIf you have an item "
-          "that you think you should be able to read, type 'read (item name)' \nIf you need the description of a room,"
-          " type 'look'. \nTo see your current stats type 'stats'."
-          " \nTo get back to your ship from any location, type 'beam me up scotty'. \nTo see this message"
-          " again, type '?'. \nFinally, to quit the game at any point type 'quit'")
+    print(instruction)
 elif instructions == 'no':
     print("Brave choice! If you get confused type '?' at any point for the instructions")
+else:
+    print("Unsure what you meant. Type '?' at any point for the instructions")
 while True:
+    if player.equipped:
+        players_weapons = player.weapon_equipped[0].name
+    else:
+        players_weapons = 'No weapon'
     print('\n'+current_node.name+'\n')
     if not current_node.visited:
         print_description()
@@ -552,7 +565,8 @@ while True:
                 if stuff.name == 'blue stone':
                     if current_node is volcanotop:
                         player.drop(stuff, current_node)
-                        print('You have saved the planet!')
+                        print('The stone was a magic stone that froze the hot volcano on '
+                              'impact. You have saved the planet!')
                         player.winning += 50
                         if player.winning == 100:
                             player.win()
@@ -681,28 +695,8 @@ while True:
         player.death()
     elif command == 'stats':
         print('Health: %s \nDamage: %s \nWeapon equipped: %s \nCurrent score (out of 100): %s' % (player.health,
-              player.hurt, player.weapon_equipped[0].name, player.winning))
+              player.hurt, players_weapons, player.winning))
     elif command == '?':
-        print("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
-              "\nTo pick something up use 'pick up (item's full name)' or 'take (item's full name)'. For example, "
-              "\nif an"
-              " item is described as 'elven sword' say 'pick up elven sword'. \nTo drop an item, it's "
-              "exactly the same, "
-              "just say 'drop (item's full name)'. \nTo eat, say 'eat (item's full name)'."
-              "\nTo drink, just say 'drink water' and if you have a bottle in your inventory you will "
-              "\ndrink 1/3 of the"
-              " water in the bottle."
-              "\nTo fill an empty water bottle, go to a room that contains water and type 'fill (item's name)'"
-              "\nTo attack someone type 'attack (person's full name)'. \nTo give someone something type 'give"
-              " (person's full name)' and hit enter. \nThe game should then ask what to give to them, so "
-              "just type the item"
-              "'s full name and hit enter. \nWhen you pick up a weapon the game will ask if you would like to equip it."
-              "\nYou can equip any weapon or wearable at any time by typing 'equip (item name)' \nIf you have an item "
-              "that you think you should be able to read, type 'read (item name)' \nIf you need the "
-              "yes"
-              "description of a room,"
-              " type 'look'. \nTo see your current stats type 'stats'."
-              " \nTo get back to your ship from any location, type 'beam me up scotty'. \nTo see this message"
-              " again, type '?'. \nFinally, to quit the game at any point type 'quit'")
+        print(instruction)
     else:
         print('Command not recognized.')
