@@ -1,4 +1,7 @@
+import random
 # ITEMS------------------------------------------------------------------------------------------------------------
+
+
 class Item(object):
     def __init__(self, name, description):
         self.name = name
@@ -140,17 +143,18 @@ desert_cloak = Cloak('desert cloak', "There is a sturdy desert cloak that will p
                                      "desert.", 10)
 silver_helmet = Helmet('silver helmet', "You see a silver helmet shoved into the ground.", 30)
 glass_bottle = Bottle('glass bottle', 'A full glass bottle shimmers from on the ground.')
-space_food = Food('space food', "There is a packet of space food on the floor.", 35)
-dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 30)
-lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 20)
-apple = Food('apple', 'You see a shiny red apple.', 5)
-orange = Food('orange', 'There is an orange.', 5)
-grapefruit = Food('grapefruit', 'There is a grapefruit.', 5)
+space_food = Food('space food', "There is a packet of space food on the floor.", 100)
+dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 55)
+lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 40)
+apple = Food('apple', 'You see a shiny red apple.', 20)
+orange = Food('orange', 'There is an orange.', 20)
+grapefruit = Food('grapefruit', 'There is a grapefruit.', 20)
 water_bottle1 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
 water_bottle2 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
 stone = Item('blue stone', 'A blue stone glimmers at you.')
 oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4.Go east \n5.'
                                               'Go west')
+coconut = Food('coconut', 'On the tree, there is a coconut growing.', 30)
 
 # CHARACTERS---------------------------------------------------------------------------------------------------------
 
@@ -172,6 +176,8 @@ class Character(object):
         self.equipped = False
         self.won = False
         self.winning = 0
+        self.passive = True
+        self.chances = random.randint(1, 10)
         self.armour = armour
         self.weapon_equipped = weapon_equipped
         self.inv = items
@@ -183,12 +189,38 @@ class Character(object):
         thing.dropped(self, room)
 
     def attack(self, target):
-        if target is player:
+        self.chances = random.randint(1, 10)
+        target.chances = random.randint(1, 10)
+        if self is shelob:
+            print('%s attacks %s' % (self.name, target.name))
+            if self.chances > target.chances:
+                target.take_damage(self)
+            else:
+                print('%s misses' % self.name)
+        elif target is player:
             print('The %s attacks %s' % (self.name, target.name))
-            target.take_damage(self)
+            if self.chances > target.chances:
+                target.take_damage(self)
+            else:
+                print('%s misses' % self.name)
+        elif target is shelob:
+            print('%s attack %s' % (self.name, target.name))
+            if self.chances > target.chances:
+                target.take_damage(self)
+            else:
+                print('You miss')
+        elif self is shelob:
+            print('%s attacks %s' % (self.name, target.name))
+            if self.chances > target.chances:
+                target.take_damage(self)
+            else:
+                print('%s misses' % self.name)
         else:
             print('%s attack the %s' % (self.name, target.name))
-            target.take_damage(self)
+            if self.chances > target.chances:
+                target.take_damage(self)
+            else:
+                print('You miss')
 
     def death(self):
         self.dead = True
@@ -207,6 +239,8 @@ class Character(object):
         if self.health >= 1:
             if self is player:
                 print('%s have %s health.' % (self.name, self.health))
+            elif self is shelob:
+                print('%s has %s health.' % (self.name, self.health))
             else:
                 print('The %s has %s health.' % (self.name, self.health))
         else:
@@ -262,13 +296,18 @@ class Character(object):
 strange_man = Character('elven man', 100, 'In the corner there is an elven man '
                                           'in tattered clothing holding a broken knife. He is frightened by '
                                           'you.', 'The elven man looks at you and says, "Please, the stone, return it '
-                                                  'to the volcano."', 0, 0, 40,
+                                                  'to the volcano."', 0, 0, 30,
                         [], [broken_knife], [broken_knife])
 old_man = Character('old beggar', 100, 'There is an old beggar.',
                     ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
                      ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 40, [], [], [])
+player = Character('you', 100, 'The main character', None, 0, 0, 50, [], [], [elven_sword, stone])
+
+shelob = Character('shelob', 150, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 5,
+                   [], [], [])
+
+shelob.passive = False
 
 
 # ROOMS-----------------------------------------------------------------------------------------------------------
@@ -312,7 +351,7 @@ acivil = Room('Civilization', None, None, 'ahouse', 'alandingpad', None, None, '
               [], [old_man])
 ahouse = Room("Arrakis Home", None, None, None, 'acivil', None, None, 'You are in a one room house. There is a table'
               ' in front of you.\n'
-              'On the other side of the room there is a cot.', [crystal_knife, water_bottle1], [])
+              'On the other side of the room there is a cot.', [crystal_knife, water_bottle1, dried_meat], [])
 apath1 = Room("Open Desert", None, 'alandingpad', None, 'apath2', None, None, 'You have reached a crossroads.\n'
               'The path diverges to the south and west.', [], [])
 apath2 = Room('Open Desert', None, 'caveentrance', 'apath1', None, 'plateau', None, 'You have reached a crossroads.\n'
@@ -340,7 +379,7 @@ maze5 = Room('Maze', None, None, None, maze1, None, None, "You are inside the ca
                                                           "see anything, but you can feel the walls.", [], [])
 oasis = Room('Oasis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
                                                              "is cooler here. \nThis appears to be the only source of"
-             " above ground water on the entire planet.", [glass_bottle, oasismap], [])
+             " above ground water on the entire planet.", [glass_bottle, coconut, coconut, oasismap], [])
 
 # Endore
 elandingpad = Room('Endore Landing Pad', 'ecivil', None, None, None, 'airlock', None, 'You are on Endore, the forest '
@@ -398,7 +437,7 @@ volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', N
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', ['You stand at the mouth of the volcano. It is '
                                                                        'unbearably hot and appears as though it might '
                                                                        'erupt.', 'You stand at the mouth of the volcano'
-                                                                                 '.'], [], [])
+                                                                                 '.'], [], [shelob])
 
 oasis.body_of_water = True
 bridge1.body_of_water = True
@@ -418,9 +457,12 @@ def print_description():
         # Handle it after
         if found_stone:
             print(volcanotop.description[1])
-
+            for thing in current_node.chars:
+                print(thing.description)
         else:
             print(volcanotop.description[0])
+            for thing in current_node.chars:
+                print(thing.description)
     else:
         print(current_node.description)
         if current_node.chars is not None:
@@ -443,7 +485,7 @@ def print_description():
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
 
-current_node = cockpit
+current_node = volcanotop
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 instruction = ("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
@@ -492,6 +534,9 @@ while True:
     if current_node == ehouse:
         for people in ehouse.chars:
             print(people.dialogue)
+    for things in current_node.chars:
+        if things.passive is False:
+            things.attack(player)
     player.thirsty()
     player.hungry()
     print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
@@ -559,19 +604,41 @@ while True:
                     else:
                         print('You did not equip the weapon.')
     elif command[:4] == 'drop':
-        item = command[5:]
+        if current_node == volcanotop:
+            if shelob.dead is False:
+                print('Shelob blocks you from doing anything.')
+        else:
+            item = command[5:]
+            for stuff in player.inv:
+                if item == stuff.name:
+                    if current_node is volcanotop:
+                        player.inv.remove(stuff)
+                        print('You drop the %s and watch it decend into the volcano, lost forever' % stuff.name)
+                        if stuff.name == 'blue stone':
+                            print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
+                                  'have saved the planet!')
+                            player.winning += 50
+                            if player.winning == 100:
+                                player.win()
+                    else:
+                        player.drop(stuff, current_node)
+    elif command[:5] == 'throw':
+        item = command[6:]
+        if current_node == volcanotop:
+            if shelob.dead is False:
+                print('Shelob blocks you from doing anything.')
+                break
         for stuff in player.inv:
             if item == stuff.name:
-                if stuff.name == 'blue stone':
-                    if current_node is volcanotop:
-                        player.drop(stuff, current_node)
-                        print('The stone was a magic stone that froze the hot volcano on '
-                              'impact. You have saved the planet!')
+                if current_node is volcanotop:
+                    player.inv.remove(stuff)
+                    print('You throw the %s and watch it descend into the volcano, lost forever.' % stuff.name)
+                    if stuff.name == 'blue stone':
+                        print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
+                              'have saved the planet!')
                         player.winning += 50
                         if player.winning == 100:
                             player.win()
-                else:
-                    player.drop(stuff, current_node)
     elif command[:6] == 'attack':
         human = command[7:]
         for stuff in current_node.chars:
