@@ -134,6 +134,35 @@ class Map(Item):
         print(self.contents)
 
 
+class Poison(Item):
+    def __init__(self, name, description):
+        super(Poison, self).__init__(name, description)
+        self.full = 1
+
+    def drink(self, person):
+        if self.full > 0:
+            self.full -= 1
+            person.thirst = 0
+            print('You drink the spider venom.')
+            print('You chose the poison.')
+            person.death()
+
+
+class Potion(Item):
+    def __init__(self, name, description):
+        super(Potion, self).__init__(name, description)
+        self.full = 1
+
+    def drink(self, person):
+        if self.full > 0:
+            self.full -= 1
+            person.thirst = 0
+            print('You drink the spider venom.')
+            print('You chose the health potion.')
+            person.health += 200
+            print('Your health is now at %s.' % player.health)
+
+
 elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
 broken_knife = Knife('broken knife', "There is a broken knife, it has been snapped, yet it is still sharp.", 15)
 crystal_knife = Knife('crystal knife', "A crystal knife glimmers at you from the ground. it has been half-buried.", 25)
@@ -154,7 +183,10 @@ water_bottle2 = Bottle('water bottle', 'A water bottle filled with water sits on
 stone = Item('blue stone', 'A blue stone glimmers at you.')
 oasismap = Map('map', 'There is a worn map.', 'Map To Oasis: \n1.Enter cave \n2.Go south \n3.Go south \n4.Go east \n5.'
                                               'Go west')
-coconut = Food('coconut', 'On the tree, there is a coconut growing.', 30)
+coconut = Food('coconut', 'There is a coconut on the ground.', 30)
+poison = Poison('spider venom one', 'A vile of purple liquid sits on the ground. (spider venom one)')
+potion = Potion('spider venom two', 'A vile of purple liquid sits on the ground. (spider venom two)')
+
 
 # CHARACTERS---------------------------------------------------------------------------------------------------------
 
@@ -189,8 +221,8 @@ class Character(object):
         thing.dropped(self, room)
 
     def attack(self, target):
-        self.chances = random.randint(1, 10)
-        target.chances = random.randint(1, 10)
+        self.chances = random.randint(1, 100)
+        target.chances = random.randint(1, 100)
         if self is shelob:
             print('%s attacks %s' % (self.name, target.name))
             if self.chances > target.chances:
@@ -227,6 +259,13 @@ class Character(object):
         if self is player:
             print('You have died.')
             exit(0)
+        elif self is shelob:
+            print('Shelob has died.')
+            current_node.chars.remove(self)
+            print('Two vials of her venom scatter on the floor. One vial will kill you, the other will add 200 to your '
+                  'health. The two vials are identical.')
+            for thing in self.inv:
+                current_node.inv.append(thing)
         else:
             print('The %s has died' % self.name)
             current_node.chars.remove(self)
@@ -302,10 +341,10 @@ old_man = Character('old beggar', 100, 'There is an old beggar.',
                     ['He looks at you and says, "Thank you so much, my dear child. Here, take my cloak, it will protect'
                      ' you well"', 'The old beggar approaches you and says, "Can you spare some water?"'], 0, 0, 20, [],
                     [], [desert_cloak])
-player = Character('you', 100, 'The main character', None, 0, 0, 50, [], [], [elven_sword, stone])
+player = Character('you', 100, 'The main character', None, 0, 0, 50, [], [], [])
 
-shelob = Character('shelob', 150, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 5,
-                   [], [], [])
+shelob = Character('shelob', 150, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 50,
+                   [], [], [poison, potion])
 
 shelob.passive = False
 
@@ -443,6 +482,7 @@ oasis.body_of_water = True
 bridge1.body_of_water = True
 bridge2.body_of_water = True
 river.body_of_water = True
+found_stone = False
 
 
 def print_description():
@@ -459,9 +499,13 @@ def print_description():
             print(volcanotop.description[1])
             for thing in current_node.chars:
                 print(thing.description)
+            for thing in current_node.inv:
+                print(thing.description)
         else:
             print(volcanotop.description[0])
             for thing in current_node.chars:
+                print(thing.description)
+            for thing in current_node.inv:
                 print(thing.description)
     else:
         print(current_node.description)
@@ -485,7 +529,7 @@ def print_description():
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
 
-current_node = volcanotop
+current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 instruction = ("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
@@ -534,9 +578,6 @@ while True:
     if current_node == ehouse:
         for people in ehouse.chars:
             print(people.dialogue)
-    for things in current_node.chars:
-        if things.passive is False:
-            things.attack(player)
     player.thirsty()
     player.hungry()
     print('Your hunger is at %s and your thirst is at %s.' % (player.hunger, player.thirst))
@@ -606,7 +647,7 @@ while True:
     elif command[:4] == 'drop':
         if current_node == volcanotop:
             if shelob.dead is False:
-                print('Shelob blocks you from doing anything.')
+                print('Shelob blocks you.')
         else:
             item = command[5:]
             for stuff in player.inv:
@@ -616,7 +657,7 @@ while True:
                         print('You drop the %s and watch it decend into the volcano, lost forever' % stuff.name)
                         if stuff.name == 'blue stone':
                             print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
-                                  'have saved the planet!')
+                                  ' have saved the planet!')
                             player.winning += 50
                             if player.winning == 100:
                                 player.win()
@@ -626,21 +667,33 @@ while True:
         item = command[6:]
         if current_node == volcanotop:
             if shelob.dead is False:
-                print('Shelob blocks you from doing anything.')
-                break
-        for stuff in player.inv:
-            if item == stuff.name:
-                if current_node is volcanotop:
-                    player.inv.remove(stuff)
-                    print('You throw the %s and watch it descend into the volcano, lost forever.' % stuff.name)
-                    if stuff.name == 'blue stone':
-                        print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
-                              'have saved the planet!')
-                        player.winning += 50
-                        if player.winning == 100:
-                            player.win()
+                print('Shelob blocks you.')
+        else:
+            for stuff in player.inv:
+                if item == stuff.name:
+                    if current_node is volcanotop:
+                        player.inv.remove(stuff)
+                        print('You throw the %s and watch it descend into the volcano, lost forever.' % stuff.name)
+                        if stuff.name == 'blue stone':
+                            print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
+                                  ' have saved the planet!')
+                            player.winning += 50
+                            if player.winning == 100:
+                                player.win()
     elif command[:6] == 'attack':
         human = command[7:]
+        for stuff in current_node.chars:
+            if human == stuff.name:
+                if isinstance(stuff, Character):
+                    player.attack(stuff)
+                    if stuff.dead:
+                        pass
+                    else:
+                        stuff.attack(player)
+                else:
+                    print('There is no one here to attack.')
+    elif command[:5] == 'kill':
+        human = command[6:]
         for stuff in current_node.chars:
             if human == stuff.name:
                 if isinstance(stuff, Character):
@@ -721,14 +774,25 @@ while True:
                 elif isinstance(stuff, Wearable):
                     player.equip(stuff)
                     print('You have equipped the %s' % stuff.name)
-    elif command == 'drink water':
-        for stuff in player.inv:
-            if isinstance(stuff, Bottle):
-                if stuff.full > 0:
-                    player.thirst = 0
-                    stuff.full -= 1
-                    print('You have cured your thirst.')
-                    break
+    elif command[:5] == 'drink':
+        if command[6:] == 'spider venom two':
+            for stuff in player.inv:
+                if isinstance(stuff, Potion):
+                    if stuff.full == 1:
+                        stuff.drink(player)
+                        break
+        if command[6:] == 'spider venom one':
+            for stuff in player.inv:
+                if isinstance(stuff, Poison):
+                    if stuff.full == 1:
+                        stuff.drink(player)
+                        break
+        elif command[6:] == 'water':
+            for stuff in player.inv:
+                if isinstance(stuff, Bottle):
+                    if stuff.full > 0:
+                        stuff.drink(player)
+                        break
     elif 'eat' in command:
         thingy = command[4:]
         for stuff in player.inv:
@@ -765,5 +829,23 @@ while True:
               player.hurt, players_weapons, player.winning))
     elif command == '?':
         print(instruction)
+    elif command == 'jump':
+        if current_node == bridge1:
+            current_node = river
+        elif current_node == bridge2:
+            current_node = river2
+        elif current_node == volcanotop:
+            if found_stone:
+                print("You jump into the depth of the volcano. The vast height kills you.")
+                player.death()
+            else:
+                print('You jump into the bubbling hot lava.')
+                player.death()
+        elif current_node == airlock:
+            print('You jump into the vacuum of space.')
+            player.death()
+        else:
+            print('You jump. nice.')
+
     else:
         print('Command not recognized.')
