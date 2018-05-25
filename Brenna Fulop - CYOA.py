@@ -163,10 +163,10 @@ class Potion(Item):
             print('Your health is now at %s.' % player.health)
 
 
-elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 30)
+elven_sword = Sword('elven sword', 'An elven sword has been stuck in the ground.', 40)
 broken_knife = Knife('broken knife', "There is a broken knife, it has been snapped, yet it is still sharp.", 15)
 crystal_knife = Knife('crystal knife', "A crystal knife glimmers at you from the ground. it has been half-buried.", 25)
-sturdy_bow = Bow('sturdy bow', "A sturdy wooden bow with engravings in the handle sits next to you."
+sturdy_bow = Bow('wooden bow', "A wooden bow with engravings in the handle sits next to you."
                                " A quiver of arrows is next to it and seems to be charmed.", 30, 40)
 desert_cloak = Cloak('desert cloak', "There is a sturdy desert cloak that will protect you from the forces of the "
                                      "desert.", 10)
@@ -175,7 +175,7 @@ glass_bottle = Bottle('glass bottle', 'A full glass bottle shimmers from on the 
 space_food = Food('space food', "There is a packet of space food on the floor.", 100)
 dried_meat = Food('dried meat', "On the floor there is some dried meat of unknown origin.", 55)
 lembas = Food('lembas', "Kept clean by being wrapped in leaves, there are some lembas on the ground.", 40)
-apple = Food('apple', 'You see a shiny red apple.', 20)
+apple = Food('apple', 'You see an apple.', 20)
 orange = Food('orange', 'There is an orange.', 20)
 grapefruit = Food('grapefruit', 'There is a grapefruit.', 20)
 water_bottle1 = Bottle('water bottle', 'A water bottle filled with water sits on the ground.', [])
@@ -343,7 +343,7 @@ old_man = Character('old beggar', 100, 'There is an old beggar.',
                     [], [desert_cloak])
 player = Character('you', 100, 'The main character', None, 0, 0, 50, [], [], [])
 
-shelob = Character('shelob', 150, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 50,
+shelob = Character('shelob', 110, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 50,
                    [], [], [poison, potion])
 
 shelob.passive = False
@@ -414,8 +414,8 @@ maze4 = Room('Maze', 'maze2', None, None, 'oasis', None, None, 'You are inside t
              [])
 maze3 = Room('Maze', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
                                                                "see anything, but you can feel the walls.", [], [])
-maze5 = Room('Maze', None, None, None, maze1, None, None, "You are inside the cave system You can't "
-                                                          "see anything, but you can feel the walls.", [], [])
+maze5 = Room('Maze', None, None, None, 'maze1', None, None, "You are inside the cave system You can't "
+                                                            "see anything, but you can feel the walls.", [], [])
 oasis = Room('Oasis', None, None, "maze4", None, None, None, "There is a large body of water and a palm tree. The air "
                                                              "is cooler here. \nThis appears to be the only source of"
              " above ground water on the entire planet.", [glass_bottle, coconut, coconut, oasismap], [])
@@ -487,6 +487,7 @@ found_stone = False
 
 def print_description():
     global current_node
+    global found_stone
     if current_node == volcanotop:
         found_stone = False
         # Find if the stone is in the volcano
@@ -516,11 +517,12 @@ def print_description():
             for thing in current_node.inv:
                 print(thing.description)
         if current_node == acivil:
-            for thing in old_man.inv:
-                if isinstance(thing, Bottle):
-                    break
-                else:
-                    print(old_man.dialogue[1])
+            if old_man.dead is False:
+                for thing in old_man.inv:
+                    if isinstance(thing, Bottle):
+                        break
+                    else:
+                        print(old_man.dialogue[1])
         if current_node == forest:
             for thing in tree.inv:
                 if thing is stone:
@@ -844,8 +846,10 @@ while True:
         elif current_node == airlock:
             print('You jump into the vacuum of space.')
             player.death()
+        elif current_node == tree:
+            print('You jump out of the highest branch of the tree. This tree happens to be four stories tall.')
+            player.death()
         else:
             print('You jump. nice.')
-
     else:
         print('Command not recognized.')
