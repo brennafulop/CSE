@@ -287,6 +287,8 @@ class Character(object):
 
     def eat(self, food):
         food.eaten(self)
+        if self.health < 100:
+            self.health = food.nutrients + self.health
 
     def thirsty(self):
         if self.thirst == 100:
@@ -410,7 +412,7 @@ maze1 = Room('Maze', 'caveentrance', 'maze2', 'maze5', None, None, None, "You ar
 maze2 = Room('Maze', 'maze1', None, 'maze4', None, None, None, "You are inside the cave system You can't "
                                                                "see anything, but you can feel the walls.", [], [])
 maze4 = Room('Maze', 'maze2', None, None, 'oasis', None, None, 'You are inside the cave system. '
-                                                               'You see light coming from the west.', [silver_helmet],
+                                                               'You see light coming from the west.', [],
              [])
 maze3 = Room('Maze', 'maze2', None, None, 'maze1', None, None, "You are inside the cave system. You can't "
                                                                "see anything, but you can feel the walls.", [], [])
@@ -439,7 +441,7 @@ bridge1 = Room("Wooden bridge", 'forest', 'ecivil', None, None, None, 'river', '
                                                                                'there is civilization.', [], [])
 river = Room('River', None, None, None, None, 'bridge1', None, 'You are in the river. The water is freezing cold and it'
                                                                ' is difficult to fight the strong current. \n'
-                                                               'This was a bad idea.', [], [])
+                                                               'This was a bad idea.', [silver_helmet], [])
 river2 = Room('River', None, None, None, None, 'bridge2', None, 'You are in the river. The water is freezing cold and '
                                                                 ' it is difficult to fight the strong current. \n'
                                                                 'This was a bad idea.', [], [])
@@ -556,7 +558,7 @@ instruction = ("To move use north, south, east, west, up, and down(or just the f
                " \nTo get back to your ship from any location, type 'beam me up scotty'. \nTo see this message"
                " again, type '?'. \nFinally, to quit the game at any point type 'quit'")
 
-print('Welcome player! The goal of this game is to save the two planets from peril. \n')
+print('\nWelcome player! The goal of this game is to save the two planets from peril. \n')
 instructions = input('Would you like some instructions? >_')
 if instructions == 'yes':
     print(instruction)
@@ -851,5 +853,8 @@ while True:
             player.death()
         else:
             print('You jump. nice.')
+    elif command == 'yee dee da':
+        print('You ascend to Jupiter')
+        player.win()
     else:
         print('Command not recognized.')
