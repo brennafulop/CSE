@@ -345,7 +345,7 @@ old_man = Character('old beggar', 100, 'There is an old beggar.',
                     [], [desert_cloak])
 player = Character('you', 100, 'The main character', None, 0, 0, 50, [], [], [])
 
-shelob = Character('shelob', 110, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 50,
+shelob = Character('shelob', 110, 'Shelob, the evil spider who guards the volcano, blocks your path', None, 0, 0, 200,
                    [], [], [poison, potion])
 
 shelob.passive = False
@@ -533,7 +533,7 @@ def print_description():
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
 
-current_node = cockpit
+current_node = volcanotop
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 instruction = ("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
