@@ -355,7 +355,7 @@ shelob.passive = False
 
 
 class Room(object):
-    def __init__(self, name, north, south, east, west, up, down, description, items, characters=None):
+    def __init__(self, name, north, south, east, west, up, down, description, items, characters=None, unreachable=None):
         self.name = name
         self.north = north
         self.south = south
@@ -368,6 +368,7 @@ class Room(object):
         self.inv = items
         self.chars = characters
         self.body_of_water = False
+        self.unreachable = unreachable
 
     def move(self, direction):
         global current_node
@@ -478,7 +479,7 @@ volcano = Room('Base of Volcano', 'mountains', None, None, None, 'volcanotop', N
 volcanotop = Room('Volcano', None, None, None, None, None, 'volcano', ['You stand at the mouth of the volcano. It is '
                                                                        'unbearably hot and appears as though it might '
                                                                        'erupt.', 'You stand at the mouth of the volcano'
-                                                                                 '.'], [], [shelob])
+                                                                                 '.'], [], [shelob], [])
 
 oasis.body_of_water = True
 bridge1.body_of_water = True
@@ -493,7 +494,7 @@ def print_description():
     if current_node == volcanotop:
         found_stone = False
         # Find if the stone is in the volcano
-        for thing in volcanotop.inv:
+        for thing in volcanotop.unreachable:
             if thing is stone:
                 found_stone = True
 
@@ -501,8 +502,6 @@ def print_description():
         if found_stone:
             print(volcanotop.description[1])
             for thing in current_node.chars:
-                print(thing.description)
-            for thing in current_node.inv:
                 print(thing.description)
         else:
             print(volcanotop.description[0])
@@ -533,7 +532,7 @@ def print_description():
 
 # CONTROLLER ---------------------------------------------------------------------------------------------------
 
-current_node = volcanotop
+current_node = cockpit
 directions = ['north', 'south', 'east', 'west', 'up', 'down']
 short_directions = ['n', 's', 'e', 'w', 'u', 'd']
 instruction = ("To move use north, south, east, west, up, and down(or just the first letter of each of these commands)."
@@ -649,8 +648,8 @@ while True:
                     else:
                         print('You did not equip the weapon.')
     elif command[:4] == 'drop':
-        if current_node == volcanotop:
-            if shelob.dead is False:
+        if shelob.dead is False:
+            if current_node == volcanotop:
                 print('Shelob blocks you.')
         else:
             item = command[5:]
@@ -658,6 +657,7 @@ while True:
                 if item == stuff.name:
                     if current_node is volcanotop:
                         player.inv.remove(stuff)
+                        volcanotop.unreachable.append(stuff)
                         print('You drop the %s and watch it decend into the volcano, lost forever' % stuff.name)
                         if stuff.name == 'blue stone':
                             print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
@@ -669,14 +669,15 @@ while True:
                         player.drop(stuff, current_node)
     elif command[:5] == 'throw':
         item = command[6:]
-        if current_node == volcanotop:
-            if shelob.dead is False:
+        if shelob.dead is False:
+            if current_node == volcanotop:
                 print('Shelob blocks you.')
         else:
             for stuff in player.inv:
                 if item == stuff.name:
                     if current_node is volcanotop:
                         player.inv.remove(stuff)
+                        volcanotop.unreachable.append(stuff)
                         print('You throw the %s and watch it descend into the volcano, lost forever.' % stuff.name)
                         if stuff.name == 'blue stone':
                             print('You watch as the bubbling lava in the volcano freezes at the touch of the stone. You'
